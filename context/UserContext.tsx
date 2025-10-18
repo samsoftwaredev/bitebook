@@ -17,10 +17,13 @@ import { NAV_MAIN_LINKS } from '@/constants';
 import { User } from '@/interfaces';
 
 interface UserContext {
+  session: Session | null;
+  setSession: Dispatch<SetStateAction<Session | null>>;
   user: User | null | undefined;
   setUser: Dispatch<SetStateAction<User | null | undefined>>;
   getProfile: (session: Session | null) => Promise<User | undefined>;
   logout: () => Promise<void>;
+  checkAuth: () => Promise<void>;
 }
 
 interface Props {
@@ -31,6 +34,7 @@ const UserContext = createContext<UserContext | undefined>(undefined);
 
 const UserContextProvider = ({ children }: Props) => {
   const router = useRouter();
+  const [session, setSession] = useState<Session | null>(null);
   const [user, setUser] = useState<User | null | undefined>();
   const [isLoading, setIsLoading] = useState(true);
 
@@ -76,12 +80,14 @@ const UserContextProvider = ({ children }: Props) => {
     }
   };
 
-  const getSession = async () => {
-    setIsLoading(true);
+  const checkAuth = async () => {
     try {
-      const res = await supabase.auth.getSession();
-      if (res.data.session) getProfile(res.data.session);
-      else throw new Error('No session');
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+      setSession(session);
+      await getProfile(session);
+      router.push('/app');
     } catch (err) {
       console.error(err);
       setIsLoading(false);
@@ -89,7 +95,15 @@ const UserContextProvider = ({ children }: Props) => {
   };
 
   useEffect(() => {
-    getSession();
+    checkAuth();
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
+
+    return () => subscription.unsubscribe();
   }, []);
 
   const value = useMemo(
@@ -98,8 +112,11 @@ const UserContextProvider = ({ children }: Props) => {
       setUser,
       getProfile,
       logout: onLogout,
+      session,
+      setSession,
+      checkAuth,
     }),
-    [user, setUser],
+    [user, setUser, session, setSession],
   );
 
   if (isLoading) return <Loading />;

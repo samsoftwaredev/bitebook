@@ -1,4 +1,4 @@
 export const COMPANY = {
-  name: 'BiteBook',
+  name: 'Bite Book',
   nameAbbr: 'BiteBook',
 };

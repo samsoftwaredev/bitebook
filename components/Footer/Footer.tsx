@@ -5,7 +5,7 @@ import { Box, Button, Container, IconButton } from '@mui/material';
 import Link from 'next/link';
 
 import { Logo } from '@/components';
-import { NAV_FOOTER_LINKS, NAV_MAIN_LINKS } from '@/constants';
+import { COMPANY, NAV_FOOTER_LINKS, NAV_MAIN_LINKS } from '@/constants';
 
 import styles from './footer.module.scss';
 
@@ -24,7 +24,9 @@ const Footer = () => {
           display="flex"
           flexDirection="column"
         >
-          <small>&copy; {currentYear} DoIt4Jesus. All rights reserved.</small>
+          <small>
+            &copy; {currentYear} {COMPANY.name}. All rights reserved.
+          </small>
           <Box
             display="flex"
             justifyContent="center"

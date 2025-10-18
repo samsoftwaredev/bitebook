@@ -1,4 +1,18 @@
+import BrunchDiningRoundedIcon from '@mui/icons-material/BrunchDiningRounded';
+import CakeRoundedIcon from '@mui/icons-material/CakeRounded';
+import EggAltRoundedIcon from '@mui/icons-material/EggAltRounded';
+import GrassRoundedIcon from '@mui/icons-material/GrassRounded';
+import KebabDiningRoundedIcon from '@mui/icons-material/KebabDiningRounded';
+import LocalDiningRoundedIcon from '@mui/icons-material/LocalDiningRounded';
+import LocalPizzaRoundedIcon from '@mui/icons-material/LocalPizzaRounded';
+import MonitorWeightRoundedIcon from '@mui/icons-material/MonitorWeightRounded';
+import NoMealsRoundedIcon from '@mui/icons-material/NoMealsRounded';
+import RamenDiningRoundedIcon from '@mui/icons-material/RamenDiningRounded';
+import RestaurantMenuRoundedIcon from '@mui/icons-material/RestaurantMenuRounded';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
+import SetMealRoundedIcon from '@mui/icons-material/SetMealRounded';
+import TapasRoundedIcon from '@mui/icons-material/TapasRounded';
+import TimerRoundedIcon from '@mui/icons-material/TimerRounded';
 import {
   Box,
   Chip,
@@ -16,6 +30,7 @@ import * as React from 'react';
 
 import RecipeCard from '@/components/RecipeCard/RecipeCard';
 import { Recipe } from '@/components/RecipeCard/RecipeCard.model';
+import { foodTypeFilters } from '@/constants/global';
 
 export default function DashboardSection() {
   const isMdUp = useMediaQuery((t: Theme) => t.breakpoints.up('md'));
@@ -55,19 +70,6 @@ export default function DashboardSection() {
     ],
     score: [92, 95, 35, 78, 42, 68][i % 6],
   }));
-
-  const filters = [
-    { label: 'All Recipes', filled: true },
-    { label: 'Vegan' },
-    { label: 'Vegetarian' },
-    { label: 'Meat' },
-    { label: 'Seafood' },
-    { label: 'Mexican' },
-    { label: 'Italian' },
-    { label: 'Asian' },
-    { label: 'Mediterranean' },
-    { label: 'Dessert' },
-  ];
 
   return (
     <Container maxWidth="xl" disableGutters>
@@ -111,25 +113,13 @@ export default function DashboardSection() {
           '&::-webkit-scrollbar': { display: 'none' },
         }}
       >
-        {filters.map((f) => (
+        {foodTypeFilters.map((f) => (
           <Chip
             key={f.label}
             label={f.label}
             color={f.filled ? 'success' : 'default'}
             variant={f.filled ? 'filled' : 'outlined'}
-            icon={
-              f.filled ? (
-                <Box
-                  component="span"
-                  sx={{
-                    width: 8,
-                    height: 8,
-                    bgcolor: 'success.contrastText',
-                    borderRadius: 999,
-                  }}
-                />
-              ) : undefined
-            }
+            icon={<span>{f.icon}</span>}
             sx={{
               borderRadius: 999,
               fontWeight: f.filled ? 700 : 600,

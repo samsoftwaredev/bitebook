@@ -13,7 +13,7 @@ describe('Logo Component', () => {
   });
 
   it('renders the white logo when type is white', () => {
-    render(<Logo type="white" />);
+    render(<Logo type="logo" />);
     const logoElement = screen.getByTestId('logo');
     expect(logoElement).toBeInTheDocument();
     expect(logoElement).toContainHTML('<svg');
@@ -21,7 +21,7 @@ describe('Logo Component', () => {
   });
 
   it('renders the black logo when type is black', () => {
-    render(<Logo type="black" />);
+    render(<Logo type="wordLogo" />);
     const logoElement = screen.getByTestId('logo');
     expect(logoElement).toBeInTheDocument();
     expect(logoElement).toContainHTML('<svg');

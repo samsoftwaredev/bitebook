@@ -8,8 +8,8 @@ import { NAV_MAIN_LINKS } from './nav';
 export const pageView = {
   en: {
     signUp: {
-      title: 'Sing Up',
-      header: 'Join Our Catholic Community!',
+      title: 'Sign Up',
+      header: 'Join our food lovers community!',
       component: <SignUp />,
       footer: (
         <>
@@ -50,7 +50,7 @@ export const pageView = {
   es: {
     signUp: {
       title: 'Registrarse',
-      header: '¡Únete a nuestra comunidad católica!',
+      header: '¡Únete a nuestra comunidad de amantes de la comida!',
       component: <SignUp />,
       footer: (
         <>

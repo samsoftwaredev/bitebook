@@ -10,13 +10,20 @@ import {
   Stack,
   Typography,
   alpha,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material';
 import * as React from 'react';
 
 import RecipeCard from '@/components/RecipeCard/RecipeCard';
 import { Recipe } from '@/components/RecipeCard/RecipeCard.model';
+import { foodTypeFilters } from '@/constants/global';
 
 export default function MyFavoritesSection() {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isTablet = useMediaQuery(theme.breakpoints.between('sm', 'md'));
+
   // sample data
   const recipes: Recipe[] = Array.from({ length: 9 }).map((_, i) => ({
     id: String(i),
@@ -52,19 +59,6 @@ export default function MyFavoritesSection() {
     ],
     score: [92, 95, 35, 78, 42, 68][i % 6],
   }));
-
-  const filters = [
-    { label: 'All Recipes', filled: true },
-    { label: 'Vegan' },
-    { label: 'Vegetarian' },
-    { label: 'Meat' },
-    { label: 'Seafood' },
-    { label: 'Mexican' },
-    { label: 'Italian' },
-    { label: 'Asian' },
-    { label: 'Mediterranean' },
-    { label: 'Dessert' },
-  ];
 
   return (
     <Container maxWidth="xl" disableGutters>
@@ -108,25 +102,13 @@ export default function MyFavoritesSection() {
           '&::-webkit-scrollbar': { display: 'none' },
         }}
       >
-        {filters.map((f) => (
+        {foodTypeFilters.map((f) => (
           <Chip
             key={f.label}
             label={f.label}
             color={f.filled ? 'success' : 'default'}
             variant={f.filled ? 'filled' : 'outlined'}
-            icon={
-              f.filled ? (
-                <Box
-                  component="span"
-                  sx={{
-                    width: 8,
-                    height: 8,
-                    bgcolor: 'success.contrastText',
-                    borderRadius: 999,
-                  }}
-                />
-              ) : undefined
-            }
+            icon={<span>{f.icon}</span>}
             sx={{
               borderRadius: 999,
               fontWeight: f.filled ? 700 : 600,

@@ -23,7 +23,7 @@ const ErrorPage = ({ text, isPage = false }: Props) => {
   return (
     <Box className={styles.container}>
       <Box className={styles.content}>
-        <Logo type="white" />
+        <Logo type="logo" />
         <Typography my={2}>{text}</Typography>
       </Box>
     </Box>

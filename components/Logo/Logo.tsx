@@ -1,56 +1,29 @@
-const BlackCompanyLogo = () => (
+const WordLogoIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="320"
-    height="84"
-    viewBox="0 0 320 84"
+    height="64"
+    viewBox="0 0 320 64"
     role="img"
     aria-labelledby="title desc"
   >
     <title id="title">BiteBook — logo</title>
     <desc id="desc">
-      Wordmark with minimal open-book icon. The spine and a small page notch
-      subtly form a cross.
+      BiteBook wordmark with a minimal open-book icon. The spine and a small
+      page notch subtly form a cross, symbolizing thoughtful design and purpose.
     </desc>
     <style>
       {`:root{ --ink:#0B1C17; --accent:#0FB77A; --muted:#0A7F56; --bg:transparent; }
-    @media (prefers-color-scheme: dark){
-      :root{ --ink:#F5FFFB; --accent:#6EE7C8; --muted:#A7F3D0; --bg:transparent; }
-    }
-    .ink{ fill:var(--ink); }
-    .accent{ fill:var(--accent); }
-    .muted{ fill:var(--muted); }`}
+      @media (prefers-color-scheme: dark){
+        :root{ --ink:#F5FFFB; --accent:#6EE7C8; --muted:#A7F3D0; --bg:transparent; }
+      }
+      .ink{ fill:var(--ink); }
+      .accent{ fill:var(--accent); }
+      .muted{ fill:var(--muted); }`}
     </style>
 
-    {/* wordmark */}
-    <g transform="translate(90,16)">
-      <text
-        className="ink"
-        x="0"
-        y="22"
-        fontFamily="Inter, Helvetica, Arial, sans-serif"
-        fontSize="28"
-        fontWeight="800"
-        letterSpacing="0.5"
-      >
-        Bite
-      </text>
-      <text
-        className="ink"
-        x="0"
-        y="58"
-        fontFamily="Inter, Helvetica, Arial, sans-serif"
-        fontSize="28"
-        fontWeight="800"
-        letterSpacing="0.5"
-      >
-        Book
-      </text>
-    </g>
-
-    {/* icon: minimal open book with page notch (subtle cross) */}
+    {/* icon: minimal open book with subtle cross */}
     <g transform="translate(16,10)">
-      {/* soft rounded container for consistency on any bg */}
       <rect
         x="0"
         y="0"
@@ -72,7 +45,7 @@ const BlackCompanyLogo = () => (
         d="M52 16c-10-6-20-6-30 0v28c10-6 20-6 30 0V16z"
         className="muted"
       />
-      {/* spine (vertical) */}
+      {/* spine */}
       <rect
         x="30.25"
         y="12"
@@ -82,7 +55,7 @@ const BlackCompanyLogo = () => (
         className="ink"
         opacity=".9"
       />
-      {/* page notch (horizontal) -> creates a small cross at spine */}
+      {/* page notch forming subtle cross */}
       <rect
         x="26"
         y="22"
@@ -93,7 +66,7 @@ const BlackCompanyLogo = () => (
         opacity=".9"
         rx="1"
       />
-      {/* bookmark tab for balance */}
+      {/* small bookmark */}
       <path
         d="M44 14 h8 v10 l-4-3 -4 3z"
         fill="currentColor"
@@ -101,9 +74,25 @@ const BlackCompanyLogo = () => (
         opacity=".18"
       />
     </g>
+
+    {/* single-line wordmark: BiteBook */}
+    <g transform="translate(100,47)">
+      <text
+        className="ink"
+        x="0"
+        y="0"
+        fontFamily="Inter, Helvetica, Arial, sans-serif"
+        fontSize="34"
+        fontWeight="800"
+        letterSpacing="0.2"
+      >
+        BiteBook
+      </text>
+    </g>
   </svg>
 );
-const WhiteCompanyLogo = () => (
+
+const LogoIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="64"
@@ -157,13 +146,13 @@ const WhiteCompanyLogo = () => (
 );
 
 interface Props {
-  type?: 'black' | 'white';
+  type?: 'wordLogo' | 'logo';
 }
 
-const Logo = ({ type = 'black' }: Props) => {
+const Logo = ({ type = 'wordLogo' }: Props) => {
   return (
     <span data-testid="logo">
-      {type === 'black' ? <BlackCompanyLogo /> : <WhiteCompanyLogo />}
+      {type === 'wordLogo' ? <WordLogoIcon /> : <LogoIcon />}
     </span>
   );
 };

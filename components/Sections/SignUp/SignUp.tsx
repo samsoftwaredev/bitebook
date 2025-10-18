@@ -10,6 +10,7 @@ import {
   Typography,
 } from '@mui/material';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { Controller, SubmitHandler, useForm, useWatch } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -33,13 +34,14 @@ interface IFormInputs {
 
 const SignUp = () => {
   const { t } = useLanguageContext();
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccessfulSigUp, setIsSuccessfulSigUp] = useState(false);
   const { handleSubmit, control } = useForm<IFormInputs>({
     mode: 'onChange',
     defaultValues: {
       email: 'samuelruiz30@gmail.com',
-      password: '12345678',
+      password: '12345678!',
       genderMale: undefined,
       firstName: 'samuel',
       lastName: 'ruiz',
@@ -62,8 +64,7 @@ const SignUp = () => {
       console.error(error);
     }
     if (data) {
-      toast.success('We have sent a confirmation link to your email');
-      setIsSuccessfulSigUp(true);
+      router.push('/app');
     }
   };
 
