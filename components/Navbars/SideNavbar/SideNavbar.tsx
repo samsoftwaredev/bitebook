@@ -19,6 +19,7 @@ import {
   alpha,
 } from '@mui/material';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import * as React from 'react';
 
 const drawerWidth = 260;
@@ -33,6 +34,10 @@ export default function Sidebar({
   onClose: () => void;
   pathname?: string;
 }) {
+  const router = useRouter();
+  const upgradeToPremium = () => {
+    router.push('/app/pricing');
+  };
   const menu = [
     {
       icon: <HomeRoundedIcon />,
@@ -116,6 +121,7 @@ export default function Sidebar({
 
       {/* Upgrade card */}
       <Button
+        onClick={upgradeToPremium}
         startIcon={<WorkspacePremiumRoundedIcon />}
         sx={{
           m: 2,

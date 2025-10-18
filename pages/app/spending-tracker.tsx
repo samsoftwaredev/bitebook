@@ -1,10 +1,15 @@
 import type { NextPage } from 'next';
 
 import AppWrapper from '@/components/AppWrapper';
+import SpendingTrackerSection from '@/components/Sections/SpendingTrackerSection';
 import { AppLayout } from '@/components/Templates';
 
 const SpendingTracker: NextPage = () => {
-  return <AppLayout>SpendingTracker</AppLayout>;
+  return (
+    <AppLayout>
+      <SpendingTrackerSection />
+    </AppLayout>
+  );
 };
 
 const SpendingTrackerPageWrapper = () => {

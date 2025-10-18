@@ -1,23 +1,23 @@
 import type { NextPage } from 'next';
 
 import AppWrapper from '@/components/AppWrapper';
-import ShoppingListSection from '@/components/Sections/ShoppingListSection';
+import PricingSection from '@/components/Sections/PricingSection';
 import { AppLayout } from '@/components/Templates';
 
-const ShoppingList: NextPage = () => {
+const Pricing: NextPage = () => {
   return (
     <AppLayout>
-      <ShoppingListSection />
+      <PricingSection />
     </AppLayout>
   );
 };
 
-const ShoppingListPageWrapper = () => {
+const PricingPageWrapper = () => {
   return (
     <AppWrapper>
-      <ShoppingList />
+      <Pricing />
     </AppWrapper>
   );
 };
 
-export default ShoppingListPageWrapper;
+export default PricingPageWrapper;
