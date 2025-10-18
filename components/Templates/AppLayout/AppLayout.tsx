@@ -59,7 +59,18 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           minHeight: '100vh',
         }}
       >
-        <Container maxWidth="md" disableGutters>
+        <Container
+          maxWidth="md"
+          disableGutters
+          sx={{
+            width: {
+              xs: '300px',
+              sm: '400px',
+              md: '500px',
+              lg: `calc(100% - ${drawerWidth}px)`,
+            },
+          }}
+        >
           {children}
         </Container>
       </Box>

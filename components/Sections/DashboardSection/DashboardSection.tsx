@@ -28,6 +28,7 @@ import {
 } from '@mui/material';
 import * as React from 'react';
 
+import FoodFilter from '@/components/FoodFilter';
 import RecipeCard from '@/components/RecipeCard/RecipeCard';
 import { Recipe } from '@/components/RecipeCard/RecipeCard.model';
 import { foodTypeFilters } from '@/constants/global';
@@ -72,7 +73,7 @@ export default function DashboardSection() {
   }));
 
   return (
-    <Container maxWidth="xl" disableGutters>
+    <>
       {/* Title & subtitle */}
       <Box sx={{ mb: 2 }}>
         <Typography variant="h4" fontWeight={800} letterSpacing="-0.01em">
@@ -102,33 +103,12 @@ export default function DashboardSection() {
         </Stack>
       </Paper>
 
-      {/* Filters – scrollable on mobile */}
-      <Stack
-        direction="row"
-        spacing={1}
-        sx={{
-          mb: 2.5,
-          overflowX: 'auto',
-          py: 0.5,
-          '&::-webkit-scrollbar': { display: 'none' },
+      <FoodFilter
+        activeFilter="All"
+        handleChip={(label: string) => {
+          console.log('Filter by:', label);
         }}
-      >
-        {foodTypeFilters.map((f) => (
-          <Chip
-            key={f.label}
-            label={f.label}
-            color={f.filled ? 'success' : 'default'}
-            variant={f.filled ? 'filled' : 'outlined'}
-            icon={<span>{f.icon}</span>}
-            sx={{
-              borderRadius: 999,
-              fontWeight: f.filled ? 700 : 600,
-              backgroundColor: f.filled ? alpha('#0FB77A', 0.2) : undefined,
-            }}
-            clickable
-          />
-        ))}
-      </Stack>
+      />
 
       <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>
         Showing <strong>{recipes.length}</strong> recipes
@@ -142,6 +122,6 @@ export default function DashboardSection() {
           </Grid>
         ))}
       </Grid>
-    </Container>
+    </>
   );
 }
