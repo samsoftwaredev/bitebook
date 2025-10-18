@@ -54,3 +54,19 @@ export const searchRecipesService = async ({
   });
   return { data, error };
 };
+
+export const favoritesToggleService = async ({
+  recipeId,
+  isFavorite,
+}: {
+  recipeId: string;
+  isFavorite: boolean;
+}): Promise<{
+  data: { success: boolean } | null;
+  error: any;
+}> => {
+  const { data, error } = await supabase.functions.invoke('favorites-toggle', {
+    body: { recipeId, isFavorite },
+  });
+  return { data, error };
+};

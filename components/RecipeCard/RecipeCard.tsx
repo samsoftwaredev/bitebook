@@ -1,3 +1,4 @@
+import { Favorite } from '@mui/icons-material';
 import AccessTimeRoundedIcon from '@mui/icons-material/AccessTimeRounded';
 import AttachMoneyRoundedIcon from '@mui/icons-material/AttachMoneyRounded';
 import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
@@ -12,9 +13,11 @@ import {
   Typography,
   alpha,
 } from '@mui/material';
-import * as React from 'react';
+import React, { useState } from 'react';
+import { toast } from 'react-toastify';
 
 import ScorePill from '@/components/ScorePill';
+import { favoritesToggleService } from '@/services/index';
 
 import { Recipe } from './RecipeCard.model';
 
@@ -25,10 +28,18 @@ export default function RecipeCard({
   r: Recipe;
   handleCardClick: (r: Recipe) => void;
 }) {
-  const handleFavoriteClick = (e: React.MouseEvent) => {
+  const [isFavorite, setIsFavorite] = useState(false);
+  const handleFavoriteClick = async (e: React.MouseEvent) => {
     e.stopPropagation(); // Prevent card click when clicking favorite
-    // Handle favorite logic here
+    try {
+      await favoritesToggleService({ recipeId: r.id, isFavorite: !isFavorite });
+      setIsFavorite(!isFavorite);
+    } catch (error) {
+      console.error('Error toggling favorite:', error);
+      toast.error('Failed to update favorite status.');
+    }
   };
+
   const handleCardClickWrapper = () => handleCardClick(r);
 
   return (
@@ -86,7 +97,11 @@ export default function RecipeCard({
               transition: 'all 0.2s ease-in-out',
             }}
           >
-            <FavoriteBorderRoundedIcon />
+            {isFavorite ? (
+              <Favorite color="error" />
+            ) : (
+              <FavoriteBorderRoundedIcon />
+            )}
           </IconButton>
           <ScorePill score={r.score} />
         </Box>
