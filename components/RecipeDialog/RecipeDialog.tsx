@@ -1,254 +1,329 @@
-import AccessTimeRoundedIcon from '@mui/icons-material/AccessTimeRounded';
-import AttachMoneyRoundedIcon from '@mui/icons-material/AttachMoneyRounded';
-import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
-import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import CloseIcon from '@mui/icons-material/Close';
+import EmojiNatureIcon from '@mui/icons-material/EmojiNature';
+import EventAvailableIcon from '@mui/icons-material/EventAvailable';
+import RestaurantIcon from '@mui/icons-material/Restaurant';
 import {
   Box,
   Chip,
   Dialog,
   DialogContent,
-  DialogTitle,
   Divider,
+  Grid,
   IconButton,
+  Paper,
   Stack,
   Typography,
-  alpha,
   useMediaQuery,
-  useTheme,
 } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import React, { useEffect } from 'react';
 
 import { Recipe } from '@/components/RecipeCard/RecipeCard.model';
-import ScorePill from '@/components/ScorePill';
+import { RecipeDetail } from '@/interfaces/index';
 import { getRecipeByIdService } from '@/services/index';
 
-interface RecipeDialogProps {
-  recipe: Recipe | null;
+import Loading from '../Loading';
+
+// ---- Types (shape matches your API response) -------------------------------
+
+type Props = {
   open: boolean;
   onClose: () => void;
+  recipeData: Recipe | null;
+};
+
+// ---- helpers ---------------------------------------------------------------
+const money = (cents?: number) =>
+  cents != null
+    ? new Intl.NumberFormat(undefined, {
+        style: 'currency',
+        currency: 'USD',
+      }).format(cents / 100)
+    : undefined;
+
+const pluralize = (unit: string, qty: number) =>
+  qty === 1 || ['each'].includes(unit) ? unit : `${unit}s`;
+
+const prettyQty = (n: number) => {
+  const whole = Math.floor(n);
+  const frac = +(n - whole).toFixed(2);
+  const map: Record<number, string> = { 0.25: '¼', 0.5: '½', 0.75: '¾' };
+  if (map[frac]) return whole ? `${whole}${map[frac]}` : map[frac];
+  return n.toString();
+};
+
+const shelfLifeText = (d: number | null | undefined) =>
+  d == null ? '' : d === 1 ? '(1d shelf life)' : `(${d}d shelf life)`;
+
+// ---- stat card -------------------------------------------------------------
+function Stat({
+  icon,
+  label,
+  value,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  value: React.ReactNode;
+}) {
+  return (
+    <Paper variant="outlined" sx={{ p: 2, height: '100%' }}>
+      <Stack direction="row" spacing={1} alignItems="center">
+        <Box sx={{ color: 'text.secondary' }}>{icon}</Box>
+        <Box>
+          <Typography variant="caption" color="text.secondary">
+            {label}
+          </Typography>
+          <Typography variant="subtitle1" fontWeight={600}>
+            {value}
+          </Typography>
+        </Box>
+      </Stack>
+    </Paper>
+  );
 }
 
-export default function RecipeDialog({
-  recipe,
-  open,
-  onClose,
-}: RecipeDialogProps) {
+// ---- main component --------------------------------------------------------
+export default function RecipeDialog({ open, onClose, recipeData }: Props) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-
-  // Sample ingredients data - in a real app this would come from the recipe object
-  const sampleIngredients = [
-    '2 cups quinoa, rinsed',
-    '1 large sweet potato, diced',
-    '1 cup broccoli florets',
-    '1 red bell pepper, sliced',
-    '1 cucumber, diced',
-    '1/2 red onion, thinly sliced',
-    '1/4 cup tahini',
-    '2 tbsp lemon juice',
-    '2 tbsp olive oil',
-    '1 tsp ground cumin',
-    'Salt and pepper to taste',
-    '2 tbsp pumpkin seeds',
-    'Fresh cilantro for garnish',
-  ];
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [recipe, setRecipe] = React.useState<RecipeDetail | null>(null);
 
   const getRecipeById = async (id: string) => {
+    setIsLoading(true);
     try {
       const { data, error } = await getRecipeByIdService(id);
       if (error) {
         console.error('Error fetching recipe details:', error);
         return;
       }
+      setRecipe(data);
       // In a real app, you would update state with the fetched recipe details
       console.log('Fetched recipe details:', data);
     } catch (err) {
       console.error('Unexpected error fetching recipe details:', err);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    console.log('Recipe ID changed:', recipe?.id);
-    if (recipe !== null) {
-      getRecipeById(recipe.id);
+    console.log('Recipe ID changed:', recipeData?.id);
+    if (recipeData !== null) {
+      getRecipeById(recipeData.id);
     }
-  }, [recipe?.id]);
+  }, [recipeData?.id]);
 
-  if (!recipe) return null;
+  if (!recipeData) return null;
+
+  if (isLoading || !recipe) return <Loading />;
 
   return (
     <Dialog
       open={open}
       onClose={onClose}
+      fullScreen={isMobile}
       maxWidth="md"
       fullWidth
-      fullScreen={isMobile}
       PaperProps={{
         sx: {
-          borderRadius: isMobile ? 0 : 2,
-          maxHeight: '90vh',
+          bgcolor: '#fff', // make sure it's white
+          borderRadius: { xs: 0, sm: 2 },
         },
       }}
     >
-      <DialogTitle sx={{ p: 0, position: 'relative' }}>
-        <Box sx={{ position: 'relative' }}>
-          <Box
-            component="img"
-            src={recipe.img}
-            alt={recipe.title}
-            sx={{
-              width: '100%',
-              height: { xs: 200, sm: 300 },
-              objectFit: 'cover',
-            }}
-          />
+      <IconButton
+        aria-label="close"
+        onClick={onClose}
+        sx={{
+          position: 'absolute',
+          right: 8,
+          top: 8,
+          zIndex: 2,
+          bgcolor: 'rgba(255,255,255,0.8)',
+          '&:hover': { bgcolor: 'rgba(255,255,255,1)' },
+        }}
+      >
+        <CloseIcon />
+      </IconButton>
 
-          {/* Close button */}
-          <IconButton
-            onClick={onClose}
-            sx={{
-              position: 'absolute',
-              right: 16,
-              top: 16,
-              bgcolor: 'rgba(255, 255, 255, 0.9)',
-              backdropFilter: 'blur(10px)',
-              '&:hover': { bgcolor: 'rgba(255, 255, 255, 1)' },
-              boxShadow: '0 4px 12px rgba(0,0,0,.15)',
-            }}
-          >
-            <CloseRoundedIcon />
-          </IconButton>
+      {/* Hero image */}
+      <Box
+        sx={{
+          width: '100%',
+          aspectRatio: '16/9',
+          backgroundImage: `url(${recipe.recipe.image_url})`,
+          backgroundPosition: 'center',
+          backgroundSize: 'cover',
+        }}
+      />
 
-          {/* Favorite button */}
-          <IconButton
-            sx={{
-              position: 'absolute',
-              right: 16,
-              top: 70,
-              bgcolor: 'rgba(255, 255, 255, 0.9)',
-              backdropFilter: 'blur(10px)',
-              '&:hover': { bgcolor: 'rgba(255, 255, 255, 1)' },
-              boxShadow: '0 4px 12px rgba(0,0,0,.15)',
-            }}
-          >
-            <FavoriteBorderRoundedIcon />
-          </IconButton>
+      <DialogContent sx={{ pt: 3 }}>
+        {/* Title & description */}
+        <Typography variant="h5" fontWeight={700}>
+          {recipe.recipe.title}
+        </Typography>
+        {recipe.recipe.description && (
+          <Typography color="text.secondary" sx={{ mt: 0.5 }}>
+            {recipe.recipe.description}
+          </Typography>
+        )}
 
-          {/* Score pill */}
-          <Box sx={{ position: 'absolute', left: 16, bottom: 16 }}>
-            <ScorePill score={recipe.score} />
+        {/* Stats grid */}
+        <Grid container spacing={2} sx={{ mt: 2 }}>
+          <Grid item xs={6} sm={3}>
+            <Stat
+              icon={<AccessTimeIcon fontSize="small" />}
+              label="Duration"
+              value={`${recipe.recipe.duration_min} min`}
+            />
+          </Grid>
+          <Grid item xs={6} sm={3}>
+            <Stat
+              icon={<AttachMoneyIcon fontSize="small" />}
+              label="Cost"
+              value={money(recipe.recipe.est_cost_cents)}
+            />
+          </Grid>
+          <Grid item xs={6} sm={3}>
+            <Stat
+              icon={<RestaurantIcon fontSize="small" />}
+              label="Servings"
+              value={recipe.recipe.servings}
+            />
+          </Grid>
+          <Grid item xs={6} sm={3}>
+            <Stat
+              icon={<EventAvailableIcon fontSize="small" />}
+              label="Shelf Life"
+              value={
+                recipe.recipe.shelf_life_days == null
+                  ? '—'
+                  : recipe.recipe.shelf_life_days === 1
+                    ? '1 day'
+                    : `${recipe.recipe.shelf_life_days} days`
+              }
+            />
+          </Grid>
+        </Grid>
+
+        {/* Health score */}
+        <Paper variant="outlined" sx={{ mt: 2, p: 2 }}>
+          <Stack direction="row" spacing={1} alignItems="center">
+            <EmojiNatureIcon color="success" />
+            <Typography variant="subtitle2" color="text.secondary">
+              Health Score
+            </Typography>
+            <Typography variant="subtitle1" fontWeight={700}>
+              {recipe.recipe.health_score ?? '—'}/100
+            </Typography>
+          </Stack>
+        </Paper>
+
+        {/* Tags */}
+        {recipe.tags?.length > 0 && (
+          <Box sx={{ mt: 2 }}>
+            <Typography variant="subtitle1" fontWeight={700} gutterBottom>
+              Categories
+            </Typography>
+            <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
+              {recipe.tags.map((t) => (
+                <Chip
+                  key={t}
+                  size="small"
+                  label={t}
+                  color="primary"
+                  variant="outlined"
+                />
+              ))}
+            </Stack>
           </Box>
-        </Box>
-      </DialogTitle>
+        )}
 
-      <DialogContent sx={{ p: { xs: 2, sm: 3 } }}>
-        {/* Recipe title and description */}
-        <Box sx={{ mb: 3 }}>
-          <Typography
-            variant={isMobile ? 'h5' : 'h4'}
-            fontWeight={800}
-            gutterBottom
-            sx={{ mb: 1 }}
-          >
-            {recipe.title}
-          </Typography>
-          <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>
-            {recipe.desc}
+        {/* Ingredients */}
+        <Box sx={{ mt: 3 }}>
+          <Typography variant="h6" fontWeight={800} gutterBottom>
+            Ingredients
           </Typography>
 
-          {/* Tags */}
-          <Stack
-            direction="row"
-            spacing={1}
-            sx={{ mb: 2, flexWrap: 'wrap', rowGap: 1 }}
-          >
-            {recipe.tags.map((tag) => (
-              <Chip
-                key={tag}
-                label={tag}
-                size="small"
+          <Stack spacing={1.2}>
+            {recipe.ingredients.map((ing) => (
+              <Paper
+                key={ing.ingredient_id}
+                variant="outlined"
                 sx={{
-                  textTransform: 'lowercase',
-                  bgcolor: alpha('#0FB77A', 0.1),
-                  color: '#0FB77A',
-                  fontWeight: 600,
-                }}
-              />
-            ))}
-          </Stack>
-
-          {/* Time and price */}
-          <Stack direction="row" justifyContent="space-between" sx={{ mb: 3 }}>
-            <Stack direction="row" spacing={1} alignItems="center">
-              <AccessTimeRoundedIcon fontSize="small" color="action" />
-              <Typography variant="body2" fontWeight={600}>
-                {recipe.time}
-              </Typography>
-            </Stack>
-            <Stack direction="row" spacing={0.5} alignItems="center">
-              <AttachMoneyRoundedIcon fontSize="small" color="success" />
-              <Typography variant="body2" fontWeight={700} color="success.main">
-                {recipe.price}
-              </Typography>
-            </Stack>
-          </Stack>
-        </Box>
-
-        <Divider sx={{ mb: 3 }} />
-
-        {/* Ingredients section */}
-        <Box>
-          <Typography variant="h6" fontWeight={700} gutterBottom sx={{ mb: 2 }}>
-            🥘 Ingredients
-          </Typography>
-          <Box
-            component="ul"
-            sx={{
-              listStyle: 'none',
-              p: 0,
-              m: 0,
-            }}
-          >
-            {sampleIngredients.map((ingredient, index) => (
-              <Box
-                component="li"
-                key={index}
-                sx={{
+                  p: { xs: 1, sm: 1.25 },
                   display: 'flex',
-                  alignItems: 'flex-start',
-                  mb: 1.5,
-                  p: 1.5,
-                  borderRadius: 1,
-                  bgcolor: alpha('#0FB77A', 0.04),
-                  border: `1px solid ${alpha('#0FB77A', 0.1)}`,
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
                 }}
               >
-                <Typography
-                  component="span"
-                  sx={{
-                    mr: 2,
-                    minWidth: 24,
-                    height: 24,
-                    borderRadius: '50%',
-                    bgcolor: '#0FB77A',
-                    color: 'white',
-                    fontSize: '0.75rem',
-                    fontWeight: 700,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    flexShrink: 0,
-                  }}
+                <Typography variant="body2" sx={{ pr: 2 }}>
+                  {ing.name}
+                </Typography>
+                <Stack
+                  direction="row"
+                  spacing={1}
+                  alignItems="center"
+                  sx={{ whiteSpace: 'nowrap' }}
                 >
-                  {index + 1}
-                </Typography>
-                <Typography variant="body2" sx={{ lineHeight: 1.5 }}>
-                  {ingredient}
-                </Typography>
-              </Box>
+                  <Typography
+                    variant="body2"
+                    fontWeight={700}
+                    color="success.main"
+                  >
+                    {`${prettyQty(ing.qty_num)} ${pluralize(ing.qty_unit, ing.qty_num)}`}
+                  </Typography>
+                  <Typography variant="caption" color="text.secondary">
+                    {shelfLifeText(ing.shelf_life_days)}
+                  </Typography>
+                </Stack>
+              </Paper>
             ))}
-          </Box>
+          </Stack>
         </Box>
+
+        {/* Steps */}
+        {recipe.steps?.length > 0 && (
+          <Box sx={{ mt: 3 }}>
+            <Typography variant="h6" fontWeight={800} gutterBottom>
+              Instructions
+            </Typography>
+            <Stack spacing={1.25} sx={{ mb: 1 }}>
+              {recipe.steps
+                .slice()
+                .sort((a, b) => a.step_no - b.step_no)
+                .map((s) => (
+                  <Box key={s.step_no} sx={{ display: 'flex', gap: 1 }}>
+                    <Box
+                      sx={{
+                        minWidth: 28,
+                        height: 28,
+                        borderRadius: '50%',
+                        bgcolor: 'primary.main',
+                        color: '#fff',
+                        display: 'grid',
+                        placeItems: 'center',
+                        fontSize: 13,
+                        mt: '2px',
+                      }}
+                    >
+                      {s.step_no}
+                    </Box>
+                    <Typography variant="body2" sx={{ mt: '2px' }}>
+                      {s.body}
+                    </Typography>
+                  </Box>
+                ))}
+            </Stack>
+          </Box>
+        )}
+
+        <Divider sx={{ mt: 3 }} />
+        {/* Footer spacing for mobile safe area */}
+        <Box sx={{ height: 8 }} />
       </DialogContent>
     </Dialog>
   );

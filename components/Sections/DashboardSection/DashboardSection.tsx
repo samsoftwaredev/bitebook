@@ -132,7 +132,7 @@ export default function DashboardSection() {
       </Grid>
 
       <RecipeDialog
-        recipe={recipe}
+        recipeData={recipe}
         open={dialogOpen}
         onClose={handleDialogClose}
       />

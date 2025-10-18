@@ -1,5 +1,5 @@
 import { supabase } from '../classes';
-import { RecipeResponse } from '../interfaces';
+import { RecipeDetail, RecipeResponse } from '../interfaces';
 
 export const healthCheckService = async (): Promise<{
   data: any;
@@ -12,7 +12,7 @@ export const healthCheckService = async (): Promise<{
 export const getRecipeByIdService = async (
   id: string,
 ): Promise<{
-  data: RecipeResponse | null;
+  data: RecipeDetail | null;
   error: any;
 }> => {
   const { data, error } = await supabase.functions.invoke('recipes-id', {

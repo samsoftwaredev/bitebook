@@ -10,6 +10,31 @@ export type Recipe = {
   title: string;
 };
 
+export type RecipeDetail = {
+  recipe: {
+    id: string;
+    title: string;
+    description: string;
+    image_url: string;
+    duration_min: number;
+    servings: number;
+    est_cost_cents: number;
+    shelf_life_days: number | null;
+    health_score: number | null;
+    is_public: boolean;
+    owner_id: string;
+  };
+  ingredients: {
+    ingredient_id: string;
+    name: string;
+    qty_num: number;
+    qty_unit: string;
+    shelf_life_days: number | null;
+  }[];
+  steps: { step_no: number; body: string }[];
+  tags: string[];
+};
+
 export type RecipeResponse = {
   items: Recipe[];
   nextCursor: string | null;
