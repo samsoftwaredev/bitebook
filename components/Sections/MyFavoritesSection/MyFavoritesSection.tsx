@@ -1,3 +1,4 @@
+import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import {
   Box,
@@ -74,7 +75,7 @@ export default function MyFavoritesSection() {
       {/* Title & subtitle */}
       <Box sx={{ mb: 2 }}>
         <Typography variant="h4" fontWeight={800} letterSpacing="-0.01em">
-          My Favorites
+          <FavoriteRoundedIcon fontSize="large" color="error" /> My Favorites
         </Typography>
         <Typography color="text.secondary">
           Your collection of beloved recipes

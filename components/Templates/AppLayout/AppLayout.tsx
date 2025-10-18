@@ -15,7 +15,6 @@ import { SideNavbar } from '@/components/Navbars';
 
 const drawerWidth = 260;
 
-/** ---------- Page ---------- */
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -43,11 +42,9 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         </Toolbar>
       </AppBar>
 
-      {/* Sidebar */}
       <SideNavbar
         mobileOpen={mobileOpen}
         onClose={() => setMobileOpen(false)}
-        pathname="/discover"
       />
 
       {/* Main content */}

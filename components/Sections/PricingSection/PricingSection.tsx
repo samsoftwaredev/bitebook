@@ -1,4 +1,3 @@
-// PricingPage.tsx
 import AssessmentRoundedIcon from '@mui/icons-material/AssessmentRounded';
 import CalendarMonthRoundedIcon from '@mui/icons-material/CalendarMonthRounded';
 import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
@@ -88,11 +87,11 @@ function PlanCard({ plan, onSelect }: { plan: Plan; onSelect: () => void }) {
       sx={{
         position: 'relative',
         p: 2,
-        borderRadius: 3,
+        borderRadius: 1,
         height: '100%',
         border: (t) =>
           plan.highlight
-            ? `2px solid ${alpha(t.palette.success.main, 0.6)}`
+            ? `4px solid ${alpha(t.palette.success.main, 0.6)}`
             : `1px solid ${alpha(t.palette.text.primary, 0.12)}`,
         boxShadow: plan.highlight
           ? '0 16px 40px rgba(0,0,0,.16)'
@@ -123,7 +122,9 @@ function PlanCard({ plan, onSelect }: { plan: Plan; onSelect: () => void }) {
           <LockRoundedIcon sx={{ color: 'text.secondary' }} />
         )}
         <Box>
-          <Typography fontWeight={900}>{plan.name}</Typography>
+          <Typography variant="h5" fontWeight={900}>
+            {plan.name}
+          </Typography>
           <Typography variant="caption" color="text.secondary">
             {plan.tagline}
           </Typography>
@@ -281,7 +282,7 @@ export default function PricingPage() {
                 <Typography fontWeight={800}>Smart Receipt Scanning</Typography>
                 <Typography
                   variant="body2"
-                  sx={{ opacity: 0.9, maxWidth: 320 }}
+                  sx={{ color: '#bef47f', opacity: 0.9, maxWidth: 320 }}
                 >
                   Snap photos of receipts and let AI extract all items and
                   prices automatically
@@ -294,7 +295,7 @@ export default function PricingPage() {
                 <Typography fontWeight={800}>Spending Analytics</Typography>
                 <Typography
                   variant="body2"
-                  sx={{ opacity: 0.9, maxWidth: 320 }}
+                  sx={{ color: '#bef47f', opacity: 0.9, maxWidth: 320 }}
                 >
                   Beautiful charts showing monthly trends, category breakdowns,
                   and annual totals
@@ -307,7 +308,7 @@ export default function PricingPage() {
                 <Typography fontWeight={800}>Annual Overview</Typography>
                 <Typography
                   variant="body2"
-                  sx={{ opacity: 0.9, maxWidth: 320 }}
+                  sx={{ color: '#bef47f', opacity: 0.9, maxWidth: 320 }}
                 >
                   Track your entire year of food spending and see where you can
                   save money
@@ -317,13 +318,49 @@ export default function PricingPage() {
           </Grid>
         </Paper>
 
-        {/* FAQ heading placeholder */}
-        <Typography variant="h6" fontWeight={900} sx={{ textAlign: 'center' }}>
+        {/* FAQ Section */}
+        <Typography
+          variant="h6"
+          fontWeight={900}
+          sx={{ textAlign: 'center', mb: 2 }}
+        >
           Frequently Asked Questions
         </Typography>
-        <Typography color="text.secondary" sx={{ textAlign: 'center', mb: 2 }}>
-          (Add your accordion of questions here)
-        </Typography>
+        <Grid container spacing={2} sx={{ mb: 4 }}>
+          {[
+            {
+              question: "What's included in the free plan?",
+              answer:
+                'The free plan includes access to 500+ recipes, meal planning features, shopping lists, and basic recipe management tools. You can use these features forever at no cost.',
+            },
+            {
+              question: 'Can I cancel my Premium subscription anytime?',
+              answer:
+                "Yes, you can cancel your Premium subscription at any time. You'll continue to have access to Premium features until the end of your billing period.",
+            },
+            {
+              question: 'How does the receipt scanning feature work?',
+              answer:
+                'Simply take a photo of your grocery receipt using the app. Our AI technology will automatically extract and categorize all items and prices, saving you time on manual entry.',
+            },
+            {
+              question: 'Is my data secure?',
+              answer:
+                'Yes, we take data security seriously. All your information is encrypted and stored securely in the cloud, and we never share your personal data with third parties.',
+            },
+          ].map((faq, index) => (
+            <Grid item xs={12} md={6} key={index}>
+              <Paper sx={{ p: 2, borderRadius: 1, height: '100%' }}>
+                <Typography fontWeight={700} gutterBottom>
+                  {faq.question}
+                </Typography>
+                <Typography color="text.secondary" variant="body2">
+                  {faq.answer}
+                </Typography>
+              </Paper>
+            </Grid>
+          ))}
+        </Grid>
       </Container>
     </Box>
   );

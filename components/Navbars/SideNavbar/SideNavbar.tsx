@@ -24,20 +24,19 @@ import * as React from 'react';
 
 const drawerWidth = 260;
 
-/** ---------- Sidebar ---------- */
 export default function Sidebar({
   mobileOpen,
   onClose,
-  pathname = '/discover',
 }: {
   mobileOpen: boolean;
   onClose: () => void;
-  pathname?: string;
 }) {
   const router = useRouter();
   const upgradeToPremium = () => {
     router.push('/app/pricing');
   };
+  const pathname = router.pathname;
+
   const menu = [
     {
       icon: <HomeRoundedIcon />,

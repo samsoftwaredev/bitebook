@@ -24,7 +24,7 @@ export const theme = createTheme({
       main: BRAND.teal,
       light: BRAND.tealLight,
       dark: BRAND.tealDark,
-      contrastText: '#06281F',
+      contrastText: '#ffffffff',
     },
     secondary: {
       main: BRAND.yellow,
