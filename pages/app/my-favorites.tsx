@@ -1,13 +1,10 @@
 import type { NextPage } from 'next';
 
 import AppWrapper from '@/components/AppWrapper';
-import { DashboardSection } from '@/components/Sections';
+import DashboardSection from '@/components/Sections/DashboardSection';
 import { AppLayout } from '@/components/Templates';
-import { useLanguageContext } from '@/context/LanguageContext';
 
-const App: NextPage = () => {
-  const { lang } = useLanguageContext();
-
+const Dashboard: NextPage = () => {
   return (
     <AppLayout>
       <DashboardSection />
@@ -15,12 +12,12 @@ const App: NextPage = () => {
   );
 };
 
-const AppPageWrapper = () => {
+const DashboardPageWrapper = () => {
   return (
     <AppWrapper>
-      <App />
+      <Dashboard />
     </AppWrapper>
   );
 };
 
-export default AppPageWrapper;
+export default DashboardPageWrapper;
