@@ -32,10 +32,10 @@ export const mealTypesService = async (): Promise<{
 };
 
 export const searchRecipesService = async ({
-  q,
   tags,
-  limit = 30,
-  offset = 0,
+  q = undefined,
+  limit = undefined,
+  offset = undefined,
 }: {
   q?: string;
   tags?: string[];
@@ -45,8 +45,12 @@ export const searchRecipesService = async ({
   data: RecipeResponse | null;
   error: any;
 }> => {
-  if (tags?.includes('All Recipes')) {
-    tags.splice(tags.indexOf('All Recipes'), 1);
+  if (tags?.includes('all')) {
+    tags.splice(tags.indexOf('all'), 1);
+  }
+
+  if (q === '') {
+    q = undefined;
   }
 
   const { data, error } = await supabase.functions.invoke('recipes-search', {

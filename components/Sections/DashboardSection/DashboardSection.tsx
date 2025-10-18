@@ -60,8 +60,8 @@ export default function DashboardSection() {
 
   const onFilterByLabel = async (label: string) => {
     const { data } = await searchRecipesService({
-      q: searchTerm,
-      tags: [label],
+      q: searchTerm.toLowerCase(),
+      tags: [label.toLowerCase()],
     });
     if (!Array.isArray(data?.items)) return;
     const dataNormalized = recipesDataNormalized(data);
