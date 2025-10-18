@@ -32,7 +32,7 @@ export const theme = createTheme({
     },
     success: { main: BRAND.success, light: '#bef47f' },
     info: { main: BRAND.blue },
-    warning: { main: BRAND.warning },
+    warning: { main: BRAND.warning, light: '#f8ed98ff' },
     error: { main: BRAND.error },
     background: {
       default: BRAND.mint0,

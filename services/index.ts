@@ -1,44 +1,44 @@
-import { supabase } from '@/classes';
+import { supabase } from '../classes';
+import { RecipeResponse } from '../interfaces';
 
-import { FriendProfile, PostgrestError } from '../interfaces';
-import {
-  getUserProfileLocally,
-  normalizeFriendProfile,
-  storeUserProfileLocally,
-} from '../utils';
+export const healthCheck = async (): Promise<{
+  data: any;
+  error: any;
+}> => {
+  const { data, error } = await supabase.functions.invoke('health', {});
+  return { data, error };
+};
 
-/**
- * Will only make API call to retrieve user profile if users is not in sessionStorage.
- * @param {string[]} - Array of strings
- * @returns {} - returns user profiles or error
- */
-export const getUserProfileAPI = async (
-  userIds: string[],
-): Promise<[FriendProfile[] | null, PostgrestError | null]> => {
-  const emptyProfilesIds: string[] = [];
-  const profiles = userIds.map((uid) => {
-    const profile = getUserProfileLocally(uid);
-    if (profile === undefined) {
-      emptyProfilesIds.push(uid);
-      return undefined;
-    }
-    return profile;
+export const mealTypesService = async (): Promise<{
+  data: { meal_type: string[] } | null;
+  error: any;
+}> => {
+  const { data, error } = await supabase.functions.invoke('enums-meal-type', {
+    method: 'GET',
   });
-  const localProfiles: any[] = profiles.filter(
-    (profile) => profile !== undefined,
-  );
+  return { data, error };
+};
 
-  if (emptyProfilesIds.length > 0) {
-    let { data, error } = await supabase.rpc('get_profiles_by_user_ids', {
-      user_ids: emptyProfilesIds,
-    });
-
-    if (data) {
-      const friendData = normalizeFriendProfile(data ?? []);
-      storeUserProfileLocally(friendData);
-      return [[...friendData, ...localProfiles], null];
-    }
-    return [[], error];
+export const searchRecipes = async ({
+  q,
+  tags,
+  limit = 30,
+  offset = 0,
+}: {
+  q?: string;
+  tags?: string[];
+  limit?: number;
+  offset?: number;
+}): Promise<{
+  data: RecipeResponse | null;
+  error: any;
+}> => {
+  if (tags?.includes('All Recipes')) {
+    tags.splice(tags.indexOf('All Recipes'), 1);
   }
-  return [localProfiles, null];
+
+  const { data, error } = await supabase.functions.invoke('recipes-search', {
+    body: { q, tags, limit, offset },
+  });
+  return { data, error };
 };

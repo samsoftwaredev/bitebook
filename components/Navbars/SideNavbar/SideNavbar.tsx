@@ -22,6 +22,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 
+import Logo from '@/components/Logo';
 import { useUserContext } from '@/context/UserContext';
 
 const drawerWidth = 260;
@@ -72,19 +73,11 @@ export default function Sidebar({
     <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
       {/* brand */}
       <Box sx={{ p: 2, display: 'flex', alignItems: 'center', gap: 1.5 }}>
-        <Avatar
-          sx={{
-            bgcolor: 'primary.main',
-            color: '#fff',
-            width: 36,
-            height: 36,
-            fontWeight: 800,
-          }}
-        >
-          R
-        </Avatar>
+        <Box sx={{ width: 60, height: 60 }}>
+          <Logo type="logo" />
+        </Box>
         <Box>
-          <Typography fontWeight={800}>RecipeBox</Typography>
+          <Typography fontWeight={800}>BiteBook</Typography>
           <Typography variant="caption" color="text.secondary">
             Your culinary companion
           </Typography>

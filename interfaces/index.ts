@@ -1,10 +1,32 @@
-import { Json } from './database';
+export type Recipe = {
+  duration_min: number;
+  est_cost_cents: number;
+  health_score: number;
+  id: string;
+  description: string;
+  image_url: string;
+  servings: number;
+  tags: string[];
+  title: string;
+};
+
+export type RecipeResponse = {
+  items: Recipe[];
+  nextCursor: string | null;
+};
 
 export type PostgrestError = {
   message: string;
   details: string;
   hint: string;
   code: string;
+};
+
+export type FoodTypeFilter = {
+  value: string;
+  label: string;
+  icon: string;
+  filled?: boolean;
 };
 
 export type MenuItem = {

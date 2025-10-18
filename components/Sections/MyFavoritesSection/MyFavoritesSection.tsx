@@ -2,7 +2,6 @@ import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import {
   Box,
-  Container,
   Grid,
   InputBase,
   Paper,
@@ -115,7 +114,7 @@ export default function MyFavoritesSection() {
           p: 0.75,
           borderRadius: 2,
           mb: { xs: 1.5, sm: 2 },
-          backgroundColor: '#FFE847',
+          backgroundColor: 'warning.light',
         }}
       >
         <Stack

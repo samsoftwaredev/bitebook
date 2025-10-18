@@ -13,7 +13,7 @@ import { toast } from 'react-toastify';
 
 import { supabase } from '@/classes/SupabaseDB';
 import { Loading } from '@/components';
-import { NAV_MAIN_LINKS } from '@/constants';
+import { NAV_APP_LINKS, NAV_MAIN_LINKS } from '@/constants';
 import { User } from '@/interfaces';
 
 interface UserContext {
@@ -87,7 +87,7 @@ const UserContextProvider = ({ children }: Props) => {
       } = await supabase.auth.getSession();
       setSession(session);
       await getProfile(session);
-      router.push('/app');
+      router.push(NAV_APP_LINKS.app.link);
     } catch (err) {
       console.error(err);
       setIsLoading(false);

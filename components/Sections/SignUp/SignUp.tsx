@@ -17,7 +17,7 @@ import { toast } from 'react-toastify';
 
 import { db } from '@/classes/SupabaseDB';
 import FormErrorText from '@/components/FormErrorText';
-import { passwordValidationRules } from '@/constants';
+import { NAV_APP_LINKS, passwordValidationRules } from '@/constants';
 import { useLanguageContext } from '@/context/LanguageContext';
 import virginMaryLetter from '@/public/assets/images/art/virginMaryLetter.jpeg';
 import { emailRegEx, nameRegEx } from '@/utils';
@@ -64,7 +64,7 @@ const SignUp = () => {
       console.error(error);
     }
     if (data) {
-      router.push('/app');
+      router.push(NAV_APP_LINKS.app.link);
     }
   };
 

@@ -7,8 +7,12 @@ import {
   useTheme,
 } from '@mui/material';
 import * as React from 'react';
+import { useEffect } from 'react';
+import { toast } from 'react-toastify';
 
 import { foodTypeFilters } from '@/constants/global';
+import { FoodTypeFilter } from '@/interfaces/index';
+import { mealTypesService } from '@/services/index';
 
 interface FilterChipsProps {
   activeFilter: string;
@@ -19,9 +23,9 @@ export default function FoodFilter({
   activeFilter,
   handleChip,
 }: FilterChipsProps) {
+  const [mealTypes, setMealTypes] = React.useState<FoodTypeFilter[]>([]);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  const isTablet = useMediaQuery(theme.breakpoints.between('sm', 'md'));
 
   // Drag scrolling state
   const [isDragging, setIsDragging] = React.useState(false);
@@ -80,6 +84,24 @@ export default function FoodFilter({
       document.body.style.cursor = '';
       document.body.style.userSelect = '';
     };
+  }, []);
+
+  const getMealTypes = React.useCallback(async () => {
+    const { data, error } = await mealTypesService();
+    if (error) {
+      console.error('Error fetching meal types:', error);
+      toast.error('Failed to load meal types.');
+    } else {
+      // map foodTypeFilters to only those in data.meal_types
+      const filteredMealTypes = foodTypeFilters.filter((filter) =>
+        data?.meal_type?.includes(filter.value),
+      );
+      setMealTypes(filteredMealTypes);
+    }
+  }, []);
+
+  useEffect(() => {
+    getMealTypes();
   }, []);
 
   return (
@@ -163,7 +185,7 @@ export default function FoodFilter({
           clickable
         />
 
-        {foodTypeFilters.map((f) => (
+        {mealTypes.map((f) => (
           <Chip
             key={f.label}
             label={f.label}
