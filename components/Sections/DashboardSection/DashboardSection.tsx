@@ -13,8 +13,9 @@ import * as React from 'react';
 import FoodFilter from '@/components/FoodFilter';
 import RecipeCard from '@/components/RecipeCard/RecipeCard';
 import { Recipe } from '@/components/RecipeCard/RecipeCard.model';
+import RecipeDialog from '@/components/RecipeDialog/RecipeDialog';
 import { RecipeResponse } from '@/interfaces/index';
-import { searchRecipes } from '@/services/index';
+import { searchRecipesService } from '@/services/index';
 
 const recipesDataNormalized = (data: RecipeResponse): Recipe[] => {
   const dataNormalized: Recipe[] = data.items.map((r, i) => ({
@@ -33,12 +34,23 @@ const recipesDataNormalized = (data: RecipeResponse): Recipe[] => {
 };
 
 export default function DashboardSection() {
+  const [recipe, setRecipe] = React.useState<Recipe | null>(null);
+  const [dialogOpen, setDialogOpen] = React.useState(false);
+
+  const handleCardClick = (r: Recipe) => {
+    setRecipe(r);
+    setDialogOpen(true);
+  };
+
+  const handleDialogClose = () => {
+    setDialogOpen(false);
+  };
   const [searchTerm, setSearchTerm] = React.useState<string>('');
   const [recipes, setRecipes] = React.useState<Recipe[]>([]);
 
   React.useEffect(() => {
     const fetchRecipes = async () => {
-      const { data } = await searchRecipes({ q: searchTerm });
+      const { data } = await searchRecipesService({ q: searchTerm });
       if (!Array.isArray(data?.items)) return;
       const dataNormalized = recipesDataNormalized(data);
       setRecipes(dataNormalized);
@@ -47,7 +59,10 @@ export default function DashboardSection() {
   }, []);
 
   const onFilterByLabel = async (label: string) => {
-    const { data } = await searchRecipes({ q: searchTerm, tags: [label] });
+    const { data } = await searchRecipesService({
+      q: searchTerm,
+      tags: [label],
+    });
     if (!Array.isArray(data?.items)) return;
     const dataNormalized = recipesDataNormalized(data);
     setRecipes(dataNormalized);
@@ -55,7 +70,7 @@ export default function DashboardSection() {
 
   const onSearchChange = React.useCallback(
     debounce(async (value: string) => {
-      const { data } = await searchRecipes({ q: value });
+      const { data } = await searchRecipesService({ q: value });
       if (!Array.isArray(data?.items)) return;
       const dataNormalized = recipesDataNormalized(data);
       setRecipes(dataNormalized);
@@ -111,10 +126,16 @@ export default function DashboardSection() {
       <Grid container spacing={2.5}>
         {recipes.map((r) => (
           <Grid key={r.id} item xs={12} sm={6} lg={4}>
-            <RecipeCard r={r} />
+            <RecipeCard r={r} handleCardClick={handleCardClick} />
           </Grid>
         ))}
       </Grid>
+
+      <RecipeDialog
+        recipe={recipe}
+        open={dialogOpen}
+        onClose={handleDialogClose}
+      />
     </>
   );
 }

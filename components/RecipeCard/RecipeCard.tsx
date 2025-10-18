@@ -14,31 +14,27 @@ import {
 } from '@mui/material';
 import * as React from 'react';
 
-import RecipeDialog from '@/components/RecipeDialog';
 import ScorePill from '@/components/ScorePill';
 
 import { Recipe } from './RecipeCard.model';
 
-export default function RecipeCard({ r }: { r: Recipe }) {
-  const [dialogOpen, setDialogOpen] = React.useState(false);
-
-  const handleCardClick = () => {
-    setDialogOpen(true);
-  };
-
-  const handleDialogClose = () => {
-    setDialogOpen(false);
-  };
-
+export default function RecipeCard({
+  r,
+  handleCardClick,
+}: {
+  r: Recipe;
+  handleCardClick: (r: Recipe) => void;
+}) {
   const handleFavoriteClick = (e: React.MouseEvent) => {
     e.stopPropagation(); // Prevent card click when clicking favorite
     // Handle favorite logic here
   };
+  const handleCardClickWrapper = () => handleCardClick(r);
 
   return (
     <>
       <Card
-        onClick={handleCardClick}
+        onClick={handleCardClickWrapper}
         sx={{
           borderRadius: 1,
           overflow: 'hidden',
@@ -142,8 +138,6 @@ export default function RecipeCard({ r }: { r: Recipe }) {
           </Stack>
         </CardContent>
       </Card>
-
-      <RecipeDialog recipe={r} open={dialogOpen} onClose={handleDialogClose} />
     </>
   );
 }

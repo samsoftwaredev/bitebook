@@ -1,11 +1,23 @@
 import { supabase } from '../classes';
 import { RecipeResponse } from '../interfaces';
 
-export const healthCheck = async (): Promise<{
+export const healthCheckService = async (): Promise<{
   data: any;
   error: any;
 }> => {
   const { data, error } = await supabase.functions.invoke('health', {});
+  return { data, error };
+};
+
+export const getRecipeByIdService = async (
+  id: string,
+): Promise<{
+  data: RecipeResponse | null;
+  error: any;
+}> => {
+  const { data, error } = await supabase.functions.invoke('recipes-id', {
+    body: { id },
+  });
   return { data, error };
 };
 
@@ -19,7 +31,7 @@ export const mealTypesService = async (): Promise<{
   return { data, error };
 };
 
-export const searchRecipes = async ({
+export const searchRecipesService = async ({
   q,
   tags,
   limit = 30,

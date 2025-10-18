@@ -16,10 +16,11 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
-import * as React from 'react';
+import React, { useEffect } from 'react';
 
 import { Recipe } from '@/components/RecipeCard/RecipeCard.model';
 import ScorePill from '@/components/ScorePill';
+import { getRecipeByIdService } from '@/services/index';
 
 interface RecipeDialogProps {
   recipe: Recipe | null;
@@ -34,8 +35,6 @@ export default function RecipeDialog({
 }: RecipeDialogProps) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-
-  if (!recipe) return null;
 
   // Sample ingredients data - in a real app this would come from the recipe object
   const sampleIngredients = [
@@ -53,6 +52,29 @@ export default function RecipeDialog({
     '2 tbsp pumpkin seeds',
     'Fresh cilantro for garnish',
   ];
+
+  const getRecipeById = async (id: string) => {
+    try {
+      const { data, error } = await getRecipeByIdService(id);
+      if (error) {
+        console.error('Error fetching recipe details:', error);
+        return;
+      }
+      // In a real app, you would update state with the fetched recipe details
+      console.log('Fetched recipe details:', data);
+    } catch (err) {
+      console.error('Unexpected error fetching recipe details:', err);
+    }
+  };
+
+  useEffect(() => {
+    console.log('Recipe ID changed:', recipe?.id);
+    if (recipe !== null) {
+      getRecipeById(recipe.id);
+    }
+  }, [recipe?.id]);
+
+  if (!recipe) return null;
 
   return (
     <Dialog
