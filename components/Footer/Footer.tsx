@@ -4,7 +4,7 @@ import YouTubeIcon from '@mui/icons-material/YouTube';
 import { Box, Button, Container, IconButton } from '@mui/material';
 import Link from 'next/link';
 
-import { Logo, YouTubeSubscribe } from '@/components';
+import { Logo } from '@/components';
 import { NAV_FOOTER_LINKS, NAV_MAIN_LINKS } from '@/constants';
 
 import styles from './footer.module.scss';
@@ -59,9 +59,6 @@ const Footer = () => {
               <InstagramIcon />
             </IconButton>
           </Box>
-        </Box>
-        <Box className={styles.socialMedia} aria-label="YouTube Subscription">
-          <YouTubeSubscribe />
         </Box>
         <nav aria-label="Footer Navigation Links">
           <Link passHref href={NAV_FOOTER_LINKS.about.link}>

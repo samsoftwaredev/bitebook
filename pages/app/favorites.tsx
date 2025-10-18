@@ -1,23 +1,23 @@
 import type { NextPage } from 'next';
 
 import AppWrapper from '@/components/AppWrapper';
-import DashboardSection from '@/components/Sections/DashboardSection';
+import MyFavoritesSection from '@/components/Sections/MyFavoritesSection';
 import { AppLayout } from '@/components/Templates';
 
-const Dashboard: NextPage = () => {
+const Favorite: NextPage = () => {
   return (
     <AppLayout>
-      <DashboardSection />
+      <MyFavoritesSection />
     </AppLayout>
   );
 };
 
-const DashboardPageWrapper = () => {
+const FavoritePageWrapper = () => {
   return (
     <AppWrapper>
-      <Dashboard />
+      <Favorite />
     </AppWrapper>
   );
 };
 
-export default DashboardPageWrapper;
+export default FavoritePageWrapper;

@@ -25,8 +25,8 @@ const LogIn = () => {
   const { handleSubmit, control } = useForm<IFormInputs>({
     mode: 'onChange',
     defaultValues: {
-      email: ' ',
-      password: ' ',
+      email: '',
+      password: '',
     },
   });
 

@@ -9,7 +9,7 @@ import {
   Typography,
   alpha,
 } from '@mui/material';
-import * as React from 'react';
+import React from 'react';
 
 import { SideNavbar } from '@/components/Navbars';
 

@@ -18,6 +18,7 @@ import {
   Typography,
   alpha,
 } from '@mui/material';
+import Link from 'next/link';
 import * as React from 'react';
 
 const drawerWidth = 260;
@@ -33,22 +34,30 @@ export default function Sidebar({
   pathname?: string;
 }) {
   const menu = [
-    { icon: <HomeRoundedIcon />, label: 'Discover Recipes', href: '/discover' },
+    {
+      icon: <HomeRoundedIcon />,
+      label: 'Discover Recipes',
+      href: '/app',
+    },
     {
       icon: <FavoriteRoundedIcon />,
       label: 'My Favorites',
-      href: '/favorites',
+      href: '/app/favorites',
     },
-    { icon: <EventNoteRoundedIcon />, label: 'Meal Planner', href: '/planner' },
+    {
+      icon: <EventNoteRoundedIcon />,
+      label: 'Meal Planner',
+      href: '/app/planner',
+    },
     {
       icon: <ShoppingCartRoundedIcon />,
       label: 'Shopping List',
-      href: '/list',
+      href: '/app/shopping-list',
     },
     {
       icon: <AssessmentRoundedIcon />,
       label: 'Spending Tracker',
-      href: '/spending',
+      href: '/app/spending-tracker',
     },
   ];
 
@@ -80,23 +89,25 @@ export default function Sidebar({
         {menu.map((m) => {
           const active = pathname === m.href;
           return (
-            <ListItemButton
-              key={m.label}
-              sx={(t) => ({
-                mb: 0.5,
-                borderRadius: 2,
-                ...(active && {
-                  bgcolor: alpha(t.palette.primary.light, 0.35),
-                  '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
-                    color: t.palette.primary.dark,
-                    fontWeight: 700,
-                  },
-                }),
-              })}
-            >
-              <ListItemIcon sx={{ minWidth: 36 }}>{m.icon}</ListItemIcon>
-              <ListItemText primary={m.label} />
-            </ListItemButton>
+            <Link href={m.href} passHref key={m.label}>
+              <ListItemButton
+                key={m.label}
+                sx={(t) => ({
+                  mb: 0.5,
+                  borderRadius: 2,
+                  ...(active && {
+                    bgcolor: alpha(t.palette.primary.light, 0.35),
+                    '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
+                      color: t.palette.primary.dark,
+                      fontWeight: 700,
+                    },
+                  }),
+                })}
+              >
+                <ListItemIcon sx={{ minWidth: 36 }}>{m.icon}</ListItemIcon>
+                <ListItemText primary={m.label} />
+              </ListItemButton>
+            </Link>
           );
         })}
       </List>

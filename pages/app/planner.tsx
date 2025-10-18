@@ -1,23 +1,23 @@
 import type { NextPage } from 'next';
 
 import AppWrapper from '@/components/AppWrapper';
-import DashboardSection from '@/components/Sections/DashboardSection';
+import MealPlannerSection from '@/components/Sections/MealPlannerSection/MealPlannerSection';
 import { AppLayout } from '@/components/Templates';
 
-const Dashboard: NextPage = () => {
+const Planner: NextPage = () => {
   return (
     <AppLayout>
-      <DashboardSection />
+      <MealPlannerSection />
     </AppLayout>
   );
 };
 
-const DashboardPageWrapper = () => {
+const PlannerPageWrapper = () => {
   return (
     <AppWrapper>
-      <Dashboard />
+      <Planner />
     </AppWrapper>
   );
 };
 
-export default DashboardPageWrapper;
+export default PlannerPageWrapper;
