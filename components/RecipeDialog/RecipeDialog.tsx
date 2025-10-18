@@ -68,14 +68,24 @@ function Stat({
   value: React.ReactNode;
 }) {
   return (
-    <Paper variant="outlined" sx={{ p: 2, height: '100%' }}>
+    <Paper
+      variant="outlined"
+      sx={{
+        p: 2,
+        height: '100%',
+        bgcolor: 'rgba(255, 255, 255, 0.95)',
+        backdropFilter: 'blur(10px)',
+        border: '1px solid rgba(255, 255, 255, 0.2)',
+        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+      }}
+    >
       <Stack direction="row" spacing={1} alignItems="center">
-        <Box sx={{ color: 'text.secondary' }}>{icon}</Box>
+        <Box sx={{ color: 'primary.main' }}>{icon}</Box>
         <Box>
-          <Typography variant="caption" color="text.secondary">
+          <Typography variant="caption" color="text.secondary" fontWeight={500}>
             {label}
           </Typography>
-          <Typography variant="subtitle1" fontWeight={600}>
+          <Typography variant="subtitle1" fontWeight={700}>
             {value}
           </Typography>
         </Box>
@@ -129,8 +139,26 @@ export default function RecipeDialog({ open, onClose, recipeData }: Props) {
       fullWidth
       PaperProps={{
         sx: {
-          bgcolor: '#fff', // make sure it's white
+          position: 'relative',
+          overflow: 'hidden',
           borderRadius: { xs: 0, sm: 2 },
+          // Hero image as background
+          backgroundImage: `url(${recipe.recipe.image_url})`,
+          backgroundPosition: 'center',
+          backgroundSize: 'cover',
+          backgroundRepeat: 'no-repeat',
+          // Create overlay effect
+          '&::before': {
+            content: '""',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background:
+              'linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.4) 40%, rgba(255,255,255,0.95) 60%, rgba(255,255,255,1) 100%)',
+            zIndex: 0,
+          },
         },
       }}
     >
@@ -139,40 +167,59 @@ export default function RecipeDialog({ open, onClose, recipeData }: Props) {
         onClick={onClose}
         sx={{
           position: 'absolute',
-          right: 8,
-          top: 8,
-          zIndex: 2,
-          bgcolor: 'rgba(255,255,255,0.8)',
-          '&:hover': { bgcolor: 'rgba(255,255,255,1)' },
+          right: 16,
+          top: 16,
+          zIndex: 10,
+          bgcolor: 'rgba(255,255,255,0.9)',
+          backdropFilter: 'blur(10px)',
+          boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+          '&:hover': {
+            bgcolor: 'rgba(255,255,255,1)',
+            transform: 'scale(1.05)',
+          },
+          transition: 'all 0.2s ease-in-out',
         }}
       >
         <CloseIcon />
       </IconButton>
 
-      {/* Hero image */}
-      <Box
+      <DialogContent
         sx={{
-          width: '100%',
-          aspectRatio: '16/9',
-          backgroundImage: `url(${recipe.recipe.image_url})`,
-          backgroundPosition: 'center',
-          backgroundSize: 'cover',
+          position: 'relative',
+          zIndex: 1,
+          pt: { xs: 8, sm: 10 }, // Add more top padding to account for background
+          pb: 3,
         }}
-      />
-
-      <DialogContent sx={{ pt: 3 }}>
-        {/* Title & description */}
-        <Typography variant="h5" fontWeight={700}>
-          {recipe.recipe.title}
-        </Typography>
-        {recipe.recipe.description && (
-          <Typography color="text.secondary" sx={{ mt: 0.5 }}>
-            {recipe.recipe.description}
+      >
+        {/* Title & description with enhanced styling for overlay */}
+        <Box sx={{ mb: 3 }}>
+          <Typography
+            variant={isMobile ? 'h5' : 'h4'}
+            fontWeight={800}
+            sx={{
+              color: 'white',
+              textShadow: '0 2px 8px rgba(0,0,0,0.5)',
+              mb: 1,
+            }}
+          >
+            {recipe.recipe.title}
           </Typography>
-        )}
+          {recipe.recipe.description && (
+            <Typography
+              variant="body1"
+              sx={{
+                color: 'rgba(255,255,255,0.95)',
+                textShadow: '0 1px 4px rgba(0,0,0,0.5)',
+                fontSize: { xs: '0.95rem', sm: '1rem' },
+              }}
+            >
+              {recipe.recipe.description}
+            </Typography>
+          )}
+        </Box>
 
-        {/* Stats grid */}
-        <Grid container spacing={2} sx={{ mt: 2 }}>
+        {/* Stats grid with enhanced background */}
+        <Grid container spacing={2} sx={{ mt: 0 }}>
           <Grid item xs={6} sm={3}>
             <Stat
               icon={<AccessTimeIcon fontSize="small" />}
