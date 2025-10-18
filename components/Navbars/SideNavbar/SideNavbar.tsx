@@ -22,6 +22,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 
+import { useUserContext } from '@/context/UserContext';
+
 const drawerWidth = 260;
 
 export default function Sidebar({
@@ -31,6 +33,7 @@ export default function Sidebar({
   mobileOpen: boolean;
   onClose: () => void;
 }) {
+  const { logout } = useUserContext();
   const router = useRouter();
   const upgradeToPremium = () => {
     router.push('/app/pricing');
@@ -140,7 +143,7 @@ export default function Sidebar({
       </Button>
 
       <List sx={{ px: 1, pb: 2 }}>
-        <ListItemButton sx={{ borderRadius: 2 }}>
+        <ListItemButton sx={{ borderRadius: 2 }} onClick={logout}>
           <ListItemIcon sx={{ minWidth: 36 }}>
             <LogoutRoundedIcon />
           </ListItemIcon>

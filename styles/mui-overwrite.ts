@@ -30,7 +30,7 @@ export const theme = createTheme({
       main: BRAND.yellow,
       contrastText: '#0D1B16',
     },
-    success: { main: BRAND.success },
+    success: { main: BRAND.success, light: '#bef47f' },
     info: { main: BRAND.blue },
     warning: { main: BRAND.warning },
     error: { main: BRAND.error },
@@ -72,6 +72,7 @@ export const theme = createTheme({
       letterSpacing: '-0.015em',
     },
     h3: { fontWeight: 700, fontSize: '1.75rem', lineHeight: 1.2 },
+
     body1: { fontSize: '1rem', lineHeight: 1.65 },
     body2: { fontSize: '.95rem', lineHeight: 1.6, color: BRAND.text2 },
     button: { textTransform: 'none', fontWeight: 700, letterSpacing: 0 },

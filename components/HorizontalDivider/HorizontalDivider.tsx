@@ -1,14 +1,17 @@
-import { useLanguageContext } from '@/context/LanguageContext';
+import { Box, Divider, Typography } from '@mui/material';
 
-import styles from './HorizontalDivider.module.scss';
+import { useLanguageContext } from '@/context/LanguageContext';
 
 const HorizontalDivider = () => {
   const { t } = useLanguageContext();
   return (
-    <div className={styles.container}>
-      <div className={styles.bar} />
-      <div className={styles.text}>{t.or}</div>
-    </div>
+    <Box sx={{ display: 'flex', alignItems: 'center', width: '100%', gap: 2 }}>
+      <Divider sx={{ flex: 1 }} />
+      <Typography variant="body2" color="text.secondary">
+        {t.or}
+      </Typography>
+      <Divider sx={{ flex: 1 }} />
+    </Box>
   );
 };
 

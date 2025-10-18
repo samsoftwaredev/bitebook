@@ -85,7 +85,9 @@ function AccentCard({ item }: { item: FeatureItem }) {
       sx={{
         position: 'relative',
         p: { xs: 2.5, md: 3 },
-        borderRadius: 3,
+        borderRadius: 1,
+        borderTopLeftRadius: '5px',
+        borderTopRightRadius: '5px',
         height: '100%',
         boxShadow:
           theme.palette.mode === 'dark'

@@ -282,7 +282,7 @@ export default function PricingPage() {
                 <Typography fontWeight={800}>Smart Receipt Scanning</Typography>
                 <Typography
                   variant="body2"
-                  sx={{ color: '#bef47f', opacity: 0.9, maxWidth: 320 }}
+                  sx={{ color: 'success.light', opacity: 0.9, maxWidth: 320 }}
                 >
                   Snap photos of receipts and let AI extract all items and
                   prices automatically
@@ -295,7 +295,7 @@ export default function PricingPage() {
                 <Typography fontWeight={800}>Spending Analytics</Typography>
                 <Typography
                   variant="body2"
-                  sx={{ color: '#bef47f', opacity: 0.9, maxWidth: 320 }}
+                  sx={{ color: 'success.light', opacity: 0.9, maxWidth: 320 }}
                 >
                   Beautiful charts showing monthly trends, category breakdowns,
                   and annual totals
@@ -308,7 +308,7 @@ export default function PricingPage() {
                 <Typography fontWeight={800}>Annual Overview</Typography>
                 <Typography
                   variant="body2"
-                  sx={{ color: '#bef47f', opacity: 0.9, maxWidth: 320 }}
+                  sx={{ color: 'success.light', opacity: 0.9, maxWidth: 320 }}
                 >
                   Track your entire year of food spending and see where you can
                   save money

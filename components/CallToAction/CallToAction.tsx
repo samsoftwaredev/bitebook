@@ -10,6 +10,7 @@ import {
   alpha,
   useTheme,
 } from '@mui/material';
+import Link from 'next/link';
 import * as React from 'react';
 
 type Stat = { value: string; label: string };
@@ -31,7 +32,7 @@ const defaultStats: Stat[] = [
 export default function CallToAction({
   title = 'Ready to Transform Your Kitchen?',
   subtitleTop = 'Start discovering recipes, planning meals, and tracking your spending today.',
-  subtitleBottom = 'No credit card required, forever free.',
+  subtitleBottom = 'No credit card required.',
   ctaText = 'Start Cooking Smarter',
   onCtaClick,
   stats = defaultStats,
@@ -63,7 +64,14 @@ export default function CallToAction({
           <Typography variant="body1" sx={{ opacity: 0.9 }}>
             {subtitleTop}
           </Typography>
-          <Typography variant="body2" sx={{ opacity: 0.85, mb: 1 }}>
+          <Typography
+            variant="body2"
+            sx={{
+              color: 'success.light',
+              opacity: 0.85,
+              mb: 1,
+            }}
+          >
             {subtitleBottom}
           </Typography>
 
@@ -91,9 +99,9 @@ export default function CallToAction({
           <Box
             sx={{
               width: { xs: '100%', sm: '80%', md: '70%' },
-              height: 1,
+              height: '2px',
               my: { xs: 4, md: 5 },
-              backgroundColor: alpha('#FFFFFF', 0.28),
+              backgroundColor: 'success.light',
             }}
           />
 
@@ -108,7 +116,7 @@ export default function CallToAction({
                 <Stack spacing={0.5} alignItems="center">
                   <Typography
                     sx={{
-                      fontSize: { xs: '1.6rem', md: '1.8rem' },
+                      fontSize: { xs: '1.6rem', md: '2.8rem' },
                       fontWeight: 800,
                       lineHeight: 1.1,
                       color: '#FFFFFF',

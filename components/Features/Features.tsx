@@ -47,7 +47,7 @@ const defaultItems: Feature[] = [
   },
 ];
 
-export default function FeatureHighlights({
+export default function Features({
   title = 'Why Choose RecipeBox?',
   subtitle = 'Transform your cooking experience with powerful tools designed to save you time and money',
   items = defaultItems,

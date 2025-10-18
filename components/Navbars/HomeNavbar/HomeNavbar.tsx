@@ -53,11 +53,6 @@ function HomeNavbar(props: Props) {
       sx: { color: '#fff' },
     },
     {
-      label: t.whyPraySectionTitle,
-      goTo: '/#why-pray-rosary',
-      sx: { color: '#fff' },
-    },
-    {
       label: t.logIn,
       goTo: NAV_MAIN_LINKS.login.link,
       sx: { color: '#fff' },
@@ -130,12 +125,8 @@ function HomeNavbar(props: Props) {
             ))}
             <Select
               sx={{
-                color: 'white',
                 height: '36px',
                 border: '1px solid white',
-                '.MuiSelect-icon': {
-                  color: 'white', // Makes the caret (dropdown arrow) white
-                },
               }}
               variant="outlined"
               defaultValue={lang}
