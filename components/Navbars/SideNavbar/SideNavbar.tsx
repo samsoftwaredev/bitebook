@@ -99,6 +99,7 @@ export default function Sidebar({
                 sx={(t) => ({
                   mb: 0.5,
                   borderRadius: 2,
+                  color: t.palette.primary.dark,
                   ...(active && {
                     bgcolor: alpha(t.palette.primary.light, 0.35),
                     '& .MuiListItemIcon-root, & .MuiListItemText-primary': {

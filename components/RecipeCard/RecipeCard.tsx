@@ -22,7 +22,7 @@ export default function RecipeCard({ r }: { r: Recipe }) {
   return (
     <Card
       sx={{
-        borderRadius: 3,
+        borderRadius: 1,
         overflow: 'hidden',
         boxShadow: '0 12px 30px rgba(2,33,25,.10)',
       }}

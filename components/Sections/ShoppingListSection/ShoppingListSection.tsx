@@ -99,173 +99,161 @@ export default function ShoppingListPage() {
   const purchased = items.filter((i) => i.purchased);
 
   return (
-    <Box
-      sx={{
-        py: { xs: 3, md: 5 },
-        px: { xs: 2, md: 4 },
-        bgcolor: (t) => alpha(t.palette.text.primary, 0.02),
-      }}
-    >
-      <Container maxWidth="lg">
-        {/* Page header */}
-        <Stack
-          direction={{ xs: 'column', sm: 'row' }}
-          alignItems={{ xs: 'flex-start', sm: 'center' }}
-          justifyContent="space-between"
-          spacing={2}
-          sx={{ mb: 2 }}
+    <>
+      {/* Page header */}
+      <Stack
+        direction={{ xs: 'column', sm: 'row' }}
+        alignItems={{ xs: 'flex-start', sm: 'center' }}
+        justifyContent="space-between"
+        spacing={2}
+        sx={{ mb: 2 }}
+      >
+        <Box>
+          <Stack direction="row" spacing={1} alignItems="center">
+            <Typography variant="h4" fontWeight={900} letterSpacing="-0.01em">
+              Shopping List
+            </Typography>
+          </Stack>
+          <Typography color="text.secondary">
+            Check off items as you shop
+          </Typography>
+        </Box>
+
+        <Button
+          variant="contained"
+          startIcon={<DeleteRoundedIcon />}
+          sx={{
+            bgcolor: '#FFE847',
+            color: 'text.primary',
+            '&:hover': { bgcolor: '#FDE047' },
+          }}
+          onClick={clearCompleted}
         >
-          <Box>
-            <Stack direction="row" spacing={1} alignItems="center">
-              <Typography variant="h4" fontWeight={900} letterSpacing="-0.01em">
-                Shopping List
+          Clear Completed
+        </Button>
+      </Stack>
+
+      <Grid container spacing={2.5}>
+        {/* Left – checklist */}
+        <Grid item xs={12} md={8}>
+          <Paper sx={{ borderRadius: 1, overflow: 'hidden' }}>
+            {/* Gradient header */}
+            <Stack
+              direction="row"
+              alignItems="center"
+              justifyContent="space-between"
+              sx={{
+                px: 2,
+                py: 1.25,
+                background:
+                  'linear-gradient(90deg, rgba(15,183,122,.12), rgba(59,130,246,.10))',
+                borderBottom: (t) =>
+                  `1px solid ${alpha(t.palette.text.primary, 0.08)}`,
+              }}
+            >
+              <Stack direction="row" spacing={1} alignItems="center">
+                <ShoppingCartRoundedIcon color="success" />
+                <Typography fontWeight={800}>Shopping Checklist</Typography>
+              </Stack>
+              <Typography variant="body2" color="text.secondary">
+                {toBuy.length} items remaining
               </Typography>
             </Stack>
-            <Typography color="text.secondary">
-              Check off items as you shop
-            </Typography>
-          </Box>
 
-          <Button
-            variant="contained"
-            startIcon={<DeleteRoundedIcon />}
-            sx={{
-              bgcolor: '#FFE847',
-              color: 'text.primary',
-              '&:hover': { bgcolor: '#FDE047' },
-            }}
-            onClick={clearCompleted}
-          >
-            Clear Completed
-          </Button>
-        </Stack>
+            <Box sx={{ p: 1.25 }}>
+              {/* To Buy */}
+              <SectionHeader
+                dotColor="#16A34A"
+                title={`To Buy (${toBuy.length})`}
+              />
+              <List disablePadding sx={{ m: 1 }}>
+                {toBuy.map((it) => (
+                  <ItemRow
+                    key={it.id}
+                    item={it}
+                    onToggle={toggle}
+                    onDelete={remove}
+                  />
+                ))}
+              </List>
 
-        <Grid container spacing={2.5}>
-          {/* Left – checklist */}
-          <Grid item xs={12} md={8}>
-            <Paper sx={{ borderRadius: 2.5, overflow: 'hidden' }}>
-              {/* Gradient header */}
-              <Stack
-                direction="row"
-                alignItems="center"
-                justifyContent="space-between"
-                sx={{
-                  px: 2,
-                  py: 1.25,
-                  background:
-                    'linear-gradient(90deg, rgba(15,183,122,.12), rgba(59,130,246,.10))',
-                  borderBottom: (t) =>
-                    `1px solid ${alpha(t.palette.text.primary, 0.08)}`,
-                }}
-              >
-                <Stack direction="row" spacing={1} alignItems="center">
-                  <ShoppingCartRoundedIcon color="success" />
-                  <Typography fontWeight={800}>Shopping Checklist</Typography>
-                </Stack>
-                <Typography variant="body2" color="text.secondary">
-                  {toBuy.length} items remaining
-                </Typography>
-              </Stack>
+              <Divider sx={{ my: 1 }} />
 
-              <Box sx={{ p: 1.25 }}>
-                {/* To Buy */}
-                <SectionHeader
-                  dotColor="#16A34A"
-                  title={`To Buy (${toBuy.length})`}
-                />
-                <List disablePadding sx={{ mb: 1 }}>
-                  {toBuy.map((it) => (
-                    <ItemRow
-                      key={it.id}
-                      item={it}
-                      onToggle={toggle}
-                      onDelete={remove}
-                    />
-                  ))}
-                </List>
-
-                <Divider sx={{ my: 1 }} />
-
-                {/* Purchased */}
-                <SectionHeader
-                  icon={
-                    <CheckCircleRoundedIcon fontSize="small" color="success" />
-                  }
-                  title={`Purchased (${purchased.length})`}
-                />
-                <List disablePadding sx={{ mb: 1 }}>
-                  {purchased.map((it) => (
-                    <ItemRow
-                      key={it.id}
-                      item={it}
-                      onToggle={toggle}
-                      onDelete={remove}
-                      purchasedStyle
-                    />
-                  ))}
-                </List>
-              </Box>
-            </Paper>
-          </Grid>
-
-          {/* Right – tips & stats */}
-          <Grid item xs={12} md={4}>
-            <Stack spacing={2}>
-              <Paper
-                sx={{
-                  borderRadius: 2.5,
-                  p: 2,
-                  background: (t) =>
-                    alpha('#60A5FA', t.palette.mode === 'dark' ? 0.08 : 0.08),
-                  border: (t) => `1px solid ${alpha('#60A5FA', 0.25)}`,
-                }}
-              >
-                <Typography fontWeight={800} sx={{ mb: 1 }}>
-                  Shopping Tips
-                </Typography>
-                <TipList
-                  tips={[
-                    'Check items off as you add them to your cart',
-                    'Items are automatically dated when checked',
-                    'Watch for expiration alerts on purchased items',
-                    'Plan to use items with shorter shelf life first',
-                  ]}
-                />
-              </Paper>
-
-              <Paper
-                sx={{
-                  borderRadius: 2.5,
-                  p: 2,
-                  background: (t) =>
-                    alpha('#C084FC', t.palette.mode === 'dark' ? 0.08 : 0.08),
-                  border: (t) => `1px solid ${alpha('#C084FC', 0.25)}`,
-                }}
-              >
-                <Typography fontWeight={800} sx={{ mb: 1 }}>
-                  Stats
-                </Typography>
-                <StatRow
-                  label="Total Items"
-                  value={items.length}
-                  color="#7C3AED"
-                />
-                <StatRow
-                  label="Purchased"
-                  value={purchased.length}
-                  color="#16A34A"
-                />
-                <StatRow
-                  label="Remaining"
-                  value={toBuy.length}
-                  color="#F97316"
-                />
-              </Paper>
-            </Stack>
-          </Grid>
+              {/* Purchased */}
+              <SectionHeader
+                icon={
+                  <CheckCircleRoundedIcon fontSize="small" color="success" />
+                }
+                title={`Purchased (${purchased.length})`}
+              />
+              <List disablePadding sx={{ m: 1 }}>
+                {purchased.map((it) => (
+                  <ItemRow
+                    key={it.id}
+                    item={it}
+                    onToggle={toggle}
+                    onDelete={remove}
+                    purchasedStyle
+                  />
+                ))}
+              </List>
+            </Box>
+          </Paper>
         </Grid>
-      </Container>
-    </Box>
+
+        {/* Right – tips & stats */}
+        <Grid item xs={12} md={4}>
+          <Stack spacing={2}>
+            <Paper
+              sx={{
+                borderRadius: 1,
+                p: 2,
+                background: (t) =>
+                  alpha('#60A5FA', t.palette.mode === 'dark' ? 0.08 : 0.08),
+                border: (t) => `1px solid ${alpha('#60A5FA', 0.25)}`,
+              }}
+            >
+              <Typography fontWeight={800} sx={{ mb: 1 }}>
+                Shopping Tips
+              </Typography>
+              <TipList
+                tips={[
+                  'Check items off as you add them to your cart',
+                  'Items are automatically dated when checked',
+                  'Watch for expiration alerts on purchased items',
+                  'Plan to use items with shorter shelf life first',
+                ]}
+              />
+            </Paper>
+
+            <Paper
+              sx={{
+                borderRadius: 1,
+                p: 2,
+                background: (t) =>
+                  alpha('#C084FC', t.palette.mode === 'dark' ? 0.08 : 0.08),
+                border: (t) => `1px solid ${alpha('#C084FC', 0.25)}`,
+              }}
+            >
+              <Typography fontWeight={800} sx={{ mb: 1 }}>
+                Stats
+              </Typography>
+              <StatRow
+                label="Total Items"
+                value={items.length}
+                color="#7C3AED"
+              />
+              <StatRow
+                label="Purchased"
+                value={purchased.length}
+                color="#16A34A"
+              />
+              <StatRow label="Remaining" value={toBuy.length} color="#F97316" />
+            </Paper>
+          </Stack>
+        </Grid>
+      </Grid>
+    </>
   );
 }
 
@@ -314,10 +302,9 @@ function ItemRow({
     <Paper
       variant="outlined"
       sx={{
-        borderRadius: 2,
+        borderRadius: 1,
         mb: 1,
-        pl: 1,
-        pr: 1,
+        px: 2,
         py: 0.75,
         bgcolor: purchasedStyle ? 'rgba(16,185,129,.10)' : 'background.paper',
         borderColor: (t) =>

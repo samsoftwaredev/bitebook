@@ -8,10 +8,8 @@ import {
   InputBase,
   Paper,
   Stack,
-  Theme,
   Typography,
   alpha,
-  useMediaQuery,
 } from '@mui/material';
 import * as React from 'react';
 
@@ -19,8 +17,6 @@ import RecipeCard from '@/components/RecipeCard/RecipeCard';
 import { Recipe } from '@/components/RecipeCard/RecipeCard.model';
 
 export default function MyFavoritesSection() {
-  const isMdUp = useMediaQuery((t: Theme) => t.breakpoints.up('md'));
-
   // sample data
   const recipes: Recipe[] = Array.from({ length: 9 }).map((_, i) => ({
     id: String(i),
