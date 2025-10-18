@@ -38,11 +38,11 @@ const SignUp = () => {
   const { handleSubmit, control } = useForm<IFormInputs>({
     mode: 'onChange',
     defaultValues: {
-      email: '',
-      password: '',
+      email: 'samuelruiz30@gmail.com',
+      password: '12345678',
       genderMale: undefined,
-      firstName: '',
-      lastName: '',
+      firstName: 'samuel',
+      lastName: 'ruiz',
     },
   });
   const password = useWatch({ control, name: 'password' });

@@ -39,12 +39,14 @@ const LogIn = () => {
     } else {
       const { data } = await supabase.auth.onAuthStateChange(
         async (event, session) => {
+          debugger;
           if (event === 'SIGNED_IN') {
             // await getProfile(session);
-            router.push(NAV_APP_LINKS.dashboard.link);
+            router.push(NAV_APP_LINKS.app.link);
           }
         },
       );
+      debugger;
       data.subscription.unsubscribe();
     }
     setIsLoading(false);

@@ -16,7 +16,7 @@ const Login: NextPage = () => {
 
   useEffect(() => {
     // if user is auth, navigate user to application
-    if (isAuth) navigate.push(NAV_APP_LINKS.dashboard.link);
+    if (isAuth) navigate.push(NAV_APP_LINKS.app.link);
   }, []);
 
   const pageLanguage = useMemo(() => pageView[lang], [lang]);

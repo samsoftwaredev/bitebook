@@ -19,33 +19,6 @@ class SupabaseDB {
   getProfiles = () => {
     return supabase.from('profiles');
   };
-  getGroups = () => {
-    return supabase.from('groups');
-  };
-  getFriends = () => {
-    return supabase.from('friends');
-  };
-  getRosaryStats = () => {
-    return supabase.from('rosary_stats');
-  };
-  getEvents = () => {
-    return supabase.from('events');
-  };
-  getPosts = () => {
-    return supabase.from('posts');
-  };
-  getYouTubeVideo = () => {
-    return supabase.from('youtube');
-  };
-  getEventMessages = () => {
-    return supabase.from('event_messages');
-  };
-  getEventMessagesActions = () => {
-    return supabase.from('event_messages_actions');
-  };
-  getFriendRequests = () => {
-    return supabase.from('friend_requests');
-  };
   updatePassword = async (newPassword: string) => {
     return await supabase.auth.updateUser({ password: newPassword });
   };
@@ -69,7 +42,7 @@ class SupabaseDB {
     genderMale: boolean;
   }): Promise<AuthResponse> => {
     const redirectTo =
-      window.location.origin + NAV_APP_LINKS.dashboard.link + '?newUser=true';
+      window.location.origin + NAV_APP_LINKS.app.link + '?newUser=true';
     const userGender = userInput.genderMale
       ? GENDER_TYPES.male
       : GENDER_TYPES.female;

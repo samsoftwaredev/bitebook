@@ -1,8 +1,5 @@
 import moment from 'moment';
 
-import { sessionFriendsKey } from '@/constants';
-import { FriendProfile } from '@/interfaces';
-
 export const isClientSideRender = () => typeof window !== 'undefined';
 
 export const capitalizeFirstLetter = (str: string) => {
@@ -73,32 +70,4 @@ export const compareUUIDs = (uuid1: string, uuid2: string) => {
 export const orderUUIDs = (uuid1: string, uuid2: string) => {
   const num = compareUUIDs(uuid1, uuid2);
   return num === -1 ? [uuid2, uuid1] : [uuid1, uuid2];
-};
-
-export const getUserProfileLocally = (
-  friendId: string,
-): FriendProfile | undefined => {
-  const friendsProfile = sessionStorage.getItem(sessionFriendsKey);
-  const friendsList: FriendProfile[] =
-    typeof friendsProfile === 'string' ? JSON.parse(friendsProfile) : [];
-
-  const friendData = friendsList.find(({ userId }) => userId === friendId);
-  return friendData;
-};
-
-export const storeUserProfileLocally = (friendsData: FriendProfile[] = []) => {
-  const friendsProfile = sessionStorage.getItem(sessionFriendsKey);
-  const prevFriendsData: FriendProfile[] =
-    typeof friendsProfile === 'string' ? JSON.parse(friendsProfile) : [];
-  if (Array.isArray(prevFriendsData)) {
-    const prevFriendsDataIds = prevFriendsData.map(({ userId }) => userId);
-    const friendsDataIds = friendsData.map(({ userId }) => userId);
-    const noDuplicatesIds = new Set([...prevFriendsDataIds, ...friendsDataIds]);
-    const friends = Array.from(noDuplicatesIds).map((uid) => {
-      let found = prevFriendsData.find(({ userId }) => userId === uid);
-      if (found) return found;
-      return friendsData.find(({ userId }) => userId === uid);
-    });
-    sessionStorage.setItem(sessionFriendsKey, JSON.stringify(friends));
-  }
 };

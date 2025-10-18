@@ -1,6 +1,6 @@
 # BiteBook
 
-This app helps catholics pray the rosary
+This app ...
 
 ### Getting Started
 

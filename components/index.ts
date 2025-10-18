@@ -9,7 +9,6 @@ export { default as CardCounter } from './CardCounter';
 export { default as Pulse } from './Pulse';
 export { default as PageNotFound } from './PageNotFound';
 export { default as StarButton } from './StarButton';
-export { default as WhyPrayRosary } from './AccentCard';
 export { default as CallToAction } from './CallToAction';
 export { default as CardDeck } from './CardDeck';
 export { default as FormErrorText } from './FormErrorText';

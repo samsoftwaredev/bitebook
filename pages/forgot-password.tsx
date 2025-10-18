@@ -18,7 +18,7 @@ const ForgotPassword: NextPage = () => {
 
   useEffect(() => {
     // if user is auth, navigate user to application
-    if (isAuth) router.push(NAV_APP_LINKS.dashboard.link);
+    if (isAuth) router.push(NAV_APP_LINKS.app.link);
   }, []);
 
   if (isAuth) return null;

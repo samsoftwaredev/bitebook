@@ -14,7 +14,10 @@ import {
   Typography,
   useTheme,
 } from '@mui/material';
+import Image from 'next/image';
 import * as React from 'react';
+
+import spaghetti from '@/public/assets/images/food/spaghetti.jpg';
 
 type HeroProps = {
   eyebrow?: string;
@@ -31,7 +34,6 @@ export default function Hero({
   titleLine1 = 'Your Complete',
   titleLine2 = 'Culinary Companion',
   subtitle = `Discover recipes, plan meals, track spending, and reduce food waste—all in one beautiful app. Cook smarter, save money, and eat healthier.`,
-  imageSrc = '/hero-bowl.jpg', // replace with your asset
   onPrimaryClick,
   onSecondaryClick,
 }: HeroProps) {
@@ -155,9 +157,19 @@ export default function Hero({
                 boxShadow: '0 16px 44px rgba(2,33,25,.12)',
               }}
             >
-              <CardMedia
-                component="img"
-                src={imageSrc}
+              <Image
+                style={{
+                  gridArea: 'image',
+                  width: '100%',
+                  height: 'auto',
+                  borderRadius: '20px',
+                }}
+                src={spaghetti}
+                alt="Bowl of spaghetti with tomato sauce and garnished with herbs"
+              />
+              {/* <CardMedia
+                component={Image}
+                src={spaghetti}
                 alt="Bowl of tomato soup garnished with herbs"
                 sx={{
                   display: 'block',
@@ -165,7 +177,7 @@ export default function Hero({
                   height: { xs: 320, sm: 420, md: 460 },
                   objectFit: 'cover',
                 }}
-              />
+              /> */}
 
               {/* Top-right badge: 10K+ Happy Users */}
               <Paper

@@ -4,50 +4,56 @@ import { COMPANY } from '@/constants';
 
 interface Props {
   pageTitle?: string;
+  description?: string;
+  canonicalUrl?: string;
 }
 
-const Meta = ({ pageTitle = COMPANY.name }: Props) => {
+const Meta = ({
+  pageTitle = `${COMPANY.name} - Your Complete Culinary Companion`,
+  description = 'Discover recipes, plan meals, track grocery spending, and reduce food waste—all in one beautiful app. Cook smarter, save money, and eat healthier with BiteBook.',
+  canonicalUrl = 'https://bitebook.app',
+}: Props) => {
+  const title = `${pageTitle} | ${COMPANY.name}`;
+  const imageUrl = `${canonicalUrl}/og-image.jpg`;
+
   return (
     <Head>
+      {/* PWA and theme */}
       <link rel="manifest" href="/site.webmanifest" />
-      <meta name="theme-color" content="#0b1c2b" />
-      <title>{pageTitle} - DoIt4Jesus</title>
-      <meta
-        name="description"
-        content="Join DoIt4Jesus, a Catholic prayer app that unites people in real-time Rosary prayer. Grow spiritually through community and faith."
-      />
+      <meta name="theme-color" content="#0fb77a" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+      {/* Basic SEO */}
+      <title>{title}</title>
+      <meta name="description" content={description} />
       <meta
         name="keywords"
-        content="Rosary app, Catholic prayer, pray together, spiritual growth, Christian community, DoIt4Jesus, do it for Jesus, prayer app, faith-based app"
+        content="meal planning app, recipe organizer, grocery list app, track food spending, reduce food waste, cooking planner, budget meal ideas, healthy recipes, BiteBook"
       />
-      <meta
-        property="og:title"
-        content="DoIt4Jesus - Pray the Holy Rosary Together"
-      />
-      <meta
-        property="og:description"
-        content="Connect with others in faith and prayer. DoIt4Jesus helps you pray the Rosary in a vibrant spiritual community."
-      />
-      <meta property="og:url" content="https://doit4jesus.com" />
+      <link rel="canonical" href={canonicalUrl} />
+
+      {/* Open Graph / Facebook */}
       <meta property="og:type" content="website" />
-      <meta property="og:image" content="https://doit4jesus.com/og-image.jpg" />
-      <meta property="og:site_name" content="DoIt4Jesus" />
-      <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+      <meta property="og:site_name" content="BiteBook" />
+      <meta property="og:title" content={title} />
+      <meta property="og:description" content={description} />
+      <meta property="og:url" content={canonicalUrl} />
+      <meta property="og:image" content={imageUrl} />
+      <meta
+        property="og:image:alt"
+        content="BiteBook - Your Complete Culinary Companion"
+      />
+
+      {/* Twitter Card */}
       <meta name="twitter:card" content="summary_large_image" />
-      <meta
-        name="twitter:title"
-        content="DoIt4Jesus - Pray the Holy Rosary Together"
-      />
-      <meta
-        name="twitter:description"
-        content="A faith-based app uniting believers through Rosary prayer. Join and grow spiritually together."
-      />
-      <meta
-        name="twitter:image"
-        content="https://doit4jesus.com/og-image.jpg"
-      />
-      <link rel="canonical" href="https://doit4jesus.com" />
+      <meta name="twitter:site" content="@bitebook" />
+      <meta name="twitter:title" content={title} />
+      <meta name="twitter:description" content={description} />
+      <meta name="twitter:image" content={imageUrl} />
+      <meta name="twitter:image:alt" content="BiteBook App preview" />
+
+      {/* Apple Icons */}
+      <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     </Head>
   );
 };

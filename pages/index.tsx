@@ -1,6 +1,7 @@
 import type { NextPage } from 'next';
 
 import {
+  AccentCard,
   AppIntroduction,
   CallToAction,
   Community,
@@ -8,9 +9,7 @@ import {
   Hero,
   HowItWorks,
   Meta,
-  WhyPrayRosary,
 } from '@/components';
-import RosaryWeapon from '@/components/RosaryWeapon';
 import { MainLayout } from '@/components/Templates';
 
 const Home: NextPage = () => {
@@ -21,7 +20,7 @@ const Home: NextPage = () => {
       <AppIntroduction />
       <HowItWorks />
       <Features />
-      <WhyPrayRosary />
+      <AccentCard />
       <Community />
       <CallToAction />
     </MainLayout>
