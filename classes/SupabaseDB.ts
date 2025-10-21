@@ -43,21 +43,12 @@ class SupabaseDB {
   }): Promise<AuthResponse> => {
     const redirectTo =
       window.location.origin + NAV_APP_LINKS.app.link + '?newUser=true';
-    const userGender = userInput.genderMale
-      ? GENDER_TYPES.male
-      : GENDER_TYPES.female;
     return await supabase.auth.signUp({
       email: userInput.email,
       password: userInput.password,
       options: {
         data: {
-          first_name: userInput.firstName,
-          last_name: userInput.lastName,
-          gender: userGender,
-          username:
-            userInput.firstName +
-            userInput.lastName +
-            generateRandomStringId(3),
+          display_name: `${userInput.firstName} ${userInput.lastName}`,
         },
         emailRedirectTo: redirectTo,
       },

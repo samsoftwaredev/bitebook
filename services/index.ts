@@ -65,16 +65,16 @@ export const searchRecipesService = async ({
 
 export const favoritesToggleService = async ({
   recipeId,
-  isFavorite,
+  favorite,
 }: {
   recipeId: string;
-  isFavorite: boolean;
+  favorite: boolean;
 }): Promise<{
   data: { success: boolean } | null;
   error: any;
 }> => {
   const { data, error } = await supabase.functions.invoke('favorites-toggle', {
-    body: { recipeId, isFavorite },
+    body: { recipeId, favorite },
   });
   return { data, error };
 };

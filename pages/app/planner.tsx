@@ -1,13 +1,15 @@
 import type { NextPage } from 'next';
 
 import AppWrapper from '@/components/AppWrapper';
-import MealPlannerSection from '@/components/Sections/MealPlannerSection/MealPlannerSection';
+import MealPlannerEditorSection from '@/components/Sections/MealPlannerEditorSection';
+import MealPlannerSection from '@/components/Sections/MealPlannerSection';
 import { AppLayout } from '@/components/Templates';
 
 const Planner: NextPage = () => {
+  const isEditMode = true; // You can replace this with actual logic to determine the mode
   return (
     <AppLayout>
-      <MealPlannerSection />
+      {isEditMode ? <MealPlannerEditorSection /> : <MealPlannerSection />}
     </AppLayout>
   );
 };

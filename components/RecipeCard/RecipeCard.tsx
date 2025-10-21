@@ -32,7 +32,7 @@ export default function RecipeCard({
   const handleFavoriteClick = async (e: React.MouseEvent) => {
     e.stopPropagation(); // Prevent card click when clicking favorite
     try {
-      await favoritesToggleService({ recipeId: r.id, isFavorite: !isFavorite });
+      await favoritesToggleService({ recipeId: r.id, favorite: !isFavorite });
       setIsFavorite(!isFavorite);
     } catch (error) {
       console.error('Error toggling favorite:', error);
