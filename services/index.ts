@@ -36,11 +36,13 @@ export const searchRecipesService = async ({
   q = undefined,
   limit = undefined,
   offset = undefined,
+  isFavorite = false,
 }: {
   q?: string;
   tags?: string[];
   limit?: number;
   offset?: number;
+  isFavorite?: boolean;
 }): Promise<{
   data: RecipeResponse | null;
   error: any;
@@ -53,7 +55,9 @@ export const searchRecipesService = async ({
     q = undefined;
   }
 
-  const { data, error } = await supabase.functions.invoke('recipes-search', {
+  const serviceName = isFavorite ? 'favorites-list' : 'recipes-search';
+
+  const { data, error } = await supabase.functions.invoke(serviceName, {
     body: { q, tags, limit, offset },
   });
   return { data, error };

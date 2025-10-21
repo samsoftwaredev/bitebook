@@ -13,7 +13,7 @@ import { toast } from 'react-toastify';
 
 import { supabase } from '@/classes/SupabaseDB';
 import { Loading } from '@/components';
-import { NAV_APP_LINKS, NAV_MAIN_LINKS } from '@/constants';
+import { NAV_MAIN_LINKS } from '@/constants';
 import { User } from '@/interfaces';
 
 interface UserContext {
@@ -24,6 +24,7 @@ interface UserContext {
   getProfile: (session: Session | null) => Promise<User | undefined>;
   logout: () => Promise<void>;
   checkAuth: () => Promise<void>;
+  isLoading: boolean;
 }
 
 interface Props {
@@ -85,9 +86,13 @@ const UserContextProvider = ({ children }: Props) => {
       const {
         data: { session },
       } = await supabase.auth.getSession();
+
+      if (!session) {
+        throw new Error('No session');
+      }
+
       setSession(session);
       await getProfile(session);
-      router.push(NAV_APP_LINKS.app.link);
     } catch (err) {
       console.error(err);
       setIsLoading(false);
@@ -115,8 +120,9 @@ const UserContextProvider = ({ children }: Props) => {
       session,
       setSession,
       checkAuth,
+      isLoading,
     }),
-    [user, setUser, session, setSession],
+    [user, setUser, session, setSession, isLoading],
   );
 
   if (isLoading) return <Loading />;

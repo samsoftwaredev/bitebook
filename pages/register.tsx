@@ -15,15 +15,16 @@ import { useUserContext } from '@/context/UserContext';
 
 const Register: NextPage = () => {
   const { lang } = useLanguageContext() as { lang: keyof typeof pageView };
-  const { user, checkAuth } = useUserContext();
-  const isAuth = !!user;
+  const { isLoading, session } = useUserContext();
   const pageLanguage = useMemo(() => pageView[lang], [lang]);
+  const router = useRouter();
 
   useEffect(() => {
-    checkAuth();
-  }, [checkAuth]);
+    // if user is auth, navigate user to application
+    if (session) router.push(NAV_APP_LINKS.app.link);
+  }, [session]);
 
-  if (isAuth) return <Loading />;
+  if (isLoading) return <Loading />;
 
   return (
     <MainLayout>

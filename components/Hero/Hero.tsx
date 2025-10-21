@@ -6,7 +6,6 @@ import {
   Avatar,
   Box,
   Button,
-  CardMedia,
   Chip,
   Container,
   Paper,
@@ -15,8 +14,10 @@ import {
   useTheme,
 } from '@mui/material';
 import Image from 'next/image';
-import * as React from 'react';
+import Link from 'next/link';
+import React from 'react';
 
+import { NAV_MAIN_LINKS } from '@/constants/nav';
 import spaghetti from '@/public/assets/images/food/spaghetti.jpg';
 
 type HeroProps = {
@@ -102,11 +103,12 @@ export default function Hero({
 
             <Stack direction="row" spacing={2} sx={{ mt: 3 }}>
               <Button
+                component={Link}
+                href={NAV_MAIN_LINKS.signup.link}
                 size="large"
                 variant="contained"
                 color="primary"
                 endIcon={<ArrowForwardRoundedIcon />}
-                onClick={onPrimaryClick}
                 sx={{
                   borderRadius: 999,
                   px: 2.5,
@@ -116,17 +118,18 @@ export default function Hero({
                 Get Started Free
               </Button>
               <Button
+                component={Link}
+                href="/meal-planner"
                 size="large"
                 variant="contained"
                 color="secondary"
-                onClick={onSecondaryClick}
                 sx={{
                   borderRadius: 999,
                   px: 2.5,
                   color: 'text.primary',
                 }}
               >
-                See Meal Planner
+                See Recipes
               </Button>
             </Stack>
 

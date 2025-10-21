@@ -4,4 +4,3 @@ export { default as ForgotPassword } from './ForgotPassword';
 export { default as UpdatePassword } from './UpdatePassword';
 export { default as AccountSection } from './AccountSection';
 export { default as DashboardSection } from './DashboardSection';
-export { default as MyFavoritesSection } from './MyFavoritesSection';

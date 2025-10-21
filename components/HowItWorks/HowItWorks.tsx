@@ -51,7 +51,7 @@ const HowItWorks = () => {
         id="how-it-works"
         component="section"
         aria-labelledby="how-it-works-title"
-        sx={{ mb: 8 }}
+        sx={{ mb: 8, display: 'none' }}
       >
         <Typography
           id="how-it-works-title"

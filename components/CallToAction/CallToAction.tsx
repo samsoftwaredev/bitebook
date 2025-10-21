@@ -1,4 +1,3 @@
-// CTAStatsSection.tsx
 import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
 import {
   Box,
@@ -11,17 +10,11 @@ import {
   useTheme,
 } from '@mui/material';
 import Link from 'next/link';
-import * as React from 'react';
+import React from 'react';
+
+import { NAV_MAIN_LINKS } from '@/constants/nav';
 
 type Stat = { value: string; label: string };
-type Props = {
-  title?: string;
-  subtitleTop?: string;
-  subtitleBottom?: string;
-  ctaText?: string;
-  onCtaClick?: () => void;
-  stats?: Stat[];
-};
 
 const defaultStats: Stat[] = [
   { value: '500+', label: 'Delicious Recipes' },
@@ -29,15 +22,17 @@ const defaultStats: Stat[] = [
   { value: '95+', label: 'Health Score Available' },
 ];
 
-export default function CallToAction({
-  title = 'Ready to Transform Your Kitchen?',
-  subtitleTop = 'Start discovering recipes, planning meals, and tracking your spending today.',
-  subtitleBottom = 'No credit card required.',
-  ctaText = 'Start Cooking Smarter',
-  onCtaClick,
-  stats = defaultStats,
-}: Props) {
+export default function CallToAction() {
   const theme = useTheme();
+
+  const page = {
+    title: 'Ready to Transform Your Kitchen?',
+    subtitleTop:
+      'Start discovering recipes, planning meals, and tracking your spending today.',
+    subtitleBottom: 'No credit card required.',
+    ctaText: 'Start Cooking Smarter',
+    stats: defaultStats,
+  };
 
   const bg = theme.palette.mode === 'dark' ? '#0B5A47' : '#0F8C6B'; // rich brandy green
 
@@ -58,11 +53,11 @@ export default function CallToAction({
             letterSpacing="-0.01em"
             sx={{ color: '#F0FDF9' }}
           >
-            {title}
+            {page.title}
           </Typography>
 
           <Typography variant="body1" sx={{ opacity: 0.9 }}>
-            {subtitleTop}
+            {page.subtitleTop}
           </Typography>
           <Typography
             variant="body2"
@@ -72,13 +67,14 @@ export default function CallToAction({
               mb: 1,
             }}
           >
-            {subtitleBottom}
+            {page.subtitleBottom}
           </Typography>
 
           <Button
             size="large"
             variant="contained"
-            onClick={onCtaClick}
+            component={Link}
+            href={NAV_MAIN_LINKS.signup.link}
             endIcon={<ArrowForwardRoundedIcon />}
             sx={{
               mt: 1,
@@ -92,7 +88,7 @@ export default function CallToAction({
               },
             }}
           >
-            {ctaText}
+            {page.ctaText}
           </Button>
 
           {/* Divider */}
@@ -111,7 +107,7 @@ export default function CallToAction({
             spacing={{ xs: 3, md: 6 }}
             sx={{ width: { xs: '100%', sm: '90%', md: '70%' }, mx: 'auto' }}
           >
-            {stats.map((s, i) => (
+            {page.stats.map((s, i) => (
               <Grid key={i} item xs={12} sm={4}>
                 <Stack spacing={0.5} alignItems="center">
                   <Typography

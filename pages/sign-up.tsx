@@ -1,23 +1,25 @@
 import { Box, Container, Typography } from '@mui/material';
 import type { NextPage } from 'next';
+import { useRouter } from 'next/router';
 import { useEffect, useMemo } from 'react';
 
 import { Loading, MainLayout, Meta } from '@/components';
-import { pageView } from '@/constants';
+import { NAV_APP_LINKS, pageView } from '@/constants';
 import { useLanguageContext } from '@/context/LanguageContext';
 import { useUserContext } from '@/context/UserContext';
 
 const Register: NextPage = () => {
+  const router = useRouter();
   const { lang } = useLanguageContext() as { lang: keyof typeof pageView };
-  const { user, checkAuth } = useUserContext();
-  const isAuth = !!user;
+  const { session, isLoading } = useUserContext();
   const pageLanguage = useMemo(() => pageView[lang], [lang]);
 
   useEffect(() => {
-    checkAuth();
-  }, [checkAuth]);
+    // if user is auth, navigate user to application
+    if (session) router.push(NAV_APP_LINKS.app.link);
+  }, [session]);
 
-  if (isAuth) return <Loading />;
+  if (isLoading) return <Loading />;
 
   return (
     <MainLayout>

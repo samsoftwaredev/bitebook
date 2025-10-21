@@ -7,8 +7,7 @@ const Page404: NextPage = () => {
   return (
     <div>
       <Meta pageTitle="Page Not Found" />
-      not found
-      {/* <PageNotFound /> */}
+      <PageNotFound />
     </div>
   );
 };

@@ -7,9 +7,7 @@ import {
   Radio,
   RadioGroup,
   TextField,
-  Typography,
 } from '@mui/material';
-import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { Controller, SubmitHandler, useForm, useWatch } from 'react-hook-form';
@@ -19,7 +17,6 @@ import { db } from '@/classes/SupabaseDB';
 import FormErrorText from '@/components/FormErrorText';
 import { NAV_APP_LINKS, passwordValidationRules } from '@/constants';
 import { useLanguageContext } from '@/context/LanguageContext';
-import virginMaryLetter from '@/public/assets/images/art/virginMaryLetter.jpeg';
 import { emailRegEx, nameRegEx } from '@/utils';
 
 import { HorizontalDivider, Loading, PasswordValidator } from '../..';
@@ -36,7 +33,6 @@ const SignUp = () => {
   const { t } = useLanguageContext();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  const [isSuccessfulSigUp, setIsSuccessfulSigUp] = useState(false);
   const { handleSubmit, control } = useForm<IFormInputs>({
     mode: 'onChange',
     defaultValues: {
@@ -53,7 +49,7 @@ const SignUp = () => {
     const { firstName, lastName } = userInput;
     setIsLoading(true);
     // validate no Jesus or Christ allowed for first and last name
-    const { error, data } = await db.signUp({
+    const { error } = await db.signUp({
       ...userInput,
       firstName: firstName.trim(),
       lastName: lastName.trim(),
@@ -62,45 +58,12 @@ const SignUp = () => {
     if (error) {
       toast.error(error.message);
       console.error(error);
-    }
-    if (data) {
+    } else {
       router.push(NAV_APP_LINKS.app.link);
     }
   };
 
   if (isLoading) return <Loading />;
-
-  if (isSuccessfulSigUp) {
-    return (
-      <>
-        <div
-          style={{
-            width: '100%',
-            height: '200px',
-            position: 'relative',
-          }}
-        >
-          <Image
-            style={{
-              width: '100%',
-              borderTopLeftRadius: '50%',
-              borderTopRightRadius: '50%',
-            }}
-            alt="Virgin Mary Letter"
-            src={virginMaryLetter}
-            layout="fill"
-            objectFit="contain"
-          />
-        </div>
-        <Typography my={2} textAlign="center" variant="h5">
-          {t.checkYourEmail}
-        </Typography>
-        <Typography mb={3} textAlign="center">
-          {t.checkYourEmailDescription}
-        </Typography>
-      </>
-    );
-  }
 
   return (
     <FormControl
