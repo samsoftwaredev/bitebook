@@ -1,4 +1,3 @@
-// WeeklyMealPlanner.tsx
 import {
   DndContext,
   type DragEndEvent,
@@ -13,27 +12,21 @@ import {
 } from '@dnd-kit/core';
 import BoltRoundedIcon from '@mui/icons-material/BoltRounded';
 import CalendarMonthRoundedIcon from '@mui/icons-material/CalendarMonthRounded';
-import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import ExpandLessRoundedIcon from '@mui/icons-material/ExpandLessRounded';
 import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded';
 import SaveRoundedIcon from '@mui/icons-material/SaveRounded';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import ShoppingCartRoundedIcon from '@mui/icons-material/ShoppingCartRounded';
-import VisibilityRoundedIcon from '@mui/icons-material/VisibilityRounded';
 import {
   Box,
   Button,
   Chip,
-  Dialog,
   DialogActions,
-  DialogContent,
-  DialogTitle,
   Grid,
   IconButton,
   InputBase,
   Paper,
   Stack,
-  Tooltip,
   Typography,
   alpha,
   useMediaQuery,
@@ -43,19 +36,23 @@ import * as React from 'react';
 
 import Draggable from '@/components/Draggable';
 import Droppable from '@/components/Droppable/Droppable';
+import { Recipe } from '@/components/RecipeCard/RecipeCard.model';
+import RecipeDialog from '@/components/RecipeDialog';
+import RecipeDraggableCard from '@/components/RecipeDraggableCard';
+import SlotDrop from '@/components/SlotDrop';
 
-// ---------- Types & sample data ----------
+interface Props {
+  searchTerm: string;
+  recipes: Recipe[];
+  handleCardClick: (r: Recipe) => void;
+  dialogOpen: boolean;
+  recipe: Recipe | null;
+  handleDialogClose: () => void;
+  handleSearchChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onFilterByLabel: (label: string) => void;
+}
+
 type Slot = 'breakfast' | 'lunch' | 'dinner';
-
-type Recipe = {
-  id: string;
-  title: string;
-  img: string;
-  time: string;
-  price: string;
-  tags: string[];
-  desc?: string;
-};
 
 type DayPlan = {
   key: string; // e.g., "Mon 20"
@@ -73,26 +70,6 @@ const EMOJI: Record<Slot, string> = {
   lunch: '🥗',
   dinner: '🌙',
 };
-
-const sampleRecipes: Recipe[] = Array.from({ length: 14 }).map((_, i) => ({
-  id: `r${i + 1}`,
-  title: [
-    'Mediterranean Chickpea Salad',
-    'Blueberry Pancakes',
-    'Quinoa Buddha Bowl',
-    'Spicy Korean Beef Bowl',
-    'Rainbow Fruit Kabobs',
-    'Classic Margherita Pizza',
-    'No-Bake Energy Bites',
-  ][i % 7],
-  img: `https://picsum.photos/seed/meal${i}/640/420`,
-  time: ['15m', '25m', '30m', '40m', '20m'][i % 5],
-  price: ['$8', '$9', '$11', '$13', '$6'][i % 5],
-  tags: [['vegan'], ['breakfast'], ['dinner'], ['high-protein'], ['dessert']][
-    i % 5
-  ],
-  desc: 'A tasty, budget-friendly recipe with fresh ingredients. Perfect for weekly meal planning and reducing food waste.',
-}));
 
 const weekTemplate: DayPlan[] = [
   'Mon 20',
@@ -115,164 +92,24 @@ const parseSlotId = (id: string) => {
   return { dayIndex: Number(dayIndex), slot: slot as Slot };
 };
 
-// ---------- UI atoms ----------
-function SlotDrop({
-  active,
-  assigned,
-  label,
-  emoji,
-  onView,
-}: {
-  active?: boolean;
-  assigned?: Recipe | null;
-  label: string;
-  emoji: string;
-  onView?: () => void;
-}) {
-  const theme = useTheme();
-  const border = active
-    ? `2px dashed ${alpha(theme.palette.success.main, 0.8)}`
-    : `2px dashed ${alpha(theme.palette.text.primary, 0.15)}`;
-  return (
-    <Paper
-      elevation={0}
-      sx={{
-        position: 'relative',
-        height: 96,
-        p: 1,
-        borderRadius: 1,
-        border,
-        bgcolor: assigned
-          ? alpha(theme.palette.success.main, 0.04)
-          : alpha(theme.palette.common.black, 0.02),
-        overflow: 'hidden',
-        transition: 'border-color .15s ease, transform .1s ease',
-        ...(active && { transform: 'scale(1.01)' }),
-      }}
-    >
-      {!assigned ? (
-        <Stack
-          alignItems="center"
-          justifyContent="center"
-          sx={{ height: '100%', color: 'text.secondary', fontSize: 12 }}
-        >
-          <Typography variant="caption" sx={{ opacity: 0.9 }}>
-            {emoji} {label}
-          </Typography>
-        </Stack>
-      ) : (
-        <Stack
-          direction="row"
-          alignItems="center"
-          spacing={1}
-          sx={{ height: '100%' }}
-        >
-          <Box
-            component="img"
-            src={assigned.img}
-            alt={assigned.title}
-            sx={{
-              width: 120,
-              height: '100%',
-              objectFit: 'cover',
-              borderRadius: 1,
-            }}
-          />
-          <Box sx={{ minWidth: 0, flex: 1 }}>
-            <Typography variant="subtitle2" noWrap fontWeight={800}>
-              {assigned.title}
-            </Typography>
-            <Stack direction="row" spacing={1} alignItems="center">
-              <Chip size="small" label={assigned.time} variant="outlined" />
-              <Chip size="small" label={assigned.price} color="success" />
-            </Stack>
-          </Box>
-          <Tooltip title="View recipe">
-            <IconButton size="small" onClick={onView}>
-              <VisibilityRoundedIcon fontSize="small" />
-            </IconButton>
-          </Tooltip>
-        </Stack>
-      )}
-    </Paper>
-  );
-}
-
-function RecipeCard({
-  r,
-  onView,
-}: {
-  r: Recipe;
-  onView: (rec: Recipe) => void;
-}) {
-  return (
-    <Paper
-      id={r.id}
-      elevation={1}
-      sx={{
-        width: 220,
-        flex: '0 0 auto',
-        borderRadius: 1,
-        overflow: 'hidden',
-        transition: 'transform .12s ease',
-        '&:hover': {
-          transform: 'translateY(-2px)',
-          boxShadow: '0 8px 24px rgba(0,0,0,.12)',
-        },
-      }}
-    >
-      <Box sx={{ position: 'relative' }}>
-        <Box
-          component="img"
-          src={r.img}
-          alt={r.title}
-          sx={{ width: '100%', height: 120, objectFit: 'cover' }}
-        />
-        <Stack
-          direction="row"
-          spacing={0.5}
-          sx={{ position: 'absolute', top: 6, right: 6 }}
-        >
-          <Tooltip title="View details">
-            <IconButton
-              size="small"
-              onClick={() => onView(r)}
-              sx={{ bgcolor: alpha('#000', 0.5), color: '#fff' }}
-            >
-              <VisibilityRoundedIcon fontSize="inherit" />
-            </IconButton>
-          </Tooltip>
-        </Stack>
-      </Box>
-      <Box sx={{ p: 1 }}>
-        <Typography variant="subtitle2" noWrap fontWeight={800}>
-          {r.title}
-        </Typography>
-        <Stack direction="row" spacing={0.5}>
-          <Chip size="small" label={r.time} variant="outlined" />
-          <Chip size="small" label={r.price} color="success" />
-        </Stack>
-      </Box>
-    </Paper>
-  );
-}
-
-// ---------- Main component ----------
-export default function WeeklyMealPlanner() {
+export default function WeeklyMealPlanner({
+  searchTerm,
+  recipes,
+  handleCardClick,
+  dialogOpen,
+  recipe,
+  handleDialogClose,
+  handleSearchChange,
+  onFilterByLabel,
+}: Props) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   // planner state
   const [days, setDays] = React.useState<DayPlan[]>(weekTemplate);
-  const [recipes] = React.useState<Recipe[]>(sampleRecipes);
 
   // bottom drawer state
   const [openDrawer, setOpenDrawer] = React.useState(true);
-  const [showSearch, setShowSearch] = React.useState(false);
-  const [q, setQ] = React.useState('');
-
-  // dialog state
-  const [viewing, setViewing] = React.useState<Recipe | null>(null);
 
   // drag state
   const [activeId, setActiveId] = React.useState<string | null>(null);
@@ -289,16 +126,6 @@ export default function WeeklyMealPlanner() {
     (id: string | null | undefined) => recipes.find((r) => r.id === id) || null,
     [recipes],
   );
-
-  const filteredRecipes = React.useMemo(() => {
-    const term = q.trim().toLowerCase();
-    if (!term) return recipes;
-    return recipes.filter(
-      (r) =>
-        r.title.toLowerCase().includes(term) ||
-        r.tags.join(' ').toLowerCase().includes(term),
-    );
-  }, [q, recipes]);
 
   // DnD handlers
   function handleDragStart(e: DragStartEvent) {
@@ -360,7 +187,7 @@ export default function WeeklyMealPlanner() {
       <Chip
         size="small"
         color="success"
-        label={`${filteredRecipes.length} Recipes Available`}
+        label={`${recipes.length} Recipes Available`}
         sx={{ fontWeight: 800 }}
       />
       <IconButton size="small" onClick={() => setOpenDrawer((o) => !o)}>
@@ -486,7 +313,9 @@ export default function WeeklyMealPlanner() {
                               assigned={assigned}
                               label={SLOT_LABEL[slot]}
                               emoji={EMOJI[slot]}
-                              onView={() => assigned && setViewing(assigned)}
+                              onView={() =>
+                                assigned && handleCardClick(assigned)
+                              }
                             />
                           </Droppable>
                         </Grid>
@@ -557,16 +386,11 @@ export default function WeeklyMealPlanner() {
             >
               <SearchRoundedIcon fontSize="small" sx={{ mr: 1 }} />
               <InputBase
-                value={q}
-                onChange={(e) => setQ(e.target.value)}
+                value={searchTerm}
+                onChange={handleSearchChange}
                 placeholder="Search recipes…"
                 sx={{ fontSize: 14 }}
               />
-              {!!q && (
-                <IconButton size="small" onClick={() => setQ('')}>
-                  <CloseRoundedIcon fontSize="small" />
-                </IconButton>
-              )}
             </Paper>
           </Stack>
 
@@ -583,10 +407,13 @@ export default function WeeklyMealPlanner() {
                 '&::-webkit-scrollbar': { height: 6 },
               }}
             >
-              {filteredRecipes.map((r) => (
+              {recipes.map((r) => (
                 <Draggable id={r.id} key={r.id}>
                   <Box key={r.id} id={r.id}>
-                    <RecipeCard r={r} onView={(rec) => setViewing(rec)} />
+                    <RecipeDraggableCard
+                      r={r}
+                      onView={(rec) => handleCardClick(rec)}
+                    />
                   </Box>
                 </Draggable>
               ))}
@@ -596,61 +423,18 @@ export default function WeeklyMealPlanner() {
       </DndContext>
 
       {/* Detail dialog */}
-      <Dialog
-        open={!!viewing}
-        onClose={() => setViewing(null)}
-        fullWidth
-        maxWidth="sm"
+      <RecipeDialog
+        open={dialogOpen}
+        onClose={handleDialogClose}
+        recipeData={recipe}
       >
-        <DialogTitle sx={{ fontWeight: 900 }}>{viewing?.title}</DialogTitle>
-        <DialogContent dividers>
-          {viewing && (
-            <Stack spacing={2}>
-              <Box
-                component="img"
-                src={viewing.img}
-                alt={viewing.title}
-                sx={{
-                  width: '100%',
-                  height: 240,
-                  objectFit: 'cover',
-                  borderRadius: 2,
-                }}
-              />
-              <Stack direction="row" spacing={1}>
-                <Chip label={viewing.time} variant="outlined" />
-                <Chip label={viewing.price} color="success" />
-                {viewing.tags.map((t) => (
-                  <Chip key={t} label={t} size="small" />
-                ))}
-              </Stack>
-              <Typography color="text.secondary">{viewing.desc}</Typography>
-              <Box>
-                <Typography fontWeight={800} gutterBottom>
-                  Ingredients
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  • 2 cups mixed veggies · 1 cup grains · olive oil · spices
-                </Typography>
-              </Box>
-              <Box>
-                <Typography fontWeight={800} gutterBottom>
-                  Instructions
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  1) Prep ingredients 2) Sauté 3) Simmer 4) Serve and enjoy.
-                </Typography>
-              </Box>
-            </Stack>
-          )}
-        </DialogContent>
         <DialogActions>
-          <Button onClick={() => setViewing(null)}>Close</Button>
+          <Button onClick={handleDialogClose}>Close</Button>
           <Button variant="contained" color="success">
             Add to Meal
           </Button>
         </DialogActions>
-      </Dialog>
+      </RecipeDialog>
     </>
   );
 }

@@ -1,4 +1,4 @@
-export type Recipe = {
+export type RecipeService = {
   duration_min: number;
   est_cost_cents: number;
   health_score: number;
@@ -36,7 +36,7 @@ export type RecipeDetail = {
 };
 
 export type RecipeResponse = {
-  items: Recipe[];
+  items: RecipeService[];
   nextCursor: string | null;
 };
 

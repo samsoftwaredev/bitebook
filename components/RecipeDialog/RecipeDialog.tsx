@@ -32,6 +32,7 @@ type Props = {
   open: boolean;
   onClose: () => void;
   recipeData: Recipe | null;
+  children?: React.ReactNode;
 };
 
 // ---- helpers ---------------------------------------------------------------
@@ -95,7 +96,12 @@ function Stat({
 }
 
 // ---- main component --------------------------------------------------------
-export default function RecipeDialog({ open, onClose, recipeData }: Props) {
+export default function RecipeDialog({
+  open,
+  onClose,
+  recipeData,
+  children = null,
+}: Props) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [isLoading, setIsLoading] = React.useState(false);
@@ -369,7 +375,7 @@ export default function RecipeDialog({ open, onClose, recipeData }: Props) {
         )}
 
         <Divider sx={{ mt: 3 }} />
-        {/* Footer spacing for mobile safe area */}
+        {children}
         <Box sx={{ height: 8 }} />
       </DialogContent>
     </Dialog>
