@@ -41,6 +41,9 @@ import {
 } from '@mui/material';
 import * as React from 'react';
 
+import Draggable from '@/components/Draggable';
+import Droppable from '@/components/Droppable/Droppable';
+
 // ---------- Types & sample data ----------
 type Slot = 'breakfast' | 'lunch' | 'dinner';
 
@@ -137,7 +140,7 @@ function SlotDrop({
         position: 'relative',
         height: 96,
         p: 1,
-        borderRadius: 2,
+        borderRadius: 1,
         border,
         bgcolor: assigned
           ? alpha(theme.palette.success.main, 0.04)
@@ -172,7 +175,7 @@ function SlotDrop({
               width: 120,
               height: '100%',
               objectFit: 'cover',
-              borderRadius: 1.5,
+              borderRadius: 1,
             }}
           />
           <Box sx={{ minWidth: 0, flex: 1 }}>
@@ -202,7 +205,6 @@ function RecipeCard({
   r: Recipe;
   onView: (rec: Recipe) => void;
 }) {
-  const theme = useTheme();
   return (
     <Paper
       id={r.id}
@@ -210,9 +212,8 @@ function RecipeCard({
       sx={{
         width: 220,
         flex: '0 0 auto',
-        borderRadius: 2,
+        borderRadius: 1,
         overflow: 'hidden',
-        cursor: 'grab',
         transition: 'transform .12s ease',
         '&:hover': {
           transform: 'translateY(-2px)',
@@ -365,9 +366,6 @@ export default function WeeklyMealPlanner() {
       <IconButton size="small" onClick={() => setOpenDrawer((o) => !o)}>
         {openDrawer ? <ExpandMoreRoundedIcon /> : <ExpandLessRoundedIcon />}
       </IconButton>
-      <IconButton size="small" onClick={() => setShowSearch((s) => !s)}>
-        <SearchRoundedIcon />
-      </IconButton>
     </Stack>
   );
 
@@ -419,16 +417,15 @@ export default function WeeklyMealPlanner() {
           </Button>
         </Stack>
       </Stack>
-
-      {/* Planner grid (no scrolling; content fits) */}
-      <Box sx={{ px: 2, overflow: 'hidden' }}>
-        <DndContext
-          sensors={sensors}
-          collisionDetection={rectIntersection}
-          onDragStart={handleDragStart}
-          onDragOver={handleDragOver}
-          onDragEnd={handleDragEnd}
-        >
+      <DndContext
+        sensors={sensors}
+        collisionDetection={rectIntersection}
+        onDragStart={handleDragStart}
+        onDragOver={handleDragOver}
+        onDragEnd={handleDragEnd}
+      >
+        {/* Planner grid (no scrolling; content fits) */}
+        <Box sx={{ px: 2, overflow: 'hidden' }}>
           <Grid
             container
             spacing={1}
@@ -444,7 +441,7 @@ export default function WeeklyMealPlanner() {
                   elevation={0}
                   sx={{
                     p: 1,
-                    borderRadius: 2,
+                    borderRadius: 1,
                     bgcolor: theme.palette.background.paper,
                     boxShadow: '0 1px 0 rgba(0,0,0,.04)',
                   }}
@@ -483,13 +480,15 @@ export default function WeeklyMealPlanner() {
                           md={(11 / 3) as any}
                         >
                           <div id={id} />
-                          <SlotDrop
-                            active={Boolean(active)}
-                            assigned={assigned}
-                            label={SLOT_LABEL[slot]}
-                            emoji={EMOJI[slot]}
-                            onView={() => assigned && setViewing(assigned)}
-                          />
+                          <Droppable id={id}>
+                            <SlotDrop
+                              active={Boolean(active)}
+                              assigned={assigned}
+                              label={SLOT_LABEL[slot]}
+                              emoji={EMOJI[slot]}
+                              onView={() => assigned && setViewing(assigned)}
+                            />
+                          </Droppable>
                         </Grid>
                       );
                     })}
@@ -504,7 +503,7 @@ export default function WeeklyMealPlanner() {
               <Paper
                 sx={{
                   width: 220,
-                  borderRadius: 2,
+                  borderRadius: 1,
                   overflow: 'hidden',
                   boxShadow: '0 12px 28px rgba(0,0,0,.25)',
                 }}
@@ -523,29 +522,27 @@ export default function WeeklyMealPlanner() {
               </Paper>
             ) : null}
           </DragOverlay>
-        </DndContext>
-      </Box>
+        </Box>
 
-      {/* Bottom Drawer / Recipes carousel */}
-      <Paper
-        elevation={8}
-        sx={{
-          position: 'relative',
-          borderTopLeftRadius: 16,
-          borderTopRightRadius: 16,
-          px: 2,
-          pt: 1,
-          pb: openDrawer ? 1.5 : 0.5,
-        }}
-      >
-        {/* Drawer header */}
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent="space-between"
+        {/* Bottom Drawer / Recipes carousel */}
+        <Paper
+          elevation={8}
+          sx={{
+            position: 'relative',
+            borderTopLeftRadius: 16,
+            borderTopRightRadius: 16,
+            px: 2,
+            pt: 1,
+            pb: openDrawer ? 1.5 : 0.5,
+          }}
         >
-          {DrawerToggle}
-          {showSearch && (
+          {/* Drawer header */}
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="space-between"
+          >
+            {DrawerToggle}
             <Paper
               sx={{
                 ml: 'auto',
@@ -571,35 +568,32 @@ export default function WeeklyMealPlanner() {
                 </IconButton>
               )}
             </Paper>
-          )}
-        </Stack>
+          </Stack>
 
-        {/* Cards row */}
-        {openDrawer && (
-          <Box
-            sx={{
-              mt: 1,
-              display: 'flex',
-              gap: 12,
-              overflowX: 'auto',
-              pb: 0.5,
-              scrollSnapType: 'x mandatory',
-              '&::-webkit-scrollbar': { height: 6 },
-            }}
-          >
-            {filteredRecipes.map((r) => (
-              <Box
-                key={r.id}
-                // make card draggable by setting draggable="true" and letting dnd-kit pick up by id
-                id={r.id}
-                style={{ scrollSnapAlign: 'start' }}
-              >
-                <RecipeCard r={r} onView={(rec) => setViewing(rec)} />
-              </Box>
-            ))}
-          </Box>
-        )}
-      </Paper>
+          {/* Cards row */}
+          {openDrawer && (
+            <Box
+              sx={{
+                mt: 1,
+                display: 'flex',
+                gap: 5,
+                overflowX: 'auto',
+                pb: 0.5,
+                scrollSnapType: 'x mandatory',
+                '&::-webkit-scrollbar': { height: 6 },
+              }}
+            >
+              {filteredRecipes.map((r) => (
+                <Draggable id={r.id} key={r.id}>
+                  <Box key={r.id} id={r.id}>
+                    <RecipeCard r={r} onView={(rec) => setViewing(rec)} />
+                  </Box>
+                </Draggable>
+              ))}
+            </Box>
+          )}
+        </Paper>
+      </DndContext>
 
       {/* Detail dialog */}
       <Dialog

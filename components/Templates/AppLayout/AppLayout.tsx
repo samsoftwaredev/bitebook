@@ -60,15 +60,10 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         }}
       >
         <Container
-          maxWidth="md"
+          maxWidth="lg"
           disableGutters
           sx={{
-            width: {
-              xs: '300px',
-              sm: '400px',
-              md: '500px',
-              lg: `calc(100% - ${drawerWidth}px)`,
-            },
+            width: '100%',
           }}
         >
           {children}
