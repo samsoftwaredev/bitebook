@@ -71,18 +71,16 @@ const EMOJI: Record<Slot, string> = {
   dinner: '🌙',
 };
 
-const weekTemplate: DayPlan[] = [
-  'Mon 20',
-  'Tue 21',
-  'Wed 22',
-  'Thu 23',
-  'Fri 24',
-  'Sat 25',
-  'Sun 26',
-].map((k) => ({
-  key: k,
-  slots: { breakfast: null, lunch: null, dinner: null },
-}));
+const weekTemplate: DayPlan[] = Array.from({ length: 7 }, (_, i) => {
+  const date = new Date();
+  date.setDate(date.getDate() + i);
+  const day = date.toLocaleDateString('en-US', { weekday: 'short' });
+  const dayNum = date.getDate();
+  return {
+    key: `${day} ${dayNum}`,
+    slots: { breakfast: null, lunch: null, dinner: null },
+  };
+});
 
 // ---------- Helpers ----------
 const slotId = (dayIndex: number, slot: Slot) => `slot:${dayIndex}:${slot}`;
