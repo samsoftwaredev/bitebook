@@ -103,3 +103,12 @@ export interface ResourcePost {
   slug: string;
   updatedAt: string | null;
 }
+
+export type Slot = 'breakfast' | 'lunch' | 'dinner';
+
+export type DayPlan = {
+  key: string; // e.g., "Mon 20"
+  weekStart: string; // e.g., "2025-06-17"
+  slots: Record<Slot, string | null>; // recipe id or null
+  isToday: boolean;
+};

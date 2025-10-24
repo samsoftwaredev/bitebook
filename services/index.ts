@@ -78,3 +78,48 @@ export const favoritesToggleService = async ({
   });
   return { data, error };
 };
+
+export const getMealPlanSummaryService = async (
+  mealPlanId: string, // uuid
+): Promise<{
+  data: {
+    total_cost: number;
+    ingredient_count: number;
+    meals_planned: number;
+  } | null;
+  error: any;
+}> => {
+  const { data, error } = await supabase.functions.invoke(
+    'meal-plans-summary',
+    {
+      body: { mealPlanId },
+    },
+  );
+  return { data, error };
+};
+
+export const createOrUpdateMealPlanService = async ({
+  weekStart, // "YYYY-MM-DD",
+}: {
+  weekStart: string;
+}): Promise<{
+  data: {
+    mealPlan: {
+      id: string;
+      user_id: string;
+      week_start: string;
+      title: null;
+      created_at: string;
+    };
+    plannedMeals: [];
+  } | null;
+  error: any;
+}> => {
+  const { data, error } = await supabase.functions.invoke(
+    'meal-plans-get-or-create',
+    {
+      body: { weekStart },
+    },
+  );
+  return { data, error };
+};

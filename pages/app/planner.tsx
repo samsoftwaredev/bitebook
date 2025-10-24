@@ -8,8 +8,31 @@ import MealPlannerEditorSection from '@/components/Sections/MealPlannerEditorSec
 import MealPlannerSection from '@/components/Sections/MealPlannerSection';
 import { AppLayout } from '@/components/Templates';
 import { useLanguageContext } from '@/context/LanguageContext';
-import { RecipeResponse } from '@/interfaces/index';
-import { searchRecipesService } from '@/services/index';
+import { DayPlan, RecipeResponse } from '@/interfaces/index';
+import {
+  createOrUpdateMealPlanService,
+  searchRecipesService,
+} from '@/services/index';
+
+const weekTemplate: DayPlan[] = Array.from({ length: 7 }, (_, i) => {
+  const today = new Date();
+  const monday = new Date(today);
+  monday.setDate(today.getDate() - today.getDay() + 1); // Get Monday
+  const day = new Date(monday);
+  day.setDate(monday.getDate() + i);
+
+  const dayName = day
+    .toLocaleDateString('en-US', { weekday: 'short' })
+    .slice(0, 3);
+  const date = day.getDate();
+
+  return {
+    key: `${dayName} ${date}`,
+    weekStart: day.toISOString().split('T')[0], // e.g., "2025-06-17"
+    slots: { breakfast: null, lunch: null, dinner: null },
+    isToday: day.toDateString() === today.toDateString(),
+  };
+});
 
 const Planner: NextPage = () => {
   const isEditMode = true; // You can replace this with actual logic to determine the mode
@@ -52,8 +75,20 @@ const Planner: NextPage = () => {
     setRecipes(dataNormalized);
   };
 
+  const createWeeklyMealPlanner = async () => {
+    try {
+      const res = await createOrUpdateMealPlanService({
+        weekStart: weekTemplate[0].weekStart,
+      });
+      console.log('Meal plan created/updated:', res);
+    } catch (error) {
+      console.error('Error creating weekly meal planner:', error);
+    }
+  };
+
   useEffect(() => {
     fetchRecipes();
+    createWeeklyMealPlanner();
   }, []);
 
   const onFilterByLabel = async (label: string) => {
@@ -93,6 +128,7 @@ const Planner: NextPage = () => {
           handleDialogClose={handleDialogClose}
           handleSearchChange={handleSearchChange}
           onFilterByLabel={onFilterByLabel}
+          weekTemplate={weekTemplate}
         />
       ) : (
         <MealPlannerSection />

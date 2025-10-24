@@ -35,11 +35,12 @@ import {
 import * as React from 'react';
 
 import Draggable from '@/components/Draggable';
-import Droppable from '@/components/Droppable/Droppable';
+import Droppable from '@/components/Droppable';
 import { Recipe } from '@/components/RecipeCard/RecipeCard.model';
 import RecipeDialog from '@/components/RecipeDialog';
 import RecipeDraggableCard from '@/components/RecipeDraggableCard';
 import SlotDrop from '@/components/SlotDrop';
+import { DayPlan, Slot } from '@/interfaces/index';
 
 interface Props {
   searchTerm: string;
@@ -50,14 +51,8 @@ interface Props {
   handleDialogClose: () => void;
   handleSearchChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onFilterByLabel: (label: string) => void;
+  weekTemplate: DayPlan[];
 }
-
-type Slot = 'breakfast' | 'lunch' | 'dinner';
-
-type DayPlan = {
-  key: string; // e.g., "Mon 20"
-  slots: Record<Slot, string | null>; // recipe id or null
-};
 
 const SLOT_LABEL: Record<Slot, string> = {
   breakfast: 'Breakfast',
@@ -71,18 +66,6 @@ const EMOJI: Record<Slot, string> = {
   dinner: '🌙',
 };
 
-const weekTemplate: DayPlan[] = Array.from({ length: 7 }, (_, i) => {
-  const date = new Date();
-  date.setDate(date.getDate() + i);
-  const day = date.toLocaleDateString('en-US', { weekday: 'short' });
-  const dayNum = date.getDate();
-  return {
-    key: `${day} ${dayNum}`,
-    slots: { breakfast: null, lunch: null, dinner: null },
-  };
-});
-
-// ---------- Helpers ----------
 const slotId = (dayIndex: number, slot: Slot) => `slot:${dayIndex}:${slot}`;
 const isSlotId = (id?: string) => id?.startsWith('slot:');
 const parseSlotId = (id: string) => {
@@ -99,6 +82,7 @@ export default function WeeklyMealPlanner({
   handleDialogClose,
   handleSearchChange,
   onFilterByLabel,
+  weekTemplate,
 }: Props) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -124,6 +108,10 @@ export default function WeeklyMealPlanner({
     (id: string | null | undefined) => recipes.find((r) => r.id === id) || null,
     [recipes],
   );
+
+  function handleAIGeneratePlanner() {
+    // TODO: Implement AI planner generation logic
+  }
 
   // DnD handlers
   function handleDragStart(e: DragStartEvent) {
@@ -220,6 +208,7 @@ export default function WeeklyMealPlanner({
           <Button
             variant="contained"
             color="warning"
+            onClick={handleAIGeneratePlanner}
             startIcon={<BoltRoundedIcon />}
             sx={{ textTransform: 'none', fontWeight: 800 }}
           >
@@ -267,7 +256,9 @@ export default function WeeklyMealPlanner({
                   sx={{
                     p: 1,
                     borderRadius: 1,
-                    bgcolor: theme.palette.background.paper,
+                    bgcolor: day.isToday
+                      ? alpha(theme.palette.primary.main, 0.1)
+                      : theme.palette.background.paper,
                     boxShadow: '0 1px 0 rgba(0,0,0,.04)',
                   }}
                 >
@@ -279,6 +270,9 @@ export default function WeeklyMealPlanner({
                         spacing={0}
                         sx={{ minWidth: 56 }}
                       >
+                        <Typography color="text.primary">
+                          {day.isToday ? 'TODAY' : ''}
+                        </Typography>
                         <Typography variant="caption" color="text.secondary">
                           {day.key.split(' ')[0].toUpperCase()}
                         </Typography>
