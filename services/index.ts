@@ -111,7 +111,14 @@ export const createOrUpdateMealPlanService = async ({
       title: null;
       created_at: string;
     };
-    plannedMeals: [];
+    plannedMeals: {
+      id: string;
+      meal_plan_id: string;
+      meal_date: string;
+      meal_slot: string;
+      recipe_id: string | null;
+      notes: null;
+    }[];
   } | null;
   error: any;
 }> => {
@@ -119,6 +126,29 @@ export const createOrUpdateMealPlanService = async ({
     'meal-plans-get-or-create',
     {
       body: { weekStart },
+    },
+  );
+  return { data, error };
+};
+
+export const updateMealPlanSlotService = async ({
+  mealPlanId, // uuid
+  date, // "YYYY-MM-DD",
+  slot, // "breakfast" | "lunch" | "dinner" | "snack"
+  recipeId, // uuid
+}: {
+  mealPlanId: string;
+  date: string;
+  slot: string;
+  recipeId: string | null;
+}): Promise<{
+  data: any;
+  error: any;
+}> => {
+  const { data, error } = await supabase.functions.invoke(
+    'meal-plans-update-slot',
+    {
+      body: { mealPlanId, date, slot, recipeId },
     },
   );
   return { data, error };

@@ -33,6 +33,7 @@ import {
   useTheme,
 } from '@mui/material';
 import * as React from 'react';
+import { toast } from 'react-toastify';
 
 import Draggable from '@/components/Draggable';
 import Droppable from '@/components/Droppable';
@@ -41,6 +42,7 @@ import RecipeDialog from '@/components/RecipeDialog';
 import RecipeDraggableCard from '@/components/RecipeDraggableCard';
 import SlotDrop from '@/components/SlotDrop';
 import { DayPlan, Slot } from '@/interfaces/index';
+import { updateMealPlanSlotService } from '@/services/index';
 
 interface Props {
   searchTerm: string;
@@ -51,7 +53,9 @@ interface Props {
   handleDialogClose: () => void;
   handleSearchChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onFilterByLabel: (label: string) => void;
-  weekTemplate: DayPlan[];
+  mealPlanId: string | null;
+  setDays: React.Dispatch<React.SetStateAction<DayPlan[]>>;
+  days: DayPlan[];
 }
 
 const SLOT_LABEL: Record<Slot, string> = {
@@ -82,13 +86,12 @@ export default function WeeklyMealPlanner({
   handleDialogClose,
   handleSearchChange,
   onFilterByLabel,
-  weekTemplate,
+  mealPlanId,
+  setDays,
+  days,
 }: Props) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-
-  // planner state
-  const [days, setDays] = React.useState<DayPlan[]>(weekTemplate);
 
   // bottom drawer state
   const [openDrawer, setOpenDrawer] = React.useState(true);
@@ -96,6 +99,25 @@ export default function WeeklyMealPlanner({
   // drag state
   const [activeId, setActiveId] = React.useState<string | null>(null);
   const [dragPreview, setDragPreview] = React.useState<Recipe | null>(null);
+
+  const updateMealPlanSlot = async (
+    slot: Slot,
+    recipeId: string | null,
+    mealDate: string,
+  ) => {
+    if (!mealPlanId) return;
+    try {
+      await updateMealPlanSlotService({
+        mealPlanId: mealPlanId,
+        date: mealDate,
+        slot,
+        recipeId,
+      });
+    } catch (error) {
+      console.error('Error updating meal plan slots:', error);
+      toast.error('Error updating meal plan slots');
+    }
+  };
 
   const sensors = useSensors(
     useSensor(MouseSensor, { activationConstraint: { distance: 6 } }),
@@ -108,6 +130,10 @@ export default function WeeklyMealPlanner({
     (id: string | null | undefined) => recipes.find((r) => r.id === id) || null,
     [recipes],
   );
+
+  function handleShoppingCart() {
+    // TODO: Implement shopping cart logic
+  }
 
   function handleAIGeneratePlanner() {
     // TODO: Implement AI planner generation logic
@@ -130,7 +156,7 @@ export default function WeeklyMealPlanner({
     // we just use highlight styles via activeId + droppable ids
   }
 
-  function handleDragEnd(e: DragEndEvent) {
+  async function handleDragEnd(e: DragEndEvent) {
     const { active, over } = e;
     setActiveId(null);
     setDragPreview(null);
@@ -154,6 +180,7 @@ export default function WeeklyMealPlanner({
           draft[dayIndex].slots[slot] = recipeId;
           return draft;
         });
+        await updateMealPlanSlot(slot, recipeId, days[dayIndex].date);
         return;
       }
     } else {
@@ -163,6 +190,7 @@ export default function WeeklyMealPlanner({
         draft[dayIndex].slots[slot] = recipeId!;
         return draft;
       });
+      await updateMealPlanSlot(slot, recipeId, days[dayIndex].date);
       return;
     }
   }
@@ -212,22 +240,16 @@ export default function WeeklyMealPlanner({
             startIcon={<BoltRoundedIcon />}
             sx={{ textTransform: 'none', fontWeight: 800 }}
           >
-            AI Plan
+            AI Generate Meal Plan
           </Button>
           <Button
             variant="contained"
             color="success"
+            onClick={handleShoppingCart}
             startIcon={<ShoppingCartRoundedIcon />}
             sx={{ textTransform: 'none', fontWeight: 800 }}
           >
             Shop
-          </Button>
-          <Button
-            variant="contained"
-            startIcon={<SaveRoundedIcon />}
-            sx={{ textTransform: 'none', fontWeight: 800 }}
-          >
-            Save
           </Button>
         </Stack>
       </Stack>

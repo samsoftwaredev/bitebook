@@ -107,8 +107,8 @@ export interface ResourcePost {
 export type Slot = 'breakfast' | 'lunch' | 'dinner';
 
 export type DayPlan = {
+  date: string; // e.g., "2025-06-17"
   key: string; // e.g., "Mon 20"
-  weekStart: string; // e.g., "2025-06-17"
   slots: Record<Slot, string | null>; // recipe id or null
   isToday: boolean;
 };

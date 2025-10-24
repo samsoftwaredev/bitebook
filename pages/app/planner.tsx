@@ -28,7 +28,7 @@ const weekTemplate: DayPlan[] = Array.from({ length: 7 }, (_, i) => {
 
   return {
     key: `${dayName} ${date}`,
-    weekStart: day.toISOString().split('T')[0], // e.g., "2025-06-17"
+    date: day.toISOString().split('T')[0],
     slots: { breakfast: null, lunch: null, dinner: null },
     isToday: day.toDateString() === today.toDateString(),
   };
@@ -38,6 +38,9 @@ const Planner: NextPage = () => {
   const isEditMode = true; // You can replace this with actual logic to determine the mode
 
   const { lang } = useLanguageContext();
+  // planner state
+  const [days, setDays] = React.useState<DayPlan[]>(weekTemplate);
+  const [mealPlanId, setMealPlanId] = React.useState<string | null>(null);
   const [recipe, setRecipe] = React.useState<Recipe | null>(null);
   const [dialogOpen, setDialogOpen] = React.useState(false);
   const [searchTerm, setSearchTerm] = React.useState<string>('');
@@ -78,9 +81,29 @@ const Planner: NextPage = () => {
   const createWeeklyMealPlanner = async () => {
     try {
       const res = await createOrUpdateMealPlanService({
-        weekStart: weekTemplate[0].weekStart,
+        weekStart: weekTemplate[0].date,
       });
-      console.log('Meal plan created/updated:', res);
+      setMealPlanId(res.data?.mealPlan.id || null);
+      const transformedPlannedMeals: DayPlan[] = weekTemplate.map((day) => {
+        const dayMeals = res.data?.plannedMeals.filter(
+          (meal) => meal.meal_date === day.date,
+        );
+        return {
+          ...day,
+          slots: {
+            breakfast:
+              dayMeals?.find((meal) => meal.meal_slot === 'breakfast')
+                ?.recipe_id || null,
+            lunch:
+              dayMeals?.find((meal) => meal.meal_slot === 'lunch')?.recipe_id ||
+              null,
+            dinner:
+              dayMeals?.find((meal) => meal.meal_slot === 'dinner')
+                ?.recipe_id || null,
+          },
+        };
+      });
+      setDays(transformedPlannedMeals);
     } catch (error) {
       console.error('Error creating weekly meal planner:', error);
     }
@@ -120,6 +143,7 @@ const Planner: NextPage = () => {
     <AppLayout>
       {isEditMode ? (
         <MealPlannerEditorSection
+          mealPlanId={mealPlanId}
           searchTerm={searchTerm}
           recipes={recipes}
           handleCardClick={handleCardClick}
@@ -128,7 +152,8 @@ const Planner: NextPage = () => {
           handleDialogClose={handleDialogClose}
           handleSearchChange={handleSearchChange}
           onFilterByLabel={onFilterByLabel}
-          weekTemplate={weekTemplate}
+          setDays={setDays}
+          days={days}
         />
       ) : (
         <MealPlannerSection />
