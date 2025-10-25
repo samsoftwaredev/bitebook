@@ -11,17 +11,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'uieyknteyflglukepcdy.supabase.co',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'lh3.googleusercontent.com',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'i.ytimg.com',
+        hostname: 'lhivthorxlkyfyeubrwm.supabase.co',
         pathname: '/**',
       },
     ],

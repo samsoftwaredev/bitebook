@@ -14,7 +14,6 @@ import BoltRoundedIcon from '@mui/icons-material/BoltRounded';
 import CalendarMonthRoundedIcon from '@mui/icons-material/CalendarMonthRounded';
 import ExpandLessRoundedIcon from '@mui/icons-material/ExpandLessRounded';
 import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded';
-import SaveRoundedIcon from '@mui/icons-material/SaveRounded';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import ShoppingCartRoundedIcon from '@mui/icons-material/ShoppingCartRounded';
 import {
@@ -443,9 +442,8 @@ export default function WeeklyMealPlanner({
         recipeData={recipe}
       >
         <DialogActions>
-          <Button onClick={handleDialogClose}>Close</Button>
-          <Button variant="contained" color="success">
-            Add to Meal
+          <Button variant="contained" onClick={handleDialogClose}>
+            Close
           </Button>
         </DialogActions>
       </RecipeDialog>

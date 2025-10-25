@@ -18,6 +18,7 @@ import {
   useMediaQuery,
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
+import Image from 'next/image';
 import React, { useEffect } from 'react';
 
 import { Recipe } from '@/components/RecipeCard/RecipeCard.model';
@@ -25,8 +26,6 @@ import { RecipeDetail } from '@/interfaces/index';
 import { getRecipeByIdService } from '@/services/index';
 
 import Loading from '../Loading';
-
-// ---- Types (shape matches your API response) -------------------------------
 
 type Props = {
   open: boolean;
@@ -95,7 +94,6 @@ function Stat({
   );
 }
 
-// ---- main component --------------------------------------------------------
 export default function RecipeDialog({
   open,
   onClose,
@@ -197,6 +195,27 @@ export default function RecipeDialog({
           pb: 3,
         }}
       >
+        <Box
+          sx={{
+            position: 'relative',
+            width: '100%',
+            height: { xs: '200px', sm: '300px', md: '400px' },
+            mb: 3,
+            borderRadius: '20px',
+            overflow: 'hidden',
+          }}
+        >
+          <Image
+            style={{
+              objectFit: 'cover',
+            }}
+            fill
+            sizes="(max-width: 600px) 100vw, (max-width: 900px) 80vw, 70vw"
+            src={recipe.recipe.image_url}
+            alt={recipe.recipe.title}
+            priority
+          />
+        </Box>
         {/* Title & description with enhanced styling for overlay */}
         <Box sx={{ mb: 3 }}>
           <Typography
@@ -278,18 +297,20 @@ export default function RecipeDialog({
         {/* Tags */}
         {recipe.tags?.length > 0 && (
           <Box sx={{ mt: 2 }}>
-            <Typography variant="subtitle1" fontWeight={700} gutterBottom>
+            <Typography
+              sx={{
+                color: 'white',
+                textShadow: '0 2px 8px rgba(0,0,0,0.9)',
+              }}
+              variant="subtitle1"
+              fontWeight={700}
+              gutterBottom
+            >
               Categories
             </Typography>
             <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
               {recipe.tags.map((t) => (
-                <Chip
-                  key={t}
-                  size="small"
-                  label={t}
-                  color="primary"
-                  variant="outlined"
-                />
+                <Chip key={t} size="small" label={t} color="primary" />
               ))}
             </Stack>
           </Box>
@@ -297,7 +318,15 @@ export default function RecipeDialog({
 
         {/* Ingredients */}
         <Box sx={{ mt: 3 }}>
-          <Typography variant="h6" fontWeight={800} gutterBottom>
+          <Typography
+            sx={{
+              color: 'white',
+              textShadow: '0 2px 8px rgba(0,0,0,0.9)',
+            }}
+            variant="h6"
+            fontWeight={800}
+            gutterBottom
+          >
             Ingredients
           </Typography>
 
@@ -341,36 +370,46 @@ export default function RecipeDialog({
         {/* Steps */}
         {recipe.steps?.length > 0 && (
           <Box sx={{ mt: 3 }}>
-            <Typography variant="h6" fontWeight={800} gutterBottom>
+            <Typography
+              sx={{
+                color: 'white',
+                textShadow: '0 2px 8px rgba(0,0,0,0.9)',
+              }}
+              variant="h6"
+              fontWeight={800}
+              gutterBottom
+            >
               Instructions
             </Typography>
-            <Stack spacing={1.25} sx={{ mb: 1 }}>
-              {recipe.steps
-                .slice()
-                .sort((a, b) => a.step_no - b.step_no)
-                .map((s) => (
-                  <Box key={s.step_no} sx={{ display: 'flex', gap: 1 }}>
-                    <Box
-                      sx={{
-                        minWidth: 28,
-                        height: 28,
-                        borderRadius: '50%',
-                        bgcolor: 'primary.main',
-                        color: '#fff',
-                        display: 'grid',
-                        placeItems: 'center',
-                        fontSize: 13,
-                        mt: '2px',
-                      }}
-                    >
-                      {s.step_no}
+            <Paper>
+              <Stack spacing={1.25} sx={{ mb: 1, p: 2 }}>
+                {recipe.steps
+                  .slice()
+                  .sort((a, b) => a.step_no - b.step_no)
+                  .map((s) => (
+                    <Box key={s.step_no} sx={{ display: 'flex', gap: 1 }}>
+                      <Box
+                        sx={{
+                          minWidth: 28,
+                          height: 28,
+                          borderRadius: '50%',
+                          bgcolor: 'primary.main',
+                          color: '#fff',
+                          display: 'grid',
+                          placeItems: 'center',
+                          fontSize: 13,
+                          mt: '2px',
+                        }}
+                      >
+                        {s.step_no}
+                      </Box>
+                      <Typography variant="body2" sx={{ mt: '2px' }}>
+                        {s.body}
+                      </Typography>
                     </Box>
-                    <Typography variant="body2" sx={{ mt: '2px' }}>
-                      {s.body}
-                    </Typography>
-                  </Box>
-                ))}
-            </Stack>
+                  ))}
+              </Stack>
+            </Paper>
           </Box>
         )}
 
