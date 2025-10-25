@@ -52,11 +52,20 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         component="main"
         sx={{
           flexGrow: 1,
-          px: { xs: 2, sm: 3 },
-          py: { xs: 10, md: 4 }, // leave space for mobile AppBar
-          ml: { md: `${drawerWidth}px` },
+          width: '100%',
+          px: 2,
+          py: 10,
           backgroundColor: (t) => alpha(t.palette.text.primary, 0.02),
           minHeight: '100vh',
+          // Tablet and up
+          '@media (min-width: 600px)': {
+            px: 3,
+          },
+          // Desktop and up
+          '@media (min-width: 900px)': {
+            py: 4,
+            marginLeft: drawerWidth,
+          },
         }}
       >
         <Container
@@ -64,6 +73,13 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           disableGutters
           sx={{
             width: '100%',
+            maxWidth: {
+              xs: '100%',
+              sm: '600px',
+              md: '900px',
+              lg: '1200px',
+            },
+            mx: 'auto',
           }}
         >
           {children}
