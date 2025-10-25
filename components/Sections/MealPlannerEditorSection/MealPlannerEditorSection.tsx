@@ -12,9 +12,6 @@ import {
 } from '@dnd-kit/core';
 import BoltRoundedIcon from '@mui/icons-material/BoltRounded';
 import CalendarMonthRoundedIcon from '@mui/icons-material/CalendarMonthRounded';
-import ExpandLessRoundedIcon from '@mui/icons-material/ExpandLessRounded';
-import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded';
-import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import ShoppingCartRoundedIcon from '@mui/icons-material/ShoppingCartRounded';
 import {
   Box,
@@ -22,8 +19,6 @@ import {
   Chip,
   DialogActions,
   Grid,
-  IconButton,
-  InputBase,
   Paper,
   Stack,
   Typography,
@@ -34,11 +29,10 @@ import {
 import * as React from 'react';
 import { toast } from 'react-toastify';
 
-import Draggable from '@/components/Draggable';
 import Droppable from '@/components/Droppable';
 import { Recipe } from '@/components/RecipeCard/RecipeCard.model';
 import RecipeDialog from '@/components/RecipeDialog';
-import RecipeDraggableCard from '@/components/RecipeDraggableCard';
+import RecipeListSelector from '@/components/RecipeListSelector';
 import SlotDrop from '@/components/SlotDrop';
 import { DayPlan, Slot } from '@/interfaces/index';
 import { updateMealPlanSlotService } from '@/services/index';
@@ -94,6 +88,7 @@ export default function WeeklyMealPlanner({
 
   // bottom drawer state
   const [openDrawer, setOpenDrawer] = React.useState(true);
+  const [isDragging, setIsDragging] = React.useState(false);
 
   // drag state
   const [activeId, setActiveId] = React.useState<string | null>(null);
@@ -152,7 +147,7 @@ export default function WeeklyMealPlanner({
   }
 
   function handleDragOver(_e: DragOverEvent) {
-    // we just use highlight styles via activeId + droppable ids
+    setIsDragging(true);
   }
 
   async function handleDragEnd(e: DragEndEvent) {
@@ -160,6 +155,7 @@ export default function WeeklyMealPlanner({
     setActiveId(null);
     setDragPreview(null);
     if (!over) return;
+    setIsDragging(false);
 
     const overId = String(over.id);
     if (!isSlotId(overId)) return;
@@ -193,21 +189,6 @@ export default function WeeklyMealPlanner({
       return;
     }
   }
-
-  // UI helpers
-  const DrawerToggle = (
-    <Stack direction="row" spacing={1} alignItems="center">
-      <Chip
-        size="small"
-        color="success"
-        label={`${recipes.length} Recipes Available`}
-        sx={{ fontWeight: 800 }}
-      />
-      <IconButton size="small" onClick={() => setOpenDrawer((o) => !o)}>
-        {openDrawer ? <ExpandMoreRoundedIcon /> : <ExpandLessRoundedIcon />}
-      </IconButton>
-    </Stack>
-  );
 
   return (
     <>
@@ -260,14 +241,14 @@ export default function WeeklyMealPlanner({
         onDragEnd={handleDragEnd}
       >
         {/* Planner grid (no scrolling; content fits) */}
-        <Box sx={{ px: 2, overflow: 'hidden' }}>
+        <Box sx={{ px: 2 }}>
           <Grid
             container
             spacing={1}
             sx={{
+              mb: '300px',
               // compact rows that fit in one screen (adjust heights if needed)
-              height: { xs: 'calc(100vh - 220px)', md: 'calc(100vh - 240px)' },
-              overflow: 'hidden',
+              height: { xs: 'calc(100vh - 100px)', md: 'calc(100vh - 120px)' },
             }}
           >
             {days.map((day, dIdx) => (
@@ -291,9 +272,6 @@ export default function WeeklyMealPlanner({
                         spacing={0}
                         sx={{ minWidth: 56 }}
                       >
-                        <Typography color="text.primary">
-                          {day.isToday ? 'TODAY' : ''}
-                        </Typography>
                         <Typography variant="caption" color="text.secondary">
                           {day.key.split(' ')[0].toUpperCase()}
                         </Typography>
@@ -366,73 +344,15 @@ export default function WeeklyMealPlanner({
           </DragOverlay>
         </Box>
 
-        {/* Bottom Drawer / Recipes carousel */}
-        <Paper
-          elevation={8}
-          sx={{
-            position: 'relative',
-            borderTopLeftRadius: 16,
-            borderTopRightRadius: 16,
-            px: 2,
-            pt: 1,
-            pb: openDrawer ? 1.5 : 0.5,
-          }}
-        >
-          {/* Drawer header */}
-          <Stack
-            direction="row"
-            alignItems="center"
-            justifyContent="space-between"
-          >
-            {DrawerToggle}
-            <Paper
-              sx={{
-                ml: 'auto',
-                p: 0.5,
-                px: 1,
-                borderRadius: 999,
-                display: 'flex',
-                alignItems: 'center',
-                minWidth: 220,
-                bgcolor: alpha(theme.palette.text.primary, 0.06),
-              }}
-            >
-              <SearchRoundedIcon fontSize="small" sx={{ mr: 1 }} />
-              <InputBase
-                value={searchTerm}
-                onChange={handleSearchChange}
-                placeholder="Search recipes…"
-                sx={{ fontSize: 14 }}
-              />
-            </Paper>
-          </Stack>
-
-          {/* Cards row */}
-          {openDrawer && (
-            <Box
-              sx={{
-                mt: 1,
-                display: 'flex',
-                gap: 5,
-                overflowX: 'auto',
-                pb: 0.5,
-                scrollSnapType: 'x mandatory',
-                '&::-webkit-scrollbar': { height: 6 },
-              }}
-            >
-              {recipes.map((r) => (
-                <Draggable id={r.id} key={r.id}>
-                  <Box key={r.id} id={r.id}>
-                    <RecipeDraggableCard
-                      r={r}
-                      onView={(rec) => handleCardClick(rec)}
-                    />
-                  </Box>
-                </Draggable>
-              ))}
-            </Box>
-          )}
-        </Paper>
+        <RecipeListSelector
+          isDragging={isDragging}
+          openDrawer={openDrawer}
+          searchTerm={searchTerm}
+          handleSearchChange={handleSearchChange}
+          recipes={recipes}
+          handleCardClick={handleCardClick}
+          setOpenDrawer={setOpenDrawer}
+        />
       </DndContext>
 
       {/* Detail dialog */}

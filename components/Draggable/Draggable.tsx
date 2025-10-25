@@ -29,7 +29,6 @@ export default function Draggable({
         cursor: isDragging ? 'grabbing' : 'grab',
         opacity: isDragging ? 0.6 : 1,
         transition: isDragging ? 'none' : 'opacity 0.2s ease',
-        zIndex: isDragging ? 1000 : 'auto',
         position: 'relative',
       }}
       style={style}
