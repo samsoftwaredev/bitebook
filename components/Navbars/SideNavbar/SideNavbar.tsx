@@ -89,7 +89,12 @@ export default function Sidebar({
         {menu.map((m) => {
           const active = pathname === m.href;
           return (
-            <Link href={m.href} passHref key={m.label}>
+            <Link
+              href={m.href}
+              passHref
+              key={m.label}
+              style={{ textDecoration: 'none' }}
+            >
               <ListItemButton
                 key={m.label}
                 sx={(t) => ({

@@ -28,11 +28,11 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     return (
       <>
         {/* <SpeedInsights /> */}
-        <CssBaseline />
-
         <UserContextProvider>
           <StyledEngineProvider injectFirst>
             <ThemeProvider theme={theme}>
+              <CssBaseline />
+
               <LanguageContextProvider>
                 <ToastContainer autoClose={5000} />
                 <Component {...pageProps} />
@@ -47,11 +47,10 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 
   return (
     <>
-      <CssBaseline />
-
       {/* <SpeedInsights /> */}
       <StyledEngineProvider injectFirst>
         <ThemeProvider theme={theme}>
+          <CssBaseline />
           <LanguageContextProvider>
             <Component {...pageProps} />
             {/* <Analytics /> */}

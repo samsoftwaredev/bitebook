@@ -103,16 +103,6 @@ const Footer = () => {
               <Box aria-label={`${COMPANY.name} logo`}>
                 <Logo />
               </Box>
-              <Typography
-                variant="h6"
-                color="text.primary"
-                sx={{
-                  fontWeight: 700,
-                  display: { xs: 'none', sm: 'block' },
-                }}
-              >
-                {COMPANY.name}
-              </Typography>
             </Stack>
             <Typography
               variant="body2"

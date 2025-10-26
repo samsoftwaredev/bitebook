@@ -95,11 +95,11 @@ const WordLogoIcon = () => (
   </svg>
 );
 
-const LogoIcon = () => (
+const LogoIcon = ({ size }: { size: number }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="64"
-    height="64"
+    width={size}
+    height={size}
     viewBox="0 0 64 64"
     role="img"
     aria-label="BiteBook icon"
@@ -150,12 +150,13 @@ const LogoIcon = () => (
 
 interface Props {
   type?: 'wordLogo' | 'logo';
+  size?: number;
 }
 
-const Logo = ({ type = 'wordLogo' }: Props) => {
+const Logo = ({ type = 'wordLogo', size = 64 }: Props) => {
   return (
     <span data-testid="logo">
-      {type === 'wordLogo' ? <WordLogoIcon /> : <LogoIcon />}
+      {type === 'wordLogo' ? <WordLogoIcon /> : <LogoIcon size={size} />}
     </span>
   );
 };

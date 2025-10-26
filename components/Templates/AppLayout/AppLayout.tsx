@@ -5,11 +5,11 @@ import {
   Container,
   IconButton,
   Toolbar,
-  Typography,
   alpha,
 } from '@mui/material';
 import React from 'react';
 
+import Logo from '@/components/Logo';
 import { SideNavbar } from '@/components/Navbars';
 import { drawerWidth } from '@/constants/global';
 
@@ -30,11 +30,15 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             `1px solid ${alpha(t.palette.text.primary, 0.08)}`,
         }}
       >
-        <Toolbar sx={{ gap: 1 }}>
+        <Toolbar
+          sx={{ gap: 1, justifyContent: 'space-between', display: 'flex' }}
+        >
           <IconButton edge="start" onClick={() => setMobileOpen(true)}>
             <MenuRoundedIcon />
           </IconButton>
-          <Typography fontWeight={800}>Discover</Typography>
+          <Box textAlign="center" mt={1}>
+            <Logo type="logo" size={42} />
+          </Box>
         </Toolbar>
       </AppBar>
 
