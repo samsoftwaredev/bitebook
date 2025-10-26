@@ -45,7 +45,7 @@ const LogIn = () => {
       fullWidth
       component="form"
       onSubmit={handleSubmit(onSubmit)}
-      sx={{ gap: 0.5 }}
+      sx={{ gap: 1.5 }}
     >
       <HorizontalDivider />
       <Controller

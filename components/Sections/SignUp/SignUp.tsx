@@ -36,11 +36,11 @@ const SignUp = () => {
   const { handleSubmit, control } = useForm<IFormInputs>({
     mode: 'onChange',
     defaultValues: {
-      email: 'samuelruiz30@gmail.com',
-      password: '12345678!',
+      email: '',
+      password: '',
       genderMale: undefined,
-      firstName: 'samuel',
-      lastName: 'ruiz',
+      firstName: '',
+      lastName: '',
     },
   });
   const password = useWatch({ control, name: 'password' });
@@ -70,7 +70,7 @@ const SignUp = () => {
       fullWidth
       component="form"
       onSubmit={handleSubmit(onSubmit)}
-      sx={{ gap: 0.5 }}
+      sx={{ gap: 1.5 }}
     >
       <HorizontalDivider />
       <Controller
