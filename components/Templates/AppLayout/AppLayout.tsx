@@ -3,7 +3,6 @@ import {
   AppBar,
   Box,
   Container,
-  CssBaseline,
   IconButton,
   Toolbar,
   Typography,
@@ -19,8 +18,6 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
   return (
     <Box sx={{ display: 'flex' }}>
-      <CssBaseline />
-
       {/* Top app bar (mobile only) */}
       <AppBar
         position="fixed"

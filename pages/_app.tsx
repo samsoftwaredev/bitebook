@@ -1,4 +1,5 @@
 import { ThemeProvider } from '@emotion/react';
+import { CssBaseline } from '@mui/material';
 import { StyledEngineProvider } from '@mui/material/styles';
 // import { Analytics } from '@vercel/analytics/react';
 // import { SpeedInsights } from '@vercel/speed-insights/next';
@@ -27,6 +28,8 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     return (
       <>
         {/* <SpeedInsights /> */}
+        <CssBaseline />
+
         <UserContextProvider>
           <StyledEngineProvider injectFirst>
             <ThemeProvider theme={theme}>
@@ -44,6 +47,8 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 
   return (
     <>
+      <CssBaseline />
+
       {/* <SpeedInsights /> */}
       <StyledEngineProvider injectFirst>
         <ThemeProvider theme={theme}>
