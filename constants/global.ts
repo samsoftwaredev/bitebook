@@ -4,6 +4,7 @@ import { digitRegEx, specialCharsRegEx } from '../utils';
 export const minPasswordLength = 8;
 export const maxAge = 120;
 export const minAge = 13;
+export const drawerWidth = 260;
 
 export const foodTypeFilters: FoodTypeFilter[] = [
   { value: 'all', label: 'All Recipes', filled: true, icon: '🍽️' },

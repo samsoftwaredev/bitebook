@@ -8,12 +8,14 @@ import {
   InputBase,
   Paper,
   Stack,
+  Typography,
   alpha,
 } from '@mui/material';
 import React from 'react';
 
 import Draggable from '@/components/Draggable';
 import RecipeDraggableCard from '@/components/RecipeDraggableCard';
+import { drawerWidth } from '@/constants/index';
 import { theme } from '@/styles/mui-overwrite';
 
 import { Recipe } from '../RecipeCard/RecipeCard.model';
@@ -41,6 +43,7 @@ const RecipeListSelector = ({
     <Paper
       elevation={8}
       sx={{
+        marginLeft: `${drawerWidth}px`,
         position: 'fixed',
         bottom: 0,
         left: 0,
@@ -76,26 +79,35 @@ const RecipeListSelector = ({
           </IconButton>
         </Stack>
         {openDrawer && (
-          <Paper
-            sx={{
-              width: { xs: '100%', sm: 'auto' },
-              p: 0.5,
-              px: 1,
-              borderRadius: 999,
-              display: 'flex',
-              alignItems: 'center',
-              minWidth: { xs: '100%', sm: 220 },
-              bgcolor: alpha(theme.palette.text.primary, 0.06),
-            }}
-          >
-            <SearchRoundedIcon fontSize="small" sx={{ mr: 1 }} />
-            <InputBase
-              value={searchTerm}
-              onChange={handleSearchChange}
-              placeholder="Search recipes…"
-              sx={{ fontSize: 14, width: '100%' }}
-            />
-          </Paper>
+          <>
+            <Paper
+              sx={{
+                width: { xs: '100%', sm: 'auto' },
+                p: 0.5,
+                px: 1,
+                borderRadius: 999,
+                display: 'flex',
+                alignItems: 'center',
+                minWidth: { xs: '100%', sm: 220 },
+                bgcolor: alpha(theme.palette.text.primary, 0.06),
+              }}
+            >
+              <SearchRoundedIcon fontSize="small" sx={{ mr: 1 }} />
+              <InputBase
+                value={searchTerm}
+                onChange={handleSearchChange}
+                placeholder="Search recipes…"
+                sx={{ fontSize: 14, width: '100%' }}
+              />
+            </Paper>
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              sx={{ px: 2, textAlign: 'center' }}
+            >
+              Drag and drop recipes to plan your meals.
+            </Typography>
+          </>
         )}
       </Stack>
 

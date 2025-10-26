@@ -9,7 +9,7 @@ export default function Droppable({
   children: React.ReactNode;
   id: string;
 }) {
-  const { isOver, setNodeRef } = useDroppable({
+  const { isOver, setNodeRef, active } = useDroppable({
     id,
   });
 
@@ -20,6 +20,8 @@ export default function Droppable({
         transition: 'all 0.2s ease',
         transform: isOver ? 'scale(1.02)' : 'scale(1)',
         opacity: isOver ? 0.9 : 1,
+        borderRadius: 1,
+        bgcolor: active ? 'primary.light' : 'transparent',
       }}
     >
       {React.isValidElement(children)

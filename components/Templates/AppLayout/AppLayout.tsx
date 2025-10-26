@@ -12,8 +12,7 @@ import {
 import React from 'react';
 
 import { SideNavbar } from '@/components/Navbars';
-
-const drawerWidth = 260;
+import { drawerWidth } from '@/constants/global';
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -64,7 +63,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           // Desktop and up
           '@media (min-width: 900px)': {
             py: 4,
-            marginLeft: drawerWidth,
+            marginLeft: `${drawerWidth}px`,
           },
         }}
       >
