@@ -1,12 +1,10 @@
 import AddIcon from '@mui/icons-material/Add';
-import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import CloseIcon from '@mui/icons-material/Close';
 import EditIcon from '@mui/icons-material/Edit';
 import LinkIcon from '@mui/icons-material/Link';
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
 import {
   Box,
-  Button,
   Card,
   CardActionArea,
   CardContent,
@@ -16,12 +14,15 @@ import {
   Grid,
   IconButton,
   Stack,
-  TextField,
   Typography,
   useMediaQuery,
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import React, { useState } from 'react';
+
+import ManualEntryForm from '../ManualEntryForm';
+import PhotoImportForm from '../PhotoImportForm';
+import URLImportForm from '../URLImportForm';
 
 type Props = {
   open: boolean;
@@ -139,289 +140,6 @@ function CategorySelection({
   );
 }
 
-// URL Import Form Component
-function URLImportForm({ onBack }: { onBack: () => void }) {
-  const [url, setUrl] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-
-  const handleImport = async () => {
-    if (!url.trim()) return;
-
-    setIsLoading(true);
-    try {
-      // TODO: Implement URL import logic
-      console.log('Importing from URL:', url);
-      // Add your URL import logic here
-    } catch (error) {
-      console.error('Error importing from URL:', error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  return (
-    <Box sx={{ p: { xs: 2, sm: 3 } }}>
-      <Stack spacing={3}>
-        <Typography variant="h6" fontWeight={600}>
-          Import Recipe from URL
-        </Typography>
-
-        <TextField
-          fullWidth
-          label="Recipe URL"
-          placeholder="https://example.com/recipe"
-          value={url}
-          onChange={(e) => setUrl(e.target.value)}
-          variant="outlined"
-          multiline={false}
-          sx={{
-            '& .MuiOutlinedInput-root': {
-              borderRadius: 2,
-            },
-          }}
-        />
-
-        <Stack direction="row" spacing={2} justifyContent="flex-end">
-          <Button
-            variant="outlined"
-            onClick={onBack}
-            sx={{ borderRadius: 2, px: 3 }}
-          >
-            Back
-          </Button>
-          <Button
-            variant="contained"
-            onClick={handleImport}
-            disabled={!url.trim() || isLoading}
-            sx={{ borderRadius: 2, px: 3 }}
-          >
-            {isLoading ? 'Importing...' : 'Import Recipe'}
-          </Button>
-        </Stack>
-      </Stack>
-    </Box>
-  );
-}
-
-// Photo Import Form Component
-function PhotoImportForm({ onBack }: { onBack: () => void }) {
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      setSelectedFile(file);
-    }
-  };
-
-  const handleImport = async () => {
-    if (!selectedFile) return;
-
-    setIsLoading(true);
-    try {
-      // TODO: Implement photo import logic
-      console.log('Importing from photo:', selectedFile.name);
-      // Add your photo import logic here
-    } catch (error) {
-      console.error('Error importing from photo:', error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  return (
-    <Box sx={{ p: { xs: 2, sm: 3 } }}>
-      <Stack spacing={3}>
-        <Typography variant="h6" fontWeight={600}>
-          Import Recipe from Photo
-        </Typography>
-
-        <Box
-          sx={{
-            border: 2,
-            borderStyle: 'dashed',
-            borderColor: 'grey.300',
-            borderRadius: 2,
-            p: 4,
-            textAlign: 'center',
-            bgcolor: 'grey.50',
-            transition: 'all 0.3s ease',
-            '&:hover': {
-              borderColor: 'primary.main',
-              bgcolor: 'primary.50',
-            },
-          }}
-        >
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleFileSelect}
-            style={{ display: 'none' }}
-            id="photo-upload"
-          />
-          <label htmlFor="photo-upload" style={{ cursor: 'pointer' }}>
-            <CameraAltIcon sx={{ fontSize: 48, color: 'grey.400', mb: 2 }} />
-            <Typography variant="body1" color="text.secondary">
-              {selectedFile
-                ? selectedFile.name
-                : 'Click to upload a recipe photo'}
-            </Typography>
-          </label>
-        </Box>
-
-        <Stack direction="row" spacing={2} justifyContent="flex-end">
-          <Button
-            variant="outlined"
-            onClick={onBack}
-            sx={{ borderRadius: 2, px: 3 }}
-          >
-            Back
-          </Button>
-          <Button
-            variant="contained"
-            onClick={handleImport}
-            disabled={!selectedFile || isLoading}
-            sx={{ borderRadius: 2, px: 3 }}
-          >
-            {isLoading ? 'Processing...' : 'Import Recipe'}
-          </Button>
-        </Stack>
-      </Stack>
-    </Box>
-  );
-}
-
-// Manual Entry Form Component
-function ManualEntryForm({ onBack }: { onBack: () => void }) {
-  const [formData, setFormData] = useState({
-    title: '',
-    description: '',
-    ingredients: '',
-    instructions: '',
-    cookTime: '',
-    servings: '',
-  });
-
-  const handleInputChange = (field: string, value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
-  };
-
-  const handleSave = () => {
-    // TODO: Implement manual recipe save logic
-    console.log('Saving manual recipe:', formData);
-    // Add your save logic here
-  };
-
-  return (
-    <Box sx={{ p: { xs: 2, sm: 3 } }}>
-      <Stack spacing={3}>
-        <Typography variant="h6" fontWeight={600}>
-          Add Recipe Manually
-        </Typography>
-
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <TextField
-              fullWidth
-              label="Recipe Title"
-              value={formData.title}
-              onChange={(e) => handleInputChange('title', e.target.value)}
-              variant="outlined"
-              sx={{ '& .MuiOutlinedInput-root': { borderRadius: 2 } }}
-            />
-          </Grid>
-
-          <Grid item xs={12}>
-            <TextField
-              fullWidth
-              label="Description"
-              value={formData.description}
-              onChange={(e) => handleInputChange('description', e.target.value)}
-              variant="outlined"
-              multiline
-              rows={2}
-              sx={{ '& .MuiOutlinedInput-root': { borderRadius: 2 } }}
-            />
-          </Grid>
-
-          <Grid item xs={12} sm={6}>
-            <TextField
-              fullWidth
-              label="Cook Time (minutes)"
-              value={formData.cookTime}
-              onChange={(e) => handleInputChange('cookTime', e.target.value)}
-              variant="outlined"
-              type="number"
-              sx={{ '& .MuiOutlinedInput-root': { borderRadius: 2 } }}
-            />
-          </Grid>
-
-          <Grid item xs={12} sm={6}>
-            <TextField
-              fullWidth
-              label="Servings"
-              value={formData.servings}
-              onChange={(e) => handleInputChange('servings', e.target.value)}
-              variant="outlined"
-              type="number"
-              sx={{ '& .MuiOutlinedInput-root': { borderRadius: 2 } }}
-            />
-          </Grid>
-
-          <Grid item xs={12}>
-            <TextField
-              fullWidth
-              label="Ingredients"
-              value={formData.ingredients}
-              onChange={(e) => handleInputChange('ingredients', e.target.value)}
-              variant="outlined"
-              multiline
-              rows={4}
-              placeholder="List ingredients, one per line"
-              sx={{ '& .MuiOutlinedInput-root': { borderRadius: 2 } }}
-            />
-          </Grid>
-
-          <Grid item xs={12}>
-            <TextField
-              fullWidth
-              label="Instructions"
-              value={formData.instructions}
-              onChange={(e) =>
-                handleInputChange('instructions', e.target.value)
-              }
-              variant="outlined"
-              multiline
-              rows={4}
-              placeholder="Write step-by-step instructions"
-              sx={{ '& .MuiOutlinedInput-root': { borderRadius: 2 } }}
-            />
-          </Grid>
-        </Grid>
-
-        <Stack direction="row" spacing={2} justifyContent="flex-end">
-          <Button
-            variant="outlined"
-            onClick={onBack}
-            sx={{ borderRadius: 2, px: 3 }}
-          >
-            Back
-          </Button>
-          <Button
-            variant="contained"
-            onClick={handleSave}
-            disabled={!formData.title.trim()}
-            sx={{ borderRadius: 2, px: 3 }}
-          >
-            Save Recipe
-          </Button>
-        </Stack>
-      </Stack>
-    </Box>
-  );
-}
-
 export default function AddNewRecipeDialog({ open, onClose }: Props) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -481,7 +199,7 @@ export default function AddNewRecipeDialog({ open, onClose }: Props) {
         <Stack direction="row" alignItems="center" spacing={1}>
           <AddIcon color="primary" />
           <Typography variant={isMobile ? 'h6' : 'h5'} fontWeight={600}>
-            Add New Recipe
+            Add Recipe 🧑‍🍳
           </Typography>
         </Stack>
 
