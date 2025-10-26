@@ -1,16 +1,19 @@
+import { COMPANY } from '@/constants/company';
+
 const WordLogoIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="320"
-    height="64"
-    viewBox="0 0 320 64"
+    height="74"
+    viewBox="0 0 320 74"
     role="img"
     aria-labelledby="title desc"
   >
-    <title id="title">BiteBook — logo</title>
+    <title id="title">{COMPANY.name} — logo</title>
     <desc id="desc">
-      BiteBook wordmark with a minimal open-book icon. The spine and a small
-      page notch subtly form a cross, symbolizing thoughtful design and purpose.
+      {COMPANY.name} wordmark with a minimal open-book icon. The spine and a
+      small page notch subtly form a cross, symbolizing thoughtful design and
+      purpose.
     </desc>
     <style>
       {`:root{ --ink:#0B1C17; --accent:#0FB77A; --muted:#0A7F56; --bg:transparent; }
