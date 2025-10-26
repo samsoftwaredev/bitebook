@@ -2,9 +2,6 @@ import { AuthResponse, createClient } from '@supabase/supabase-js';
 
 import { NAV_APP_LINKS, NAV_MAIN_LINKS } from '@/constants';
 import type { Database } from '@/interfaces/database';
-import { GENDER_TYPES } from '@/interfaces/enum';
-
-import { generateRandomStringId } from '../utils';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_PROJECT_URL!;
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PROJECT_KEY!;
@@ -57,4 +54,5 @@ class SupabaseDB {
 }
 
 const db = new SupabaseDB();
+
 export { db, supabase };

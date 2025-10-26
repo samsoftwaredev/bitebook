@@ -1,4 +1,3 @@
-// theme.ts
 import { alpha, createTheme } from '@mui/material/styles';
 
 const BRAND = {

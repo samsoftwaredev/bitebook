@@ -75,6 +75,7 @@ export interface User {
   pictureUrl?: string;
   isConfirmed?: boolean;
   updateAt?: string;
+  emailVerified?: boolean;
 }
 
 export type ResourceSection = {

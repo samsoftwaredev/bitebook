@@ -58,13 +58,18 @@ const UserContextProvider = ({ children }: Props) => {
     setIsLoading(true);
     try {
       if (!userSession) throw Error('No session');
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) throw Error('No user found');
       const userData = {
-        userId: '34234',
-        email: 'user@example.com',
-        fullName: '',
-        firstName: '',
-        lastName: '',
-        genderMale: false,
+        userId: user.id,
+        email: user.email,
+        fullName: user.user_metadata.display_name,
+        firstName: user.user_metadata.display_name.split(' ')[0],
+        lastName: user.user_metadata.display_name.split(' ')[1] || '',
+        genderMale: user.user_metadata.gender === 'male',
+        emailVerified: user.user_metadata.email_verified,
         dateOfBirth: '',
         pictureUrl: '',
         isConfirmed: false,

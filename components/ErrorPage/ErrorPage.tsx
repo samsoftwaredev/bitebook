@@ -1,7 +1,6 @@
 import { Box, Typography } from '@mui/material';
 
 import Logo from '../Logo';
-import styles from './ErrorPage.module.scss';
 
 interface Props {
   text: string;
@@ -21,8 +20,8 @@ const ErrorPage = ({ text, isPage = false }: Props) => {
   }
 
   return (
-    <Box className={styles.container}>
-      <Box className={styles.content}>
+    <Box>
+      <Box>
         <Logo type="logo" />
         <Typography my={2}>{text}</Typography>
       </Box>

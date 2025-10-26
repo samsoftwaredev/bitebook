@@ -176,8 +176,8 @@ export const generateShoppingListService = async ({
   return { data, error };
 };
 
-export const getShoppingListService = async (
-  id: string, // uuid
+export const getShoppingListByUserIdService = async (
+  userId: string, // uuid
 ): Promise<{
   data: {
     items: {
@@ -190,7 +190,7 @@ export const getShoppingListService = async (
   error: any;
 }> => {
   const { data, error } = await supabase.functions.invoke('shopping-lists-id', {
-    body: { id },
+    body: { id: userId },
   });
   return { data, error };
 };

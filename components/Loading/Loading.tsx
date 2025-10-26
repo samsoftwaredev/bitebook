@@ -1,8 +1,5 @@
 import { Box, CircularProgress, Typography, useTheme } from '@mui/material';
 import { keyframes, styled } from '@mui/system';
-import * as React from 'react';
-
-import styles from './loading.module.scss';
 
 interface Props {
   isFeature?: boolean;
@@ -71,14 +68,14 @@ const Loading = ({
   const rim = theme.palette.mode === 'dark' ? '#9FE3C8' : '#0FB77A';
   if (isFeature) {
     return (
-      <Box className={styles.featureContainer}>
-        <CircularProgress className={styles.featureSpinner} color="secondary" />
+      <Box>
+        <CircularProgress color="secondary" />
       </Box>
     );
   }
 
   return (
-    <Box className={styles.featureContainer}>
+    <Box>
       <Box
         role="status"
         aria-live="polite"

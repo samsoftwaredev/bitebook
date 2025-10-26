@@ -2,8 +2,6 @@ import { ReactNode } from 'react';
 
 import { Footer, HomeNavbar } from '@/components';
 
-import styles from './mainLayout.module.scss';
-
 interface Props {
   children?: ReactNode;
   topNavbar?: ReactNode;
@@ -11,12 +9,12 @@ interface Props {
 
 const MainLayout = ({ children, topNavbar = <HomeNavbar /> }: Props) => {
   return (
-    <div className={styles.container}>
-      <div className={styles.content}>
+    <div>
+      <div>
         {topNavbar}
         {children}
       </div>
-      <div className={styles.footer}>
+      <div>
         <Footer />
       </div>
     </div>
