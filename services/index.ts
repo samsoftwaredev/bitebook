@@ -194,3 +194,37 @@ export const getShoppingListService = async (
   });
   return { data, error };
 };
+
+export const clearShoppingListService = async (
+  shoppingListId: string, // uuid
+): Promise<{
+  data: { success: boolean } | null;
+  error: any;
+}> => {
+  const { data, error } = await supabase.functions.invoke(
+    'shopping-lists-clear-completed',
+    {
+      body: { shoppingListId },
+    },
+  );
+  return { data, error };
+};
+
+export const toggleShoppingListItemService = async ({
+  shoppingListItemId, // uuid
+  boughtAt,
+}: {
+  shoppingListItemId: string;
+  boughtAt?: string;
+}): Promise<{
+  data: { success: boolean } | null;
+  error: any;
+}> => {
+  const { data, error } = await supabase.functions.invoke(
+    'shopping-lists-check-item',
+    {
+      body: { shoppingListItemId, boughtAt },
+    },
+  );
+  return { data, error };
+};
