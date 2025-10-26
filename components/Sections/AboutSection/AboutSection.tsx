@@ -5,20 +5,14 @@ import Link from 'next/link';
 import { NAV_MAIN_LINKS } from '@/constants/nav';
 import virginPrayingHeaven from '@/public/assets/images/art/virginPrayingHeaven.jpeg';
 
-import styles from './aboutSection.module.scss';
-
 const AboutSection = () => {
   return (
-    <Container maxWidth="md" className={styles.container}>
-      <Image
-        className={styles.image}
-        src={virginPrayingHeaven}
-        alt="Mary holding the Holy Rosary"
-      />
-      <Typography className={styles.title} component="h1" variant="h2">
+    <Container maxWidth="md">
+      <Image src={virginPrayingHeaven} alt="Mary holding the Holy Rosary" />
+      <Typography component="h1" variant="h2">
         About
       </Typography>
-      <Typography className={styles.content}>
+      <Typography>
         DoIt4Jesus is a faith-based platform created to bring together people of
         faith to pray the Holy Rosary as a community. We believe in the
         transformative power of prayer to fight evil, foster spiritual growth,

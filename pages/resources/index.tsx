@@ -27,9 +27,9 @@ const Resources: NextPage = () => {
   };
 
   const getAllResources = async () => {
-    let { data, error } = await db.getPosts().select('*');
-    if (data) setResources(normalizePost(data));
-    if (error) toast.error('Unable to get resources');
+    // let { data, error } = await db.getPosts().select('*');
+    // if (data) setResources(normalizePost(data));
+    // if (error) toast.error('Unable to get resources');
   };
 
   useEffect(() => {

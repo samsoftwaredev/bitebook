@@ -1,10 +1,10 @@
-import { ReactNode } from 'react';
+import React from 'react';
 
 import { Footer, HomeNavbar } from '@/components';
 
 interface Props {
-  children?: ReactNode;
-  topNavbar?: ReactNode;
+  children: React.ReactNode;
+  topNavbar?: React.ReactNode;
 }
 
 const MainLayout = ({ children, topNavbar = <HomeNavbar /> }: Props) => {
