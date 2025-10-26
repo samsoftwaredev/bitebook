@@ -37,13 +37,30 @@ const Footer = () => {
       color="text.secondary"
       variant="body2"
       sx={{
-        fontWeight: 600,
+        fontWeight: 500,
         px: 0.5,
-        '&:hover': { color: 'success.main', textDecoration: 'underline' },
+        py: { xs: 0.5, md: 0 },
+        borderRadius: 1,
+        transition: 'all 0.2s ease-in-out',
+        fontSize: { xs: '0.875rem', md: '0.875rem' },
+        '&:hover': {
+          color: 'success.main',
+          textDecoration: 'underline',
+          backgroundColor: {
+            xs: alpha(theme.palette.success.main, 0.04),
+            md: 'transparent',
+          },
+        },
         '&:focus-visible': {
           outline: `2px solid ${theme.palette.success.main}`,
           outlineOffset: 2,
           borderRadius: 1,
+        },
+        '&:active': {
+          backgroundColor: {
+            xs: alpha(theme.palette.success.main, 0.08),
+            md: 'transparent',
+          },
         },
       }}
     >
@@ -64,31 +81,60 @@ const Footer = () => {
             : '#F7FDFB', // soft mint tint
       }}
     >
-      <Container maxWidth="lg" sx={{ py: { xs: 3, md: 4 } }}>
-        {/* Top row: brand + tagline */}
+      <Container
+        maxWidth="lg"
+        sx={{ py: { xs: 4, md: 5 }, px: { xs: 2, sm: 3 } }}
+      >
+        {/* Top row: brand + tagline + social icons */}
         <Stack
-          direction={{ xs: 'column', sm: 'row' }}
-          spacing={1}
-          alignItems={{ xs: 'flex-start', sm: 'center' }}
+          direction={{ xs: 'column', md: 'row' }}
+          spacing={{ xs: 3, md: 2 }}
+          alignItems={{ xs: 'center', md: 'flex-start' }}
           justifyContent="space-between"
-          sx={{ mb: 2 }}
+          sx={{ mb: { xs: 3, md: 4 }, textAlign: { xs: 'center', md: 'left' } }}
         >
-          <Stack direction="row" spacing={1.5} alignItems="center">
-            <Box aria-label={`${COMPANY.name} logo`}>
-              <Logo />
-            </Box>
+          {/* Brand section */}
+          <Stack
+            spacing={1.5}
+            alignItems={{ xs: 'center', md: 'flex-start' }}
+            sx={{ maxWidth: { xs: '100%', md: '400px' } }}
+          >
+            <Stack direction="row" spacing={1.5} alignItems="center">
+              <Box aria-label={`${COMPANY.name} logo`}>
+                <Logo />
+              </Box>
+              <Typography
+                variant="h6"
+                color="text.primary"
+                sx={{
+                  fontWeight: 700,
+                  display: { xs: 'none', sm: 'block' },
+                }}
+              >
+                {COMPANY.name}
+              </Typography>
+            </Stack>
             <Typography
               variant="body2"
               color="text.secondary"
-              sx={{ fontWeight: 600 }}
+              sx={{
+                fontWeight: 500,
+                lineHeight: 1.6,
+                fontSize: { xs: '0.875rem', sm: '1rem' },
+              }}
             >
               Cook smarter. Save money. Eat healthier.
             </Typography>
           </Stack>
 
           {/* Social icons */}
-          <Stack direction="row" spacing={1} aria-label="Social media">
-            <Tooltip title="Facebook">
+          <Stack
+            direction="row"
+            spacing={1.5}
+            aria-label="Social media"
+            sx={{ mt: { xs: 0, md: 1 } }}
+          >
+            <Tooltip title="Follow us on Facebook">
               <IconButton
                 component="a"
                 href="https://www.facebook.com/"
@@ -100,7 +146,7 @@ const Footer = () => {
                 <FacebookIcon fontSize="small" />
               </IconButton>
             </Tooltip>
-            <Tooltip title="YouTube">
+            <Tooltip title="Subscribe on YouTube">
               <IconButton
                 component="a"
                 href="https://www.youtube.com/"
@@ -112,7 +158,7 @@ const Footer = () => {
                 <YouTubeIcon fontSize="small" />
               </IconButton>
             </Tooltip>
-            <Tooltip title="Instagram">
+            <Tooltip title="Follow us on Instagram">
               <IconButton
                 component="a"
                 href="https://www.instagram.com/"
@@ -128,47 +174,118 @@ const Footer = () => {
         </Stack>
 
         <Divider
-          sx={{ mb: 2, borderColor: alpha(theme.palette.text.primary, 0.08) }}
+          sx={{
+            mb: { xs: 3, md: 4 },
+            borderColor: alpha(theme.palette.text.primary, 0.08),
+            mx: { xs: -2, sm: 0 },
+          }}
         />
 
-        {/* Nav links */}
+        {/* Navigation links - Mobile first approach */}
         <Stack
           component="nav"
-          aria-label="Footer"
-          direction={{ xs: 'column', sm: 'row' }}
-          spacing={{ xs: 1, sm: 2 }}
-          alignItems={{ xs: 'flex-start', sm: 'center' }}
-          justifyContent="space-between"
-          sx={{ rowGap: 1, mb: 1 }}
+          aria-label="Footer navigation"
+          spacing={{ xs: 3, md: 0 }}
+          sx={{ mb: { xs: 3, md: 4 } }}
         >
-          {/* Left group: Company */}
-          <Stack direction="row" spacing={2} flexWrap="wrap">
-            <NavLink href={NAV_FOOTER_LINKS.about.link}>
-              {NAV_FOOTER_LINKS.about.label}
-            </NavLink>
-            <Separator />
-            <NavLink href={NAV_FOOTER_LINKS.resources.link}>
-              {NAV_FOOTER_LINKS.resources.label}
-            </NavLink>
-            <Separator />
-            <NavLink href={NAV_FOOTER_LINKS.contact.link}>
-              {NAV_FOOTER_LINKS.contact.label}
-            </NavLink>
-          </Stack>
+          {/* Mobile: Stacked sections */}
+          <Box sx={{ display: { xs: 'block', md: 'none' } }}>
+            {/* Company links */}
+            <Stack spacing={2} sx={{ mb: 3 }}>
+              <Typography
+                variant="subtitle2"
+                fontWeight={600}
+                color="text.primary"
+              >
+                Company
+              </Typography>
+              <Stack spacing={1.5}>
+                <NavLink href={NAV_FOOTER_LINKS.about.link}>
+                  {NAV_FOOTER_LINKS.about.label}
+                </NavLink>
+                <NavLink href={NAV_FOOTER_LINKS.resources.link}>
+                  {NAV_FOOTER_LINKS.resources.label}
+                </NavLink>
+                <NavLink href={NAV_FOOTER_LINKS.contact.link}>
+                  {NAV_FOOTER_LINKS.contact.label}
+                </NavLink>
+              </Stack>
+            </Stack>
 
-          {/* Right group: Legal + Account */}
-          <Stack direction="row" spacing={2} flexWrap="wrap">
-            <NavLink href={NAV_FOOTER_LINKS.termsOfService.link}>
-              {NAV_FOOTER_LINKS.termsOfService.label}
-            </NavLink>
-            <Separator />
-            <NavLink href={NAV_FOOTER_LINKS.privacyPolicy.link}>
-              {NAV_FOOTER_LINKS.privacyPolicy.label}
-            </NavLink>
-            <Separator />
-            <NavLink href={NAV_MAIN_LINKS.login.link}>
-              {NAV_MAIN_LINKS.login.label}
-            </NavLink>
+            {/* Legal links */}
+            <Stack spacing={2}>
+              <Typography
+                variant="subtitle2"
+                fontWeight={600}
+                color="text.primary"
+              >
+                Legal & Account
+              </Typography>
+              <Stack spacing={1.5}>
+                <NavLink href={NAV_FOOTER_LINKS.termsOfService.link}>
+                  {NAV_FOOTER_LINKS.termsOfService.label}
+                </NavLink>
+                <NavLink href={NAV_FOOTER_LINKS.privacyPolicy.link}>
+                  {NAV_FOOTER_LINKS.privacyPolicy.label}
+                </NavLink>
+                <NavLink href={NAV_MAIN_LINKS.login.link}>
+                  {NAV_MAIN_LINKS.login.label}
+                </NavLink>
+              </Stack>
+            </Stack>
+          </Box>
+
+          {/* Desktop: Horizontal layout */}
+          <Stack
+            direction="row"
+            spacing={2}
+            alignItems="center"
+            justifyContent="space-between"
+            sx={{
+              display: { xs: 'none', md: 'flex' },
+              flexWrap: 'wrap',
+              gap: { md: 2, lg: 3 },
+            }}
+          >
+            {/* Left group: Company */}
+            <Stack
+              direction="row"
+              spacing={2}
+              flexWrap="wrap"
+              alignItems="center"
+            >
+              <NavLink href={NAV_FOOTER_LINKS.about.link}>
+                {NAV_FOOTER_LINKS.about.label}
+              </NavLink>
+              <Separator />
+              <NavLink href={NAV_FOOTER_LINKS.resources.link}>
+                {NAV_FOOTER_LINKS.resources.label}
+              </NavLink>
+              <Separator />
+              <NavLink href={NAV_FOOTER_LINKS.contact.link}>
+                {NAV_FOOTER_LINKS.contact.label}
+              </NavLink>
+            </Stack>
+
+            {/* Right group: Legal + Account */}
+            <Stack
+              direction="row"
+              spacing={2}
+              flexWrap="wrap"
+              alignItems="center"
+            >
+              <NavLink href={NAV_FOOTER_LINKS.termsOfService.link}>
+                {NAV_FOOTER_LINKS.termsOfService.label}
+              </NavLink>
+              <Separator />
+              <NavLink href={NAV_FOOTER_LINKS.privacyPolicy.link}>
+                {NAV_FOOTER_LINKS.privacyPolicy.label}
+              </NavLink>
+              <Separator />
+              <NavLink href={NAV_MAIN_LINKS.login.link}>
+                {NAV_MAIN_LINKS.login.label}
+              </NavLink>
+            </Stack>
           </Stack>
         </Stack>
 
@@ -176,7 +293,17 @@ const Footer = () => {
         <Typography
           variant="caption"
           color="text.secondary"
-          sx={{ display: 'block', mt: 1 }}
+          sx={{
+            display: 'block',
+            textAlign: { xs: 'center', md: 'left' },
+            fontSize: { xs: '0.75rem', sm: '0.875rem' },
+            lineHeight: 1.5,
+            pt: { xs: 2, md: 1 },
+            borderTop: {
+              xs: `1px solid ${alpha(theme.palette.text.primary, 0.08)}`,
+              md: 'none',
+            },
+          }}
         >
           © {currentYear} {COMPANY.name}. All rights reserved.
         </Typography>
@@ -190,12 +317,22 @@ function iconButtonSx(theme: any) {
     color: theme.palette.success.main,
     border: `1px solid ${alpha(theme.palette.success.main, 0.3)}`,
     backgroundColor: alpha(theme.palette.success.main, 0.06),
+    borderRadius: 2,
+    width: { xs: 44, md: 40 },
+    height: { xs: 44, md: 40 },
+    transition: 'all 0.2s ease-in-out',
     '&:hover': {
       backgroundColor: alpha(theme.palette.success.main, 0.14),
+      transform: 'translateY(-1px)',
+      borderColor: alpha(theme.palette.success.main, 0.5),
     },
     '&:focus-visible': {
       outline: `2px solid ${theme.palette.success.main}`,
       outlineOffset: 2,
+    },
+    '&:active': {
+      transform: 'translateY(0)',
+      backgroundColor: alpha(theme.palette.success.main, 0.2),
     },
   };
 }
@@ -208,7 +345,6 @@ function Separator() {
       sx={{
         width: 1,
         height: 16,
-        borderRight: (t) => `1px solid ${alpha(t.palette.text.primary, 0.15)}`,
         mx: 0.5,
         display: { xs: 'none', sm: 'inline-block' },
       }}

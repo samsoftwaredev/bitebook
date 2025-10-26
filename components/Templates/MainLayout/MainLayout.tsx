@@ -9,12 +9,18 @@ interface Props {
 
 const MainLayout = ({ children, topNavbar = <HomeNavbar /> }: Props) => {
   return (
-    <div>
-      <div>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        minHeight: '100vh',
+      }}
+    >
+      <div style={{ flex: '1 0 auto' }}>
         {topNavbar}
         {children}
       </div>
-      <div>
+      <div style={{ flexShrink: 0 }}>
         <Footer />
       </div>
     </div>
