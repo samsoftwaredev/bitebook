@@ -35,4 +35,9 @@ export const NAV_MAIN_LINKS = {
 // app routes
 export const NAV_APP_LINKS = {
   app: { link: '/app', label: 'App', value: 'app' },
+  shoppingList: {
+    link: '/app/shopping-list',
+    label: 'Shopping List',
+    value: 'shoppingList',
+  },
 };

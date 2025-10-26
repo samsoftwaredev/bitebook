@@ -153,3 +153,44 @@ export const updateMealPlanSlotService = async ({
   );
   return { data, error };
 };
+
+export const generateShoppingListService = async ({
+  mealPlanId, // uuid
+  regenerate = false,
+}: {
+  mealPlanId: string;
+  regenerate?: boolean;
+}): Promise<{
+  data: {
+    shoppingListId: string;
+    itemsCreated: number;
+  } | null;
+  error: any;
+}> => {
+  const { data, error } = await supabase.functions.invoke(
+    'shopping-lists-generate',
+    {
+      body: { mealPlanId, regenerate },
+    },
+  );
+  return { data, error };
+};
+
+export const getShoppingListService = async (
+  id: string, // uuid
+): Promise<{
+  data: {
+    items: {
+      id: string;
+      name: string;
+      quantity: number;
+      notes: string | null;
+    }[];
+  } | null;
+  error: any;
+}> => {
+  const { data, error } = await supabase.functions.invoke('shopping-lists-id', {
+    body: { id },
+  });
+  return { data, error };
+};

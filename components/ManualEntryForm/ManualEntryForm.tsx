@@ -514,7 +514,7 @@ function ManualEntryForm({ onBack }: { onBack: () => void }) {
               }}
             >
               <Typography variant="h6" fontWeight={600} sx={{ mb: 3 }}>
-                Core Details
+                🍽️ Core Details
               </Typography>
 
               <Stack spacing={3}>
@@ -525,11 +525,6 @@ function ManualEntryForm({ onBack }: { onBack: () => void }) {
                   onChange={(e) => handleInputChange('title', e.target.value)}
                   variant="outlined"
                   placeholder="Give your recipe a catchy name..."
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">🍽️</InputAdornment>
-                    ),
-                  }}
                   error={!formData.title.trim() && formData.title !== ''}
                   helperText={
                     !formData.title.trim() && formData.title !== ''
@@ -554,16 +549,6 @@ function ManualEntryForm({ onBack }: { onBack: () => void }) {
                   multiline
                   rows={3}
                   placeholder="Tell us what makes this recipe special..."
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment
-                        position="start"
-                        sx={{ alignSelf: 'flex-start', pt: 2 }}
-                      >
-                        📝
-                      </InputAdornment>
-                    ),
-                  }}
                   helperText={`${formData.description.length}/500 characters`}
                   inputProps={{ maxLength: 500 }}
                   sx={{

@@ -1,16 +1,20 @@
 import { debounce } from '@mui/material';
 import type { NextPage } from 'next';
-import React, { useEffect } from 'react';
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
 import AppWrapper from '@/components/AppWrapper';
 import { Recipe } from '@/components/RecipeCard/RecipeCard.model';
 import MealPlannerEditorSection from '@/components/Sections/MealPlannerEditorSection';
 import MealPlannerSection from '@/components/Sections/MealPlannerSection';
 import { AppLayout } from '@/components/Templates';
+import { NAV_APP_LINKS } from '@/constants/nav';
 import { useLanguageContext } from '@/context/LanguageContext';
 import { DayPlan, RecipeResponse } from '@/interfaces/index';
 import {
   createOrUpdateMealPlanService,
+  generateShoppingListService,
   searchRecipesService,
 } from '@/services/index';
 
@@ -38,13 +42,15 @@ const Planner: NextPage = () => {
   const isEditMode = true; // You can replace this with actual logic to determine the mode
 
   const { lang } = useLanguageContext();
+  const router = useRouter();
+
   // planner state
-  const [days, setDays] = React.useState<DayPlan[]>(weekTemplate);
-  const [mealPlanId, setMealPlanId] = React.useState<string | null>(null);
-  const [recipe, setRecipe] = React.useState<Recipe | null>(null);
-  const [dialogOpen, setDialogOpen] = React.useState(false);
-  const [searchTerm, setSearchTerm] = React.useState<string>('');
-  const [recipes, setRecipes] = React.useState<Recipe[]>([]);
+  const [days, setDays] = useState<DayPlan[]>(weekTemplate);
+  const [mealPlanId, setMealPlanId] = useState<string | null>(null);
+  const [recipe, setRecipe] = useState<Recipe | null>(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [recipes, setRecipes] = useState<Recipe[]>([]);
 
   const recipesDataNormalized = (data: RecipeResponse): Recipe[] => {
     const dataNormalized: Recipe[] = data.items.map((r, i) => ({
@@ -139,6 +145,30 @@ const Planner: NextPage = () => {
     onSearchChange(e.target.value);
   };
 
+  const handleSendToShoppingList = async () => {
+    if (!mealPlanId) return;
+    try {
+      const { data, error } = await generateShoppingListService({
+        mealPlanId,
+        regenerate: false,
+      });
+      if (error) {
+        console.error('Error generating shopping list:', error);
+        toast.error('Error generating shopping list');
+        return;
+      }
+      toast.success('Shopping list generated successfully', {
+        autoClose: 1000,
+        onClose: () => {
+          router.push(NAV_APP_LINKS.shoppingList.link);
+        },
+      });
+    } catch (error) {
+      console.error('Error generating shopping list:', error);
+      toast.error('Error generating shopping list');
+    }
+  };
+
   return (
     <AppLayout>
       {isEditMode ? (
@@ -153,6 +183,7 @@ const Planner: NextPage = () => {
           handleSearchChange={handleSearchChange}
           onFilterByLabel={onFilterByLabel}
           setDays={setDays}
+          handleSendToShoppingList={handleSendToShoppingList}
           days={days}
         />
       ) : (

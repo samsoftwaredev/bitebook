@@ -49,6 +49,7 @@ interface Props {
   mealPlanId: string | null;
   setDays: React.Dispatch<React.SetStateAction<DayPlan[]>>;
   days: DayPlan[];
+  handleSendToShoppingList: () => void;
 }
 
 const SLOT_LABEL: Record<Slot, string> = {
@@ -82,6 +83,7 @@ export default function WeeklyMealPlanner({
   mealPlanId,
   setDays,
   days,
+  handleSendToShoppingList,
 }: Props) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -124,10 +126,6 @@ export default function WeeklyMealPlanner({
     (id: string | null | undefined) => recipes.find((r) => r.id === id) || null,
     [recipes],
   );
-
-  function handleShoppingCart() {
-    // TODO: Implement shopping cart logic
-  }
 
   function handleAIGeneratePlanner() {
     // TODO: Implement AI planner generation logic
@@ -225,11 +223,11 @@ export default function WeeklyMealPlanner({
           <Button
             variant="contained"
             color="success"
-            onClick={handleShoppingCart}
+            onClick={handleSendToShoppingList}
             startIcon={<ShoppingCartRoundedIcon />}
             sx={{ textTransform: 'none', fontWeight: 800 }}
           >
-            Shop
+            Send to Shopping List
           </Button>
         </Stack>
       </Stack>
