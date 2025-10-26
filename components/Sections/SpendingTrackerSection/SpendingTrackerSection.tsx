@@ -1,4 +1,3 @@
-// SpendingTrackerPage.tsx
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import AttachMoneyRoundedIcon from '@mui/icons-material/AttachMoneyRounded';
 import CalendarMonthRoundedIcon from '@mui/icons-material/CalendarMonthRounded';
@@ -8,7 +7,6 @@ import ShowChartRoundedIcon from '@mui/icons-material/ShowChartRounded';
 import {
   Box,
   Button,
-  Container,
   Grid,
   MenuItem,
   Paper,
@@ -18,6 +16,8 @@ import {
   alpha,
 } from '@mui/material';
 import * as React from 'react';
+
+import PageHeader from '@/components/PageHeader/PageHeader';
 
 const MetricCard = ({
   icon,
@@ -78,22 +78,10 @@ export default function SpendingTrackerPage() {
   return (
     <>
       {/* Header */}
-      <Stack
-        direction={{ xs: 'column', sm: 'row' }}
-        justifyContent="space-between"
-        alignItems={{ xs: 'flex-start', sm: 'center' }}
-        spacing={2}
-        sx={{ mb: 2 }}
+      <PageHeader
+        title="Spending Tracker"
+        subTitle="Track your grocery expenses by scanning receipts"
       >
-        <Box>
-          <Typography variant="h4" fontWeight={900} letterSpacing="-0.01em">
-            Spending Tracker
-          </Typography>
-          <Typography color="text.secondary">
-            Track your grocery expenses by scanning receipts
-          </Typography>
-        </Box>
-
         <Button
           variant="contained"
           color="success"
@@ -102,7 +90,7 @@ export default function SpendingTrackerPage() {
         >
           Scan Receipt
         </Button>
-      </Stack>
+      </PageHeader>
 
       {/* KPIs */}
       <Grid container spacing={2} sx={{ mb: 2 }}>

@@ -1,4 +1,3 @@
-// ShoppingListPage.tsx
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
 import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
@@ -9,7 +8,6 @@ import {
   Button,
   Checkbox,
   Chip,
-  Container,
   Divider,
   Grid,
   IconButton,
@@ -21,7 +19,9 @@ import {
   Typography,
   alpha,
 } from '@mui/material';
-import * as React from 'react';
+import React from 'react';
+
+import PageHeader from '@/components/PageHeader/PageHeader';
 
 type Item = {
   id: string;
@@ -101,24 +101,7 @@ export default function ShoppingListPage() {
   return (
     <>
       {/* Page header */}
-      <Stack
-        direction={{ xs: 'column', sm: 'row' }}
-        alignItems={{ xs: 'flex-start', sm: 'center' }}
-        justifyContent="space-between"
-        spacing={2}
-        sx={{ mb: 2 }}
-      >
-        <Box>
-          <Stack direction="row" spacing={1} alignItems="center">
-            <Typography variant="h4" fontWeight={900} letterSpacing="-0.01em">
-              Shopping List
-            </Typography>
-          </Stack>
-          <Typography color="text.secondary">
-            Check off items as you shop
-          </Typography>
-        </Box>
-
+      <PageHeader title="Shopping List" subTitle="Check off items as you shop">
         <Button
           variant="contained"
           startIcon={<DeleteRoundedIcon />}
@@ -131,7 +114,7 @@ export default function ShoppingListPage() {
         >
           Clear Completed
         </Button>
-      </Stack>
+      </PageHeader>
 
       <Grid container spacing={2.5}>
         {/* Left – checklist */}

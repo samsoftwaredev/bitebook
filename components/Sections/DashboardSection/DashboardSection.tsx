@@ -1,8 +1,18 @@
+import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
-import { Box, Grid, InputBase, Paper, Stack, Typography } from '@mui/material';
+import {
+  Button,
+  Grid,
+  InputBase,
+  Paper,
+  Stack,
+  Typography,
+} from '@mui/material';
 import * as React from 'react';
 
+import AddNewRecipeDialog from '@/components/AddNewRecipeDialog/AddNewRecipeDialog';
 import FoodFilter from '@/components/FoodFilter';
+import PageHeader from '@/components/PageHeader/PageHeader';
 import RecipeCard from '@/components/RecipeCard/RecipeCard';
 import { Recipe } from '@/components/RecipeCard/RecipeCard.model';
 import RecipeDialog from '@/components/RecipeDialog/RecipeDialog';
@@ -32,15 +42,29 @@ export default function DashboardSection({
   title,
   subtitle,
 }: Props) {
+  const [addNewRecipeDialogOpen, setAddNewRecipeDialogOpen] =
+    React.useState(false);
+
+  const onAddNewRecipe = () => {
+    setAddNewRecipeDialogOpen(true);
+  };
+
+  const handleAddNewRecipeDialogClose = () => {
+    setAddNewRecipeDialogOpen(false);
+  };
+
   return (
     <>
       {/* Title & subtitle */}
-      <Box sx={{ mb: 2 }}>
-        <Typography variant="h4" fontWeight={800} letterSpacing="-0.01em">
-          {title}
-        </Typography>
-        <Typography color="text.secondary">{subtitle}</Typography>
-      </Box>
+      <PageHeader title={title} subTitle={subtitle}>
+        <Button
+          variant="contained"
+          onClick={onAddNewRecipe}
+          startIcon={<AddRoundedIcon />}
+        >
+          Add New Recipe
+        </Button>
+      </PageHeader>
 
       {/* Search bar */}
       <Paper
@@ -77,6 +101,11 @@ export default function DashboardSection({
           </Grid>
         ))}
       </Grid>
+
+      <AddNewRecipeDialog
+        open={addNewRecipeDialogOpen}
+        onClose={handleAddNewRecipeDialogClose}
+      />
 
       <RecipeDialog
         recipeData={recipe}
