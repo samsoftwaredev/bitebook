@@ -1,3 +1,4 @@
+import { ChevronLeft, ChevronRight } from '@mui/icons-material';
 import ExpandLessRoundedIcon from '@mui/icons-material/ExpandLessRounded';
 import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
@@ -43,7 +44,7 @@ const RecipeListSelector = ({
     <Paper
       elevation={8}
       sx={{
-        marginLeft: `${drawerWidth}px`,
+        marginLeft: { md: `${drawerWidth}px`, sm: '0px' },
         position: 'fixed',
         bottom: 0,
         left: 0,
@@ -113,30 +114,57 @@ const RecipeListSelector = ({
 
       {/* Cards row */}
       {openDrawer && (
-        <Box
-          sx={{
-            mt: 1,
-            display: 'flex',
-            gap: { xs: 2, sm: 5 },
-            overflowX: 'auto',
-            pb: 0.5,
-            scrollSnapType: 'x mandatory',
-            '&::-webkit-scrollbar': { height: 6 },
-            flexShrink: 1,
-            overflowY: 'hidden',
-          }}
-        >
-          {recipes.map((r) => (
-            <Draggable id={r.id} key={r.id}>
-              <Box key={r.id} id={r.id}>
-                <RecipeDraggableCard
-                  r={r}
-                  onView={(rec) => handleCardClick(rec)}
-                />
-              </Box>
-            </Draggable>
-          ))}
-        </Box>
+        <Stack direction="row" alignItems="center" sx={{ mt: 1 }}>
+          <IconButton
+            sx={{ bgcolor: 'transparent' }}
+            onClick={() => {
+              const container = document.getElementById('recipe-scroll');
+              if (container) {
+                container.scrollBy({ left: -200, behavior: 'smooth' });
+              }
+            }}
+          >
+            <ChevronLeft />
+          </IconButton>
+
+          <Box
+            id="recipe-scroll"
+            sx={{
+              mt: 1,
+              display: 'flex',
+              gap: { xs: 2, sm: 5 },
+              overflowX: 'auto',
+              pb: 0.5,
+              scrollSnapType: 'x mandatory',
+              '&::-webkit-scrollbar': { height: 6 },
+              flexShrink: 1,
+              overflowY: 'hidden',
+            }}
+          >
+            {recipes.map((r) => (
+              <Draggable id={r.id} key={r.id}>
+                <Box key={r.id} id={r.id}>
+                  <RecipeDraggableCard
+                    r={r}
+                    onView={(rec) => handleCardClick(rec)}
+                  />
+                </Box>
+              </Draggable>
+            ))}
+          </Box>
+
+          <IconButton
+            sx={{ bgcolor: 'transparent' }}
+            onClick={() => {
+              const container = document.getElementById('recipe-scroll');
+              if (container) {
+                container.scrollBy({ left: 200, behavior: 'smooth' });
+              }
+            }}
+          >
+            <ChevronRight />
+          </IconButton>
+        </Stack>
       )}
     </Paper>
   );
