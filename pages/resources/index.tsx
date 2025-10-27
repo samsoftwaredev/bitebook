@@ -16,7 +16,6 @@ import { Meta } from '@/components';
 import { MainLayout } from '@/components/Templates';
 import { NAV_MAIN_LINKS } from '@/constants/nav';
 import { ResourcePost } from '@/interfaces';
-import { normalizePost } from '@/utils';
 
 const Resources: NextPage = () => {
   const [resources, setResources] = useState<ResourcePost[]>();
