@@ -3,12 +3,16 @@
 import type { NextPage } from 'next';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
 import AppWrapper from '@/components/AppWrapper';
 import ShoppingListSection from '@/components/Sections/ShoppingListSection';
 import { AppLayout } from '@/components/Templates';
 import { ShoppingItem, ShoppingStats } from '@/interfaces/index';
-import { getShoppingListByUserIdService } from '@/services/index';
+import {
+  clearShoppingListService,
+  getShoppingListByUserIdService,
+} from '@/services/index';
 
 const ShoppingList: NextPage = () => {
   const searchParams = useSearchParams();
@@ -50,6 +54,24 @@ const ShoppingList: NextPage = () => {
     }
   };
 
+  const handleClear = async () => {
+    setToBuyItems([]);
+    setPurchasedItems([]);
+    setStats({
+      total: 0,
+      purchased: 0,
+      remaining: 0,
+      status: 'active',
+    });
+    try {
+      await clearShoppingListService(shoppingListId!);
+      toast.success('Shopping list cleared successfully.');
+    } catch (error) {
+      toast.error('Failed to clear shopping list.');
+      console.error('Error clearing shopping list:', error);
+    }
+  };
+
   useEffect(() => {
     getShoppingListData();
   }, []);
@@ -63,6 +85,7 @@ const ShoppingList: NextPage = () => {
         setToBuyItems={setToBuyItems}
         setPurchasedItems={setPurchasedItems}
         setStats={setStats}
+        handleClear={handleClear}
       />
     </AppLayout>
   );

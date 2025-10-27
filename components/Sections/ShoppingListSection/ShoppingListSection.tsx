@@ -31,6 +31,7 @@ interface Props {
   setToBuyItems: React.Dispatch<React.SetStateAction<ShoppingItem[]>>;
   setPurchasedItems: React.Dispatch<React.SetStateAction<ShoppingItem[]>>;
   setStats: React.Dispatch<React.SetStateAction<ShoppingStats>>;
+  handleClear: () => void;
 }
 
 export default function ShoppingListPage({
@@ -40,6 +41,7 @@ export default function ShoppingListPage({
   setToBuyItems,
   setPurchasedItems,
   setStats,
+  handleClear,
 }: Props) {
   const toggle = (id: string) => {
     if (toBuy.find((it) => it.id === id)) {
@@ -77,8 +79,7 @@ export default function ShoppingListPage({
   };
 
   const clearCompleted = () => {
-    setPurchasedItems([]);
-    setToBuyItems([]);
+    handleClear();
   };
 
   return (
