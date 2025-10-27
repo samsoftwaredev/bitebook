@@ -35,8 +35,8 @@ import { Recipe } from '@/components/RecipeCard/RecipeCard.model';
 import RecipeDialog from '@/components/RecipeDialog';
 import RecipeListSelector from '@/components/RecipeListSelector';
 import SlotDrop from '@/components/SlotDrop';
-import { DayPlan, Slot } from '@/interfaces/index';
-import { updateMealPlanSlotService } from '@/services/index';
+import { DayPlan, Slot } from '@/interfaces';
+import { updateMealPlanSlotService } from '@/services';
 
 interface Props {
   searchTerm: string;

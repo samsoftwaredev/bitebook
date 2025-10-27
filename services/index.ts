@@ -49,7 +49,7 @@ export const searchRecipesService = async ({
   offset?: number;
   isFavorite?: boolean;
 }): Promise<{
-  data: RecipeResponse | null;
+  data: RecipeResponse;
   error: any;
 }> => {
   if (tags?.includes('all')) {

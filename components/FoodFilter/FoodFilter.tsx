@@ -11,8 +11,8 @@ import { useEffect } from 'react';
 import { toast } from 'react-toastify';
 
 import { foodTypeFilters } from '@/constants/global';
-import { FoodTypeFilter } from '@/interfaces/index';
-import { mealTypesService } from '@/services/index';
+import { FoodTypeFilter } from '@/interfaces';
+import { mealTypesService } from '@/services';
 
 interface FilterChipsProps {
   activeFilter: string;

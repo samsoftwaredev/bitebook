@@ -11,12 +11,12 @@ import MealPlannerSection from '@/components/Sections/MealPlannerSection';
 import { AppLayout } from '@/components/Templates';
 import { NAV_APP_LINKS } from '@/constants/nav';
 import { useLanguageContext } from '@/context/LanguageContext';
-import { DayPlan, RecipeResponse } from '@/interfaces/index';
+import { DayPlan, RecipeResponse } from '@/interfaces';
 import {
   createOrUpdateMealPlanService,
   generateShoppingListService,
   searchRecipesService,
-} from '@/services/index';
+} from '@/services';
 
 const weekTemplate: DayPlan[] = Array.from({ length: 7 }, (_, i) => {
   const today = new Date();

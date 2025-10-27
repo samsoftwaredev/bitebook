@@ -22,7 +22,7 @@ import {
 import React from 'react';
 
 import { PageHeader } from '@/components';
-import { ShoppingItem, ShoppingStats } from '@/interfaces/index';
+import { ShoppingItem, ShoppingStats } from '@/interfaces';
 
 interface Props {
   toBuyItems: ShoppingItem[];

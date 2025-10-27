@@ -8,11 +8,11 @@ import { toast } from 'react-toastify';
 import AppWrapper from '@/components/AppWrapper';
 import ShoppingListSection from '@/components/Sections/ShoppingListSection';
 import { AppLayout } from '@/components/Templates';
-import { ShoppingItem, ShoppingStats } from '@/interfaces/index';
+import { ShoppingItem, ShoppingStats } from '@/interfaces';
 import {
   clearShoppingListService,
   getShoppingListByUserIdService,
-} from '@/services/index';
+} from '@/services';
 
 const ShoppingList: NextPage = () => {
   const searchParams = useSearchParams();

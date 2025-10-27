@@ -22,7 +22,7 @@ import * as React from 'react';
 import { COMPANY } from '@/constants/company';
 import { NAV_FOOTER_LINKS, NAV_MAIN_LINKS } from '@/constants/nav';
 import { useLanguageContext } from '@/context/LanguageContext';
-import { LANG } from '@/interfaces/index';
+import { LANG } from '@/interfaces';
 
 import { Logo } from '../..';
 

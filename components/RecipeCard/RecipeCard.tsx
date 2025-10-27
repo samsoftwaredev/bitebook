@@ -17,7 +17,7 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 
 import ScorePill from '@/components/ScorePill';
-import { favoritesToggleService } from '@/services/index';
+import { favoritesToggleService } from '@/services';
 
 import { Recipe } from './RecipeCard.model';
 

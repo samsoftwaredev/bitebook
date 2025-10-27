@@ -22,8 +22,8 @@ import Image from 'next/image';
 import React, { useEffect } from 'react';
 
 import { Recipe } from '@/components/RecipeCard/RecipeCard.model';
-import { RecipeDetail } from '@/interfaces/index';
-import { getRecipeByIdService } from '@/services/index';
+import { RecipeDetail } from '@/interfaces';
+import { getRecipeByIdService } from '@/services';
 
 import Loading from '../Loading';
 

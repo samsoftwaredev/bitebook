@@ -7,8 +7,8 @@ import { Recipe } from '@/components/RecipeCard/RecipeCard.model';
 import { DashboardSection } from '@/components/Sections';
 import { AppLayout } from '@/components/Templates';
 import { useLanguageContext } from '@/context/LanguageContext';
-import { RecipeResponse } from '@/interfaces/index';
-import { searchRecipesService } from '@/services/index';
+import { RecipeResponse } from '@/interfaces';
+import { searchRecipesService } from '@/services';
 
 const Favorite: NextPage = () => {
   const { lang } = useLanguageContext();

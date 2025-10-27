@@ -20,7 +20,6 @@ import { MainLayout } from '@/components/Templates';
 import { NAV_MAIN_LINKS } from '@/constants/nav';
 import { useLanguageContext } from '@/context/LanguageContext';
 import { ResourcePost } from '@/interfaces';
-import { normalizePost } from '@/utils';
 
 function ResourcesPost() {
   const { t } = useLanguageContext();
@@ -51,9 +50,9 @@ function ResourcesPost() {
     setIsLoading(true);
     const { slug } = router.query;
     if (typeof slug === 'string') {
-      let { data, error } = await db.getPosts().select('*').eq('slug', slug);
-      if (data) setArticle(normalizePost(data)[0]);
-      if (error) toast.error('Unable to display article');
+      // let { data, error } = await db.getPosts().select('*').eq('slug', slug);
+      // if (data) setArticle(normalizePost(data)[0]);
+      // if (error) toast.error('Unable to display article');
       setIsLoading(false);
     }
   };
