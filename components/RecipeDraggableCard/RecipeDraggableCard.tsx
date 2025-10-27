@@ -9,7 +9,6 @@ import {
   Typography,
   alpha,
 } from '@mui/material';
-import * as React from 'react';
 
 import { Recipe } from '@/components/RecipeCard/RecipeCard.model';
 

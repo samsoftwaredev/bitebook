@@ -75,6 +75,7 @@
     "lint-staged": "^15.2.10",
     "prettier": "^3.3.3",
     "ts-node": "^10.9.2",
+    "typescript": "^5.9.3",
     "url-loader": "^4.1.1"
   },
   "lint-staged": {

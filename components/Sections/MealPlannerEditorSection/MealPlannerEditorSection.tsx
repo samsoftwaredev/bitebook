@@ -30,11 +30,11 @@ import {
 import * as React from 'react';
 import { toast } from 'react-toastify';
 
-import Droppable from '@/components/Droppable';
+import { RecipeDialog } from '@/components';
+import { RecipeListSelector } from '@/components';
+import { SlotDrop } from '@/components';
+import { Droppable } from '@/components';
 import { Recipe } from '@/components/RecipeCard/RecipeCard.model';
-import RecipeDialog from '@/components/RecipeDialog';
-import RecipeListSelector from '@/components/RecipeListSelector';
-import SlotDrop from '@/components/SlotDrop';
 import { DayPlan, Slot } from '@/interfaces';
 import { updateMealPlanSlotService } from '@/services';
 

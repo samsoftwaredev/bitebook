@@ -20,9 +20,8 @@ import {
 } from '@mui/material';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import * as React from 'react';
 
-import Logo from '@/components/Logo';
+import { Logo } from '@/components';
 import { useUserContext } from '@/context/UserContext';
 
 const drawerWidth = 260;

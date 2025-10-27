@@ -4,7 +4,7 @@ import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
 import { db } from '@/classes/SupabaseDB';
-import FormErrorText from '@/components/FormErrorText';
+import { FormErrorText } from '@/components';
 import { useLanguageContext } from '@/context/LanguageContext';
 
 interface IFormInputs {

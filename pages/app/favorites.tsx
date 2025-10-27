@@ -2,7 +2,7 @@ import { debounce } from '@mui/material';
 import type { NextPage } from 'next';
 import * as React from 'react';
 
-import AppWrapper from '@/components/AppWrapper';
+import { AppWrapper } from '@/components';
 import { Recipe } from '@/components/RecipeCard/RecipeCard.model';
 import { DashboardSection } from '@/components/Sections';
 import { AppLayout } from '@/components/Templates';

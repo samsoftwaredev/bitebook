@@ -25,6 +25,12 @@ export { default as RecipeCard } from './RecipeCard';
 export { default as AddNewRecipeDialog } from './AddNewRecipeDialog';
 export { default as FoodFilter } from './FoodFilter';
 export { default as RecipeDialog } from './RecipeDialog';
+export { default as ScorePill } from './ScorePill';
+export { default as Draggable } from './Draggable';
+export { default as Droppable } from './Droppable';
+export { default as RecipeListSelector } from './RecipeListSelector';
+export { default as SlotDrop } from './SlotDrop';
+export { default as AppWrapper } from './AppWrapper';
 
 export * from './Navbars';
 export * from './Fields';

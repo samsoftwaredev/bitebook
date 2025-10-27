@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
-import AppWrapper from '@/components/AppWrapper';
+import { AppWrapper } from '@/components';
 import { Recipe } from '@/components/RecipeCard/RecipeCard.model';
 import MealPlannerEditorSection from '@/components/Sections/MealPlannerEditorSection';
 import MealPlannerSection from '@/components/Sections/MealPlannerSection';

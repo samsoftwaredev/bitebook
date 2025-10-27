@@ -9,7 +9,7 @@ import {
 } from '@mui/material';
 import React from 'react';
 
-import Logo from '@/components/Logo';
+import { Logo } from '@/components';
 import { SideNavbar } from '@/components/Navbars';
 import { drawerWidth } from '@/constants/global';
 

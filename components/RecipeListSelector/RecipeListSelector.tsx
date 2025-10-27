@@ -14,7 +14,7 @@ import {
 } from '@mui/material';
 import React from 'react';
 
-import Draggable from '@/components/Draggable';
+import { Draggable } from '@/components';
 import RecipeDraggableCard from '@/components/RecipeDraggableCard';
 import { drawerWidth } from '@/constants';
 import { theme } from '@/styles/mui-overwrite';
