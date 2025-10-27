@@ -7,7 +7,6 @@ export { default as Community } from './Community';
 export { default as PageNotFound } from './PageNotFound';
 export { default as StarButton } from './StarButton';
 export { default as CallToAction } from './CallToAction';
-export { default as CardDeck } from './CardDeck';
 export { default as FormErrorText } from './FormErrorText';
 export { default as ProtectedRoute } from './ProtectedRoute';
 export { default as Loading } from './Loading';
