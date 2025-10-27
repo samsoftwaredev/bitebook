@@ -68,14 +68,36 @@ const Loading = ({
   const rim = theme.palette.mode === 'dark' ? '#9FE3C8' : '#0FB77A';
   if (isFeature) {
     return (
-      <Box>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          minHeight: '200px',
+          width: '100%',
+        }}
+      >
         <CircularProgress color="secondary" />
       </Box>
     );
   }
 
   return (
-    <Box>
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        minHeight: '100vh',
+        width: '100%',
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        zIndex: 9999,
+        backgroundColor: 'rgba(255, 255, 255, 0.9)',
+        backdropFilter: 'blur(4px)',
+      }}
+    >
       <Box
         role="status"
         aria-live="polite"

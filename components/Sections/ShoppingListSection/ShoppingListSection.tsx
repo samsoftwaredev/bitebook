@@ -21,7 +21,7 @@ import {
 } from '@mui/material';
 import React from 'react';
 
-import PageHeader from '@/components/PageHeader/PageHeader';
+import { PageHeader } from '@/components';
 import { ShoppingItem, ShoppingStats } from '@/interfaces/index';
 
 interface Props {

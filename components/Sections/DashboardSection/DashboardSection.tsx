@@ -10,12 +10,14 @@ import {
 } from '@mui/material';
 import * as React from 'react';
 
-import AddNewRecipeDialog from '@/components/AddNewRecipeDialog/AddNewRecipeDialog';
-import FoodFilter from '@/components/FoodFilter';
-import PageHeader from '@/components/PageHeader/PageHeader';
-import RecipeCard from '@/components/RecipeCard/RecipeCard';
+import {
+  AddNewRecipeDialog,
+  FoodFilter,
+  PageHeader,
+  RecipeCard,
+  RecipeDialog,
+} from '@/components';
 import { Recipe } from '@/components/RecipeCard/RecipeCard.model';
-import RecipeDialog from '@/components/RecipeDialog/RecipeDialog';
 
 interface Props {
   searchTerm: string;

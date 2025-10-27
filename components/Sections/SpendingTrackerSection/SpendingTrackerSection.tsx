@@ -17,7 +17,7 @@ import {
 } from '@mui/material';
 import * as React from 'react';
 
-import PageHeader from '@/components/PageHeader/PageHeader';
+import { PageHeader } from '@/components';
 
 const MetricCard = ({
   icon,

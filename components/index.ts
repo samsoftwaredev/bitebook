@@ -20,6 +20,11 @@ export { default as HowItWorks } from './HowItWorks';
 export { default as AppIntroduction } from './AppIntroduction';
 export { default as AccentCard } from './AccentCard';
 export { default as ConfettiCelebration } from './ConfettiCelebration';
+export { default as PageHeader } from './PageHeader';
+export { default as RecipeCard } from './RecipeCard';
+export { default as AddNewRecipeDialog } from './AddNewRecipeDialog';
+export { default as FoodFilter } from './FoodFilter';
+export { default as RecipeDialog } from './RecipeDialog';
 
 export * from './Navbars';
 export * from './Fields';
