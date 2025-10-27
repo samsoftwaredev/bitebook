@@ -113,3 +113,23 @@ export type DayPlan = {
   slots: Record<Slot, string | null>; // recipe id or null
   isToday: boolean;
 };
+
+export type ShoppingItem = {
+  id: string;
+  name: string;
+  qty: number;
+  unit: string;
+  from_recipes: string[];
+  checked: boolean;
+  purchased?: boolean;
+  details?: string[];
+  bought?: string;
+  expires?: string;
+};
+
+export type ShoppingStats = {
+  purchased: number;
+  remaining: number;
+  status: string;
+  total: number;
+};

@@ -22,81 +22,64 @@ import {
 import React from 'react';
 
 import PageHeader from '@/components/PageHeader/PageHeader';
+import { ShoppingItem, ShoppingStats } from '@/interfaces/index';
 
-type Item = {
-  id: string;
-  name: string;
-  qty: string;
-  details?: string[]; // e.g. For: …, Shelf life: …
-  bought?: string; // date
-  expires?: string; // date
-  purchased: boolean;
-};
+interface Props {
+  toBuyItems: ShoppingItem[];
+  purchasedItems: ShoppingItem[];
+  stats: ShoppingStats;
+  setToBuyItems: React.Dispatch<React.SetStateAction<ShoppingItem[]>>;
+  setPurchasedItems: React.Dispatch<React.SetStateAction<ShoppingItem[]>>;
+  setStats: React.Dispatch<React.SetStateAction<ShoppingStats>>;
+}
 
-const initialItems: Item[] = [
-  {
-    id: '1',
-    name: 'Tahini',
-    qty: '1/4 cup',
-    details: [
-      'For: Quinoa Buddha Bowl, Quinoa Buddha Bowl',
-      'Shelf life: 180 days',
-    ],
-    purchased: false,
-  },
-  {
-    id: '2',
-    name: 'Garlic',
-    qty: '4 cloves',
-    details: ['For: Spicy Korean Beef Bowl', 'Shelf life: 30 days'],
-    purchased: false,
-  },
-  {
-    id: '3',
-    name: 'Baking powder',
-    qty: '2 tsp',
-    purchased: true,
-    bought: 'Bought: Oct 16',
-    expires: 'Expires: Oct 16',
-  },
-  {
-    id: '4',
-    name: 'Chickpeas',
-    qty: '2 cans (15 oz)',
-    purchased: true,
-    bought: 'Bought: Oct 16',
-    expires: 'Expires: Oct 16',
-  },
-];
+export default function ShoppingListPage({
+  toBuyItems: toBuy,
+  purchasedItems: purchased,
+  stats,
+  setToBuyItems,
+  setPurchasedItems,
+  setStats,
+}: Props) {
+  const toggle = (id: string) => {
+    if (toBuy.find((it) => it.id === id)) {
+      setToBuyItems((prev) => {
+        const item = prev.find((it) => it.id === id);
+        if (item) {
+          // Move to purchased
+          setPurchasedItems((purchasedPrev) => [
+            ...purchasedPrev,
+            { ...item, purchased: true },
+          ]);
+          return prev.filter((it) => it.id !== id);
+        }
+        return prev;
+      });
+    } else {
+      setPurchasedItems((prev) => {
+        const item = prev.find((it) => it.id === id);
+        if (item) {
+          // Move to toBuy
+          setToBuyItems((toBuyPrev) => [
+            ...toBuyPrev,
+            { ...item, purchased: false },
+          ]);
+          return prev.filter((it) => it.id !== id);
+        }
+        return prev;
+      });
+    }
+  };
 
-export default function ShoppingListPage() {
-  const [items, setItems] = React.useState<Item[]>(initialItems);
+  const remove = (id: string) => {
+    setPurchasedItems((prev) => prev.filter((it) => it.id !== id));
+    setToBuyItems((prev) => prev.filter((it) => it.id !== id));
+  };
 
-  const toggle = (id: string) =>
-    setItems((prev) =>
-      prev.map((it) =>
-        it.id === id
-          ? {
-              ...it,
-              purchased: !it.purchased,
-              bought: !it.purchased
-                ? `Bought: ${new Date().toLocaleDateString('en-US', { month: 'short', day: '2-digit' })}`
-                : undefined,
-              // naive demo expiry for UI
-              expires: !it.purchased ? `Expires: Oct 16` : undefined,
-            }
-          : it,
-      ),
-    );
-
-  const remove = (id: string) =>
-    setItems((prev) => prev.filter((it) => it.id !== id));
-
-  const clearCompleted = () =>
-    setItems((prev) => prev.filter((it) => !it.purchased));
-
-  const toBuy = items.filter((i) => !i.purchased);
-  const purchased = items.filter((i) => i.purchased);
+  const clearCompleted = () => {
+    setPurchasedItems([]);
+    setToBuyItems([]);
+  };
 
   return (
     <>
@@ -223,15 +206,19 @@ export default function ShoppingListPage() {
               </Typography>
               <StatRow
                 label="Total Items"
-                value={items.length}
+                value={stats.total}
                 color="#7C3AED"
               />
               <StatRow
                 label="Purchased"
-                value={purchased.length}
+                value={stats.purchased}
                 color="#16A34A"
               />
-              <StatRow label="Remaining" value={toBuy.length} color="#F97316" />
+              <StatRow
+                label="Remaining"
+                value={stats.remaining}
+                color="#F97316"
+              />
             </Paper>
           </Stack>
         </Grid>
@@ -276,7 +263,7 @@ function ItemRow({
   onDelete,
   purchasedStyle = false,
 }: {
-  item: Item;
+  item: ShoppingItem;
   onToggle: (id: string) => void;
   onDelete: (id: string) => void;
   purchasedStyle?: boolean;
@@ -326,7 +313,7 @@ function ItemRow({
                 {item.name}
               </Typography>
               <Typography variant="body2" color="success.main" fontWeight={800}>
-                {item.qty}
+                {item.qty} {item.unit}
               </Typography>
             </Stack>
           }

@@ -17,6 +17,7 @@ import {
   Box,
   Button,
   Chip,
+  CircularProgress,
   DialogActions,
   Grid,
   Paper,
@@ -49,7 +50,7 @@ interface Props {
   mealPlanId: string | null;
   setDays: React.Dispatch<React.SetStateAction<DayPlan[]>>;
   days: DayPlan[];
-  handleSendToShoppingList: () => void;
+  handleSendToShoppingList: (completed: () => void) => void;
 }
 
 const SLOT_LABEL: Record<Slot, string> = {
@@ -91,10 +92,18 @@ export default function WeeklyMealPlanner({
   // bottom drawer state
   const [openDrawer, setOpenDrawer] = React.useState(true);
   const [isDragging, setIsDragging] = React.useState(false);
+  const [isLoadingShoppingList, setLoadingShoppingList] = React.useState(false);
 
   // drag state
   const [activeId, setActiveId] = React.useState<string | null>(null);
   const [dragPreview, setDragPreview] = React.useState<Recipe | null>(null);
+
+  const onSendShoppingList = async () => {
+    setLoadingShoppingList(true);
+    await handleSendToShoppingList(() => {
+      setLoadingShoppingList(false);
+    });
+  };
 
   const updateMealPlanSlot = async (
     slot: Slot,
@@ -223,8 +232,15 @@ export default function WeeklyMealPlanner({
           <Button
             variant="contained"
             color="success"
-            onClick={handleSendToShoppingList}
-            startIcon={<ShoppingCartRoundedIcon />}
+            disabled={isLoadingShoppingList}
+            onClick={onSendShoppingList}
+            startIcon={
+              isLoadingShoppingList ? (
+                <CircularProgress size={24} />
+              ) : (
+                <ShoppingCartRoundedIcon />
+              )
+            }
             sx={{ textTransform: 'none', fontWeight: 800 }}
           >
             Send to Shopping List

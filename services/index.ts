@@ -1,5 +1,10 @@
 import { supabase } from '../classes';
-import { RecipeDetail, RecipeResponse } from '../interfaces';
+import {
+  RecipeDetail,
+  RecipeResponse,
+  ShoppingItem,
+  ShoppingStats,
+} from '../interfaces';
 
 export const healthCheckService = async (): Promise<{
   data: any;
@@ -176,21 +181,20 @@ export const generateShoppingListService = async ({
   return { data, error };
 };
 
-export const getShoppingListByUserIdService = async (
-  userId: string, // uuid
-): Promise<{
+export const getShoppingListByUserIdService = async ({
+  id,
+}: {
+  id: string;
+}): Promise<{
   data: {
-    items: {
-      id: string;
-      name: string;
-      quantity: number;
-      notes: string | null;
-    }[];
+    toBuy: ShoppingItem[];
+    purchased: ShoppingItem[];
+    stats: ShoppingStats;
   } | null;
   error: any;
 }> => {
   const { data, error } = await supabase.functions.invoke('shopping-lists-id', {
-    body: { id: userId },
+    body: { id },
   });
   return { data, error };
 };

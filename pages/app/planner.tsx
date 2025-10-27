@@ -145,7 +145,7 @@ const Planner: NextPage = () => {
     onSearchChange(e.target.value);
   };
 
-  const handleSendToShoppingList = async () => {
+  const handleSendToShoppingList = async (completed = () => {}) => {
     if (!mealPlanId) return;
     try {
       const { data, error } = await generateShoppingListService({
@@ -160,12 +160,16 @@ const Planner: NextPage = () => {
       toast.success('Shopping list generated successfully', {
         autoClose: 1000,
         onClose: () => {
-          router.push(NAV_APP_LINKS.shoppingList.link);
+          router.push(
+            `${NAV_APP_LINKS.shoppingList.link}?shoppingListId=${data?.shoppingListId}`,
+          );
         },
       });
     } catch (error) {
       console.error('Error generating shopping list:', error);
       toast.error('Error generating shopping list');
+    } finally {
+      completed();
     }
   };
 
