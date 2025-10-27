@@ -17,16 +17,15 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { ScorePill } from '@/components';
+import { RecipeType } from '@/interfaces';
 import { favoritesToggleService } from '@/services';
-
-import { Recipe } from './RecipeCard.model';
 
 export default function RecipeCard({
   r,
   handleCardClick,
 }: {
-  r: Recipe;
-  handleCardClick: (r: Recipe) => void;
+  r: RecipeType;
+  handleCardClick: (r: RecipeType) => void;
 }) {
   const [isFavorite, setIsFavorite] = useState(false);
   const handleFavoriteClick = async (e: React.MouseEvent) => {

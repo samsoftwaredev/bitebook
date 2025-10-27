@@ -17,16 +17,15 @@ import React from 'react';
 import { Draggable } from '@/components';
 import RecipeDraggableCard from '@/components/RecipeDraggableCard';
 import { drawerWidth } from '@/constants';
+import { RecipeType } from '@/interfaces';
 import { theme } from '@/styles/mui-overwrite';
-
-import { Recipe } from '../RecipeCard/RecipeCard.model';
 
 interface Props {
   openDrawer: boolean;
   searchTerm: string;
   handleSearchChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  recipes: Recipe[];
-  handleCardClick: (r: Recipe) => void;
+  recipes: RecipeType[];
+  handleCardClick: (r: RecipeType) => void;
   setOpenDrawer: React.Dispatch<React.SetStateAction<boolean>>;
   isDragging: boolean;
 }

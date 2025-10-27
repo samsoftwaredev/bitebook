@@ -21,8 +21,7 @@ import { useTheme } from '@mui/material/styles';
 import Image from 'next/image';
 import React, { useEffect } from 'react';
 
-import { Recipe } from '@/components/RecipeCard/RecipeCard.model';
-import { RecipeDetail } from '@/interfaces';
+import { RecipeDetail, RecipeType } from '@/interfaces';
 import { getRecipeByIdService } from '@/services';
 
 import Loading from '../Loading';
@@ -30,7 +29,7 @@ import Loading from '../Loading';
 type Props = {
   open: boolean;
   onClose: () => void;
-  recipeData: Recipe | null;
+  recipeData: RecipeType | null;
   children?: React.ReactNode;
 };
 

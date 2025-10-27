@@ -10,9 +10,8 @@ import {
   alpha,
   useTheme,
 } from '@mui/material';
-import * as React from 'react';
 
-import { Recipe } from '../RecipeCard/RecipeCard.model';
+import { RecipeType } from '@/interfaces';
 
 export default function SlotDrop({
   active,
@@ -22,7 +21,7 @@ export default function SlotDrop({
   onView,
 }: {
   active?: boolean;
-  assigned: Recipe | null;
+  assigned: RecipeType | null;
   label: string;
   emoji: string;
   onView?: () => void;

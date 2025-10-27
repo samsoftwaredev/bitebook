@@ -3,20 +3,19 @@ import type { NextPage } from 'next';
 import * as React from 'react';
 
 import { AppWrapper } from '@/components';
-import { Recipe } from '@/components/RecipeCard/RecipeCard.model';
 import { DashboardSection } from '@/components/Sections';
 import { AppLayout } from '@/components/Templates';
 import { useLanguageContext } from '@/context/LanguageContext';
-import { RecipeResponse } from '@/interfaces';
+import { RecipeResponse, RecipeType } from '@/interfaces';
 import { searchRecipesService } from '@/services';
 
 const Favorite: NextPage = () => {
   const { lang } = useLanguageContext();
-  const [recipe, setRecipe] = React.useState<Recipe | null>(null);
+  const [recipe, setRecipe] = React.useState<RecipeType | null>(null);
   const [dialogOpen, setDialogOpen] = React.useState(false);
 
-  const recipesDataNormalized = (data: RecipeResponse): Recipe[] => {
-    const dataNormalized: Recipe[] = data.items.map((r, i) => ({
+  const recipesDataNormalized = (data: RecipeResponse): RecipeType[] => {
+    const dataNormalized: RecipeType[] = data.items.map((r, i) => ({
       id: r.id || String(i),
       title: r.title || 'Untitled Recipe',
       desc: r.description || '',
@@ -31,7 +30,7 @@ const Favorite: NextPage = () => {
     return dataNormalized;
   };
 
-  const handleCardClick = (r: Recipe) => {
+  const handleCardClick = (r: RecipeType) => {
     setRecipe(r);
     setDialogOpen(true);
   };
@@ -40,7 +39,7 @@ const Favorite: NextPage = () => {
     setDialogOpen(false);
   };
   const [searchTerm, setSearchTerm] = React.useState<string>('');
-  const [recipes, setRecipes] = React.useState<Recipe[]>([]);
+  const [recipes, setRecipes] = React.useState<RecipeType[]>([]);
 
   React.useEffect(() => {
     const fetchRecipes = async () => {

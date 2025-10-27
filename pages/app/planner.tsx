@@ -5,13 +5,12 @@ import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { AppWrapper } from '@/components';
-import { Recipe } from '@/components/RecipeCard/RecipeCard.model';
 import MealPlannerEditorSection from '@/components/Sections/MealPlannerEditorSection';
 import MealPlannerSection from '@/components/Sections/MealPlannerSection';
 import { AppLayout } from '@/components/Templates';
 import { NAV_APP_LINKS } from '@/constants/nav';
 import { useLanguageContext } from '@/context/LanguageContext';
-import { DayPlan, RecipeResponse } from '@/interfaces';
+import { DayPlan, RecipeResponse, RecipeType } from '@/interfaces';
 import {
   createOrUpdateMealPlanService,
   generateShoppingListService,
@@ -47,13 +46,13 @@ const Planner: NextPage = () => {
   // planner state
   const [days, setDays] = useState<DayPlan[]>(weekTemplate);
   const [mealPlanId, setMealPlanId] = useState<string | null>(null);
-  const [recipe, setRecipe] = useState<Recipe | null>(null);
+  const [recipe, setRecipe] = useState<RecipeType | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState<string>('');
-  const [recipes, setRecipes] = useState<Recipe[]>([]);
+  const [recipes, setRecipes] = useState<RecipeType[]>([]);
 
-  const recipesDataNormalized = (data: RecipeResponse): Recipe[] => {
-    const dataNormalized: Recipe[] = data.items.map((r, i) => ({
+  const recipesDataNormalized = (data: RecipeResponse): RecipeType[] => {
+    const dataNormalized: RecipeType[] = data.items.map((r, i) => ({
       id: r.id || String(i),
       title: r.title || 'Untitled Recipe',
       desc: r.description || '',
@@ -68,7 +67,7 @@ const Planner: NextPage = () => {
     return dataNormalized;
   };
 
-  const handleCardClick = (r: Recipe) => {
+  const handleCardClick = (r: RecipeType) => {
     setRecipe(r);
     setDialogOpen(true);
   };

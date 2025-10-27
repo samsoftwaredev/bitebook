@@ -17,14 +17,14 @@ import {
   RecipeCard,
   RecipeDialog,
 } from '@/components';
-import { Recipe } from '@/components/RecipeCard/RecipeCard.model';
+import { RecipeType } from '@/interfaces';
 
 interface Props {
   searchTerm: string;
-  recipes: Recipe[];
-  handleCardClick: (r: Recipe) => void;
+  recipes: RecipeType[];
+  handleCardClick: (r: RecipeType) => void;
   dialogOpen: boolean;
-  recipe: Recipe | null;
+  recipe: RecipeType | null;
   handleDialogClose: () => void;
   handleSearchChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onFilterByLabel: (label: string) => void;

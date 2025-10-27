@@ -10,6 +10,17 @@ export type RecipeService = {
   title: string;
 };
 
+export type RecipeType = {
+  id: string;
+  title: string;
+  desc: string;
+  img: string;
+  tags: string[];
+  time: string; // "35 min"
+  price: string; // "$ 11.00"
+  score: number; // 0..100
+};
+
 export type RecipeDetail = {
   recipe: {
     id: string;

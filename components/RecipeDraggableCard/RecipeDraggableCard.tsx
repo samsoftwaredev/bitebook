@@ -10,14 +10,14 @@ import {
   alpha,
 } from '@mui/material';
 
-import { Recipe } from '@/components/RecipeCard/RecipeCard.model';
+import { RecipeType } from '@/interfaces';
 
 export default function RecipeDraggableCard({
   r,
   onView,
 }: {
-  r: Recipe;
-  onView: (rec: Recipe) => void;
+  r: RecipeType;
+  onView: (rec: RecipeType) => void;
 }) {
   return (
     <Paper

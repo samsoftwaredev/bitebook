@@ -34,16 +34,15 @@ import { RecipeDialog } from '@/components';
 import { RecipeListSelector } from '@/components';
 import { SlotDrop } from '@/components';
 import { Droppable } from '@/components';
-import { Recipe } from '@/components/RecipeCard/RecipeCard.model';
-import { DayPlan, Slot } from '@/interfaces';
+import { DayPlan, RecipeType, Slot } from '@/interfaces';
 import { updateMealPlanSlotService } from '@/services';
 
 interface Props {
   searchTerm: string;
-  recipes: Recipe[];
-  handleCardClick: (r: Recipe) => void;
+  recipes: RecipeType[];
+  handleCardClick: (r: RecipeType) => void;
   dialogOpen: boolean;
-  recipe: Recipe | null;
+  recipe: RecipeType | null;
   handleDialogClose: () => void;
   handleSearchChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onFilterByLabel: (label: string) => void;
@@ -96,7 +95,7 @@ export default function WeeklyMealPlanner({
 
   // drag state
   const [activeId, setActiveId] = React.useState<string | null>(null);
-  const [dragPreview, setDragPreview] = React.useState<Recipe | null>(null);
+  const [dragPreview, setDragPreview] = React.useState<RecipeType | null>(null);
 
   const onSendShoppingList = async () => {
     setLoadingShoppingList(true);
