@@ -15,11 +15,10 @@ import { toast } from 'react-toastify';
 
 import { db } from '@/classes';
 import { FormErrorText } from '@/components';
+import { HorizontalDivider, Loading, PasswordValidator } from '@/components';
 import { NAV_APP_LINKS, passwordValidationRules } from '@/constants';
 import { useLanguageContext } from '@/context/LanguageContext';
 import { emailRegEx, nameRegEx } from '@/utils/regEx';
-
-import { HorizontalDivider, Loading, PasswordValidator } from '../..';
 
 interface IFormInputs {
   password: string;

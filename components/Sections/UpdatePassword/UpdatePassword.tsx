@@ -5,11 +5,9 @@ import { Controller, SubmitHandler, useForm, useWatch } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
 import { db } from '@/classes';
-import { FormErrorText } from '@/components';
+import { FormErrorText, PasswordValidator } from '@/components';
 import { NAV_MAIN_LINKS, passwordValidationRules } from '@/constants';
 import { useLanguageContext } from '@/context/LanguageContext';
-
-import { PasswordValidator } from '../..';
 
 interface IFormInputs {
   password: string;

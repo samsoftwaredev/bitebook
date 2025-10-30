@@ -21,10 +21,9 @@ import { useTheme } from '@mui/material/styles';
 import Image from 'next/image';
 import React, { useEffect } from 'react';
 
+import { Loading } from '@/components';
 import { RecipeDetail, RecipeType } from '@/interfaces';
 import { getRecipeByIdService } from '@/services';
-
-import Loading from '../Loading';
 
 type Props = {
   open: boolean;

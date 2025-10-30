@@ -1,6 +1,5 @@
+import { FoodTypeFilter } from '@/interfaces';
 import { digitRegEx, specialCharsRegEx } from '@/utils/regEx';
-
-import { FoodTypeFilter } from '../interfaces';
 
 export const minPasswordLength = 8;
 export const maxAge = 120;
