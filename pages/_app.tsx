@@ -11,7 +11,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import { LanguageContextProvider } from '@/context/LanguageContext';
 import { UserContextProvider } from '@/context/UserContext';
 import { theme } from '@/styles/mui-overwrite';
-import '@/styles/normalize.css';
 
 import { NAV_APP_LINKS, NAV_MAIN_LINKS } from '../constants';
 

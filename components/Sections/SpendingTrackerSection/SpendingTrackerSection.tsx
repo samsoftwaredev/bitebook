@@ -18,6 +18,8 @@ import {
 import * as React from 'react';
 
 import { PageHeader } from '@/components';
+import { NutritionPer100 } from '@/utils/foodScore/foodScore';
+import { foodScore } from '@/utils/index';
 
 const MetricCard = ({
   icon,
@@ -74,6 +76,28 @@ const EmptyChartCard = ({ title, note }: { title: string; note: string }) => (
 
 export default function SpendingTrackerPage() {
   const [range, setRange] = React.useState<'all' | '30' | '90' | 'ytd'>('all');
+  const { scoreFood } = foodScore;
+
+  React.useEffect(() => {
+    const nutrition: NutritionPer100 = {
+      energyKJ: 1046,
+      sugarsG: 65,
+      satFatG: 0,
+      sodiumMG: 0,
+      fiberG: 0,
+      proteinG: 0,
+      fvnlPercent: undefined,
+    };
+    console.log(
+      'Current food score function:',
+      scoreFood({
+        category: 'food',
+        nutrition,
+        additives: [],
+        isCertifiedOrganic: false,
+      }),
+    );
+  }, [range]);
 
   return (
     <>
