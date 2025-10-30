@@ -1,6 +1,6 @@
 import { Box, Typography } from '@mui/material';
 
-import Logo from '../Logo';
+import { Logo } from '@/components';
 
 interface Props {
   text: string;

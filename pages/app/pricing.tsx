@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 
 import { AppWrapper } from '@/components';
-import PricingSection from '@/components/Sections/PricingSection';
+import { PricingSection } from '@/components/Sections';
 import { AppLayout } from '@/components/Templates';
 
 const Pricing: NextPage = () => {

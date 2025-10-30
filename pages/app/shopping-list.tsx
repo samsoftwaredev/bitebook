@@ -5,9 +5,8 @@ import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
-import AppWrapper from '@/components/AppWrapper';
-import ShoppingListSection from '@/components/Sections/ShoppingListSection';
-import { AppLayout } from '@/components/Templates';
+import { AppLayout, AppWrapper } from '@/components';
+import { ShoppingListSection } from '@/components/Sections';
 import { ShoppingItem, ShoppingStats } from '@/interfaces';
 import {
   clearShoppingListService,

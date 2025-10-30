@@ -1,4 +1,4 @@
-import ProtectedRoute from '../ProtectedRoute';
+import { ProtectedRoute } from '@/components';
 
 interface Props {
   children: any;

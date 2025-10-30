@@ -5,8 +5,10 @@ import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { AppWrapper } from '@/components';
-import MealPlannerEditorSection from '@/components/Sections/MealPlannerEditorSection';
-import MealPlannerSection from '@/components/Sections/MealPlannerSection';
+import {
+  MealPlannerEditorSection,
+  MealPlannerSection,
+} from '@/components/Sections';
 import { AppLayout } from '@/components/Templates';
 import { NAV_APP_LINKS } from '@/constants/nav';
 import { useLanguageContext } from '@/context/LanguageContext';

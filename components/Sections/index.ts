@@ -4,3 +4,8 @@ export { default as ForgotPassword } from './ForgotPassword';
 export { default as UpdatePassword } from './UpdatePassword';
 export { default as DashboardSection } from './DashboardSection';
 export { default as AboutSection } from './AboutSection';
+export { default as ShoppingListSection } from './ShoppingListSection';
+export { default as SpendingTrackerSection } from './SpendingTrackerSection';
+export { default as PricingSection } from './PricingSection';
+export { default as MealPlannerEditorSection } from './MealPlannerEditorSection';
+export { default as MealPlannerSection } from './MealPlannerSection';

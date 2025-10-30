@@ -18,11 +18,11 @@ import {
   useMediaQuery,
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
-import ManualEntryForm from '../ManualEntryForm';
-import PhotoImportForm from '../PhotoImportForm';
-import URLImportForm from '../URLImportForm';
+import { ManualEntryForm } from '@/components';
+import { PhotoImportForm } from '@/components';
+import { URLImportForm } from '@/components';
 
 type Props = {
   open: boolean;

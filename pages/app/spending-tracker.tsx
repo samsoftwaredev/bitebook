@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 
-import AppWrapper from '@/components/AppWrapper';
-import SpendingTrackerSection from '@/components/Sections/SpendingTrackerSection';
+import { AppWrapper } from '@/components';
+import { SpendingTrackerSection } from '@/components/Sections';
 import { AppLayout } from '@/components/Templates';
 
 const SpendingTracker: NextPage = () => {
