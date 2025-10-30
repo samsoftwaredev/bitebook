@@ -258,7 +258,7 @@ const PrivacyPolicy: NextPage = () => {
             <br />
             If you have any questions or concerns about this Privacy Policy,
             please contact us at{' '}
-            <a href="mailto:admin@doit4jesus.com">admin@doit4jesus.com</a>.
+            <a href="mailto:admin@bitebook.com">admin@bitebook.com</a>.
           </p>
           Thank you for trusting {appName} with your personal information. We
           are honored to serve you in your journey of connecting with others in
