@@ -13,7 +13,7 @@ import { useState } from 'react';
 import { Controller, SubmitHandler, useForm, useWatch } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
-import { db } from '@/classes/SupabaseDB';
+import { db } from '@/classes';
 import { FormErrorText } from '@/components';
 import { NAV_APP_LINKS, passwordValidationRules } from '@/constants';
 import { useLanguageContext } from '@/context/LanguageContext';

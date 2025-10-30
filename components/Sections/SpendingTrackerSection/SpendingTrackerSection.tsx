@@ -18,7 +18,7 @@ import {
 import * as React from 'react';
 
 import { PageHeader } from '@/components';
-import { NutritionPer100, scoreFood } from '@/utils';
+import { NutritionPer100, scoreFood } from '@/utils/foodScore';
 
 const MetricCard = ({
   icon,
@@ -73,7 +73,7 @@ const EmptyChartCard = ({ title, note }: { title: string; note: string }) => (
   </Paper>
 );
 
-export default function SpendingTrackerPage() {
+const SpendingTrackerPage = () => {
   const [range, setRange] = React.useState<'all' | '30' | '90' | 'ytd'>('all');
 
   React.useEffect(() => {
@@ -200,4 +200,6 @@ export default function SpendingTrackerPage() {
       </Paper>
     </>
   );
-}
+};
+
+export default SpendingTrackerPage;

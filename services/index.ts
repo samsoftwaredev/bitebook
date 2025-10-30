@@ -1,10 +1,10 @@
-import { supabase } from '../classes';
+import { supabase } from '@/classes';
 import {
   RecipeDetail,
   RecipeResponse,
   ShoppingItem,
   ShoppingStats,
-} from '../interfaces';
+} from '@/interfaces';
 
 export const healthCheckService = async (): Promise<{
   data: any;

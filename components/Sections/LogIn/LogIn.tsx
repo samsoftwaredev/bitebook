@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
-import { db } from '@/classes/SupabaseDB';
+import { db } from '@/classes';
 import { HorizontalDivider } from '@/components';
 import FormErrorText from '@/components/FormErrorText';
 import { NAV_APP_LINKS, NAV_MAIN_LINKS } from '@/constants/nav';

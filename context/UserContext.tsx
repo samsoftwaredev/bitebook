@@ -11,7 +11,7 @@ import {
 } from 'react';
 import { toast } from 'react-toastify';
 
-import { supabase } from '@/classes/SupabaseDB';
+import { supabase } from '@/classes';
 import { Loading } from '@/components';
 import { NAV_MAIN_LINKS } from '@/constants';
 import { User } from '@/interfaces';
