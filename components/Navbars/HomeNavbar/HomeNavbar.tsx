@@ -117,7 +117,7 @@ function HomeNavbar(props: Props) {
           </Link>
           <Box sx={{ flexGrow: 1, display: { sm: 'none', md: 'block' } }} />
           <Box sx={{ display: { xs: 'none', sm: 'none', md: 'block' } }}>
-            {navItems.map(({ label, goTo, sx }) => (
+            {navItems.map(({ label, goTo }) => (
               <Link key={label} passHref href={goTo}>
                 <Button
                   key={label}
