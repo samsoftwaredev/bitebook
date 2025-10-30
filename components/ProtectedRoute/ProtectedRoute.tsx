@@ -10,13 +10,13 @@ interface Props {
 
 const ProtectedRoute = ({ children }: Props) => {
   const router = useRouter();
-  const { session } = useUserContext();
+  const { isAuth } = useUserContext();
   useEffect(() => {
     // if user is not auth, redirect user to login screen
-    if (!session) router.push(NAV_MAIN_LINKS.login.link);
+    if (!isAuth) router.push(NAV_MAIN_LINKS.login.link);
   }, []);
 
-  if (!session) return null;
+  if (!isAuth) return null;
 
   return children;
 };

@@ -26,6 +26,7 @@ interface UserContext {
   logout: () => Promise<void>;
   checkAuth: () => Promise<void>;
   isLoading: boolean;
+  isAuth: boolean;
 }
 
 interface Props {
@@ -127,6 +128,7 @@ const UserContextProvider = ({ children }: Props) => {
       setSession,
       checkAuth,
       isLoading,
+      isAuth: !!user && isLoading === false && !!session,
     }),
     [user, setUser, session, setSession, isLoading],
   );
