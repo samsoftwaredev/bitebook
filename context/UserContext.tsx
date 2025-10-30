@@ -2,6 +2,7 @@ import { Session } from '@supabase/supabase-js';
 import { useRouter } from 'next/router';
 import {
   Dispatch,
+  JSX,
   SetStateAction,
   createContext,
   useContext,
