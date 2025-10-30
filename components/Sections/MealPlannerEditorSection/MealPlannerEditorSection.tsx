@@ -27,7 +27,7 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
-import * as React from 'react';
+import React from 'react';
 import { toast } from 'react-toastify';
 
 import { RecipeDialog } from '@/components';

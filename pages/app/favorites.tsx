@@ -1,6 +1,6 @@
 import { debounce } from '@mui/material';
 import type { NextPage } from 'next';
-import * as React from 'react';
+import React from 'react';
 
 import { AppWrapper } from '@/components';
 import { DashboardSection } from '@/components/Sections';

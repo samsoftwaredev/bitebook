@@ -4,8 +4,7 @@ import Link from 'next/link';
 
 import { Meta } from '@/components';
 import { MainLayout } from '@/components/Templates';
-
-import { COMPANY } from '../constants';
+import { COMPANY } from '@/constants';
 
 const TermsOfService: NextPage = () => {
   const appName = COMPANY.nameAbbr;

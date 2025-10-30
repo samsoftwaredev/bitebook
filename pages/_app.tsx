@@ -1,18 +1,15 @@
 import { ThemeProvider } from '@emotion/react';
 import { CssBaseline } from '@mui/material';
 import { StyledEngineProvider } from '@mui/material/styles';
-// import { Analytics } from '@vercel/analytics/react';
-// import { SpeedInsights } from '@vercel/speed-insights/next';
 import type { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import { NAV_APP_LINKS, NAV_MAIN_LINKS } from '@/constants';
 import { LanguageContextProvider } from '@/context/LanguageContext';
 import { UserContextProvider } from '@/context/UserContext';
 import { theme } from '@/styles/mui-overwrite';
-
-import { NAV_APP_LINKS, NAV_MAIN_LINKS } from '../constants';
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   const { pathname } = useRouter();
@@ -25,38 +22,29 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 
   if (authPaths) {
     return (
-      <>
-        {/* <SpeedInsights /> */}
-        <UserContextProvider>
-          <StyledEngineProvider injectFirst>
-            <ThemeProvider theme={theme}>
-              <CssBaseline />
-
-              <LanguageContextProvider>
-                <ToastContainer autoClose={5000} />
-                <Component {...pageProps} />
-                {/* <Analytics /> */}
-              </LanguageContextProvider>
-            </ThemeProvider>
-          </StyledEngineProvider>
-        </UserContextProvider>
-      </>
+      <UserContextProvider>
+        <StyledEngineProvider injectFirst>
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <LanguageContextProvider>
+              <ToastContainer autoClose={5000} />
+              <Component {...pageProps} />
+            </LanguageContextProvider>
+          </ThemeProvider>
+        </StyledEngineProvider>
+      </UserContextProvider>
     );
   }
 
   return (
-    <>
-      {/* <SpeedInsights /> */}
-      <StyledEngineProvider injectFirst>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <LanguageContextProvider>
-            <Component {...pageProps} />
-            {/* <Analytics /> */}
-          </LanguageContextProvider>
-        </ThemeProvider>
-      </StyledEngineProvider>
-    </>
+    <StyledEngineProvider injectFirst>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <LanguageContextProvider>
+          <Component {...pageProps} />
+        </LanguageContextProvider>
+      </ThemeProvider>
+    </StyledEngineProvider>
   );
 };
 

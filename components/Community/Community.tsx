@@ -9,7 +9,7 @@ import {
   Typography,
   useTheme,
 } from '@mui/material';
-import * as React from 'react';
+import React from 'react';
 
 type Testimonial = {
   quote: string;

@@ -5,7 +5,7 @@ import LockRoundedIcon from '@mui/icons-material/LockRounded';
 import ShowChartRoundedIcon from '@mui/icons-material/ShowChartRounded';
 import WorkspacePremiumRoundedIcon from '@mui/icons-material/WorkspacePremiumRounded';
 import { Box, Button, Paper, Stack, Typography, alpha } from '@mui/material';
-import * as React from 'react';
+import React from 'react';
 
 type Feature = {
   icon: React.ReactNode;

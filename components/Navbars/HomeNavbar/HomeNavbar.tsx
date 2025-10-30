@@ -16,7 +16,7 @@ import {
   Typography,
 } from '@mui/material';
 import Link from 'next/link';
-import * as React from 'react';
+import React from 'react';
 
 import { COMPANY } from '@/constants/company';
 import { NAV_FOOTER_LINKS, NAV_MAIN_LINKS } from '@/constants/nav';

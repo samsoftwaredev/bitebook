@@ -20,7 +20,7 @@ import {
   useTheme,
 } from '@mui/material';
 import NextLink from 'next/link';
-import * as React from 'react';
+import React from 'react';
 
 import { NAV_MAIN_LINKS } from '@/constants/nav';
 

@@ -25,7 +25,7 @@ import {
   Typography,
   alpha,
 } from '@mui/material';
-import * as React from 'react';
+import React from 'react';
 
 type MealSlot = 'breakfast' | 'lunch' | 'dinner';
 type DayPlan = {

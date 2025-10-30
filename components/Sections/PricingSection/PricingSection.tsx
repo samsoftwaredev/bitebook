@@ -18,7 +18,7 @@ import {
   Typography,
   alpha,
 } from '@mui/material';
-import * as React from 'react';
+import React from 'react';
 
 type FeatureRow = {
   label: string;

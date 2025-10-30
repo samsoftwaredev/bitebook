@@ -15,7 +15,7 @@ import {
   Typography,
   alpha,
 } from '@mui/material';
-import * as React from 'react';
+import React from 'react';
 
 import { PageHeader } from '@/components';
 import { NutritionPer100, scoreFood } from '@/utils/foodScore';
