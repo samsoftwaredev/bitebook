@@ -107,7 +107,7 @@ const CallToAction = () => {
             sx={{ width: { xs: '100%', sm: '90%', md: '70%' }, mx: 'auto' }}
           >
             {page.stats.map((s, i) => (
-              <Grid key={i} item xs={12} sm={4}>
+              <Grid key={i} size={{ xs: 12, sm: 4 }}>
                 <Stack spacing={0.5} alignItems="center">
                   <Typography
                     sx={{

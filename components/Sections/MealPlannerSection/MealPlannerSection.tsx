@@ -268,7 +268,7 @@ export default function MealPlannerSection() {
         Plan your week and save time & money
       </Typography>
 
-      <Grid item xs={12} md={4} lg={3} sx={{ mb: 2 }}>
+      <Grid size={{ xs: 12, md: 4, lg: 3 }} sx={{ mb: 2 }}>
         <Stack
           direction="row"
           spacing={1}
@@ -297,9 +297,9 @@ export default function MealPlannerSection() {
 
       {/* KPIs + Actions */}
       <Grid container spacing={2} alignItems="center" sx={{ mb: 2 }}>
-        <Grid item xs={12} md={12} lg={12}>
+        <Grid size={{ xs: 12, md: 12, lg: 12 }}>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={4}>
+            <Grid size={{ xs: 12, sm: 4 }}>
               <KPICard
                 icon={AttachMoneyRounded}
                 label="Total Cost"
@@ -307,7 +307,7 @@ export default function MealPlannerSection() {
                 gradient="linear-gradient(90deg,#0BA36B,#0E7C5B)"
               />
             </Grid>
-            <Grid item xs={12} sm={4}>
+            <Grid size={{ xs: 12, sm: 4 }}>
               <KPICard
                 icon={LocalMallRounded}
                 label="Ingredients"
@@ -315,7 +315,7 @@ export default function MealPlannerSection() {
                 gradient="linear-gradient(90deg,#2563EB,#4F46E5)"
               />
             </Grid>
-            <Grid item xs={12} sm={4}>
+            <Grid size={{ xs: 12, sm: 4 }}>
               <KPICard
                 icon={CalendarMonthRounded}
                 label="Meals Planned"
@@ -330,7 +330,7 @@ export default function MealPlannerSection() {
       {/* Planner + Shopping List */}
       <Grid container spacing={2.5}>
         {/* Planner */}
-        <Grid item xs={12} md={8}>
+        <Grid size={{ xs: 12, md: 8 }}>
           <Paper sx={{ p: 2, borderRadius: 1 }}>
             <Stack
               direction="row"
@@ -352,7 +352,7 @@ export default function MealPlannerSection() {
                 </Typography>
 
                 <Grid container spacing={1.5}>
-                  <Grid item xs={12} sm={4}>
+                  <Grid size={{ xs: 12, sm: 4 }}>
                     <Typography variant="caption" color="text.secondary">
                       Breakfast
                     </Typography>
@@ -366,7 +366,7 @@ export default function MealPlannerSection() {
                       ]}
                     />
                   </Grid>
-                  <Grid item xs={12} sm={4}>
+                  <Grid size={{ xs: 12, sm: 4 }}>
                     <Typography variant="caption" color="text.secondary">
                       Lunch
                     </Typography>
@@ -385,7 +385,7 @@ export default function MealPlannerSection() {
                       ]}
                     />
                   </Grid>
-                  <Grid item xs={12} sm={4}>
+                  <Grid size={{ xs: 12, sm: 4 }}>
                     <Typography variant="caption" color="text.secondary">
                       Dinner
                     </Typography>
@@ -403,7 +403,7 @@ export default function MealPlannerSection() {
         </Grid>
 
         {/* Shopping List */}
-        <Grid item xs={12} md={4}>
+        <Grid size={{ xs: 12, md: 4 }}>
           <Paper sx={{ p: 2, borderRadius: 1 }}>
             <Stack
               direction="row"

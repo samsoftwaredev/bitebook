@@ -116,14 +116,14 @@ const SpendingTrackerPage = () => {
 
       {/* KPIs */}
       <Grid container spacing={2} sx={{ mb: 2 }}>
-        <Grid item xs={12} md={4}>
+        <Grid size={{ xs: 12, md: 4 }}>
           <MetricCard
             icon={AttachMoneyRoundedIcon}
             label="Total Spent"
             value="$0.00"
           />
         </Grid>
-        <Grid item xs={12} md={4}>
+        <Grid size={{ xs: 12, md: 4 }}>
           <MetricCard
             icon={CalendarMonthRoundedIcon}
             label="Receipts Scanned"
@@ -131,7 +131,7 @@ const SpendingTrackerPage = () => {
             gradient="linear-gradient(90deg,#2563EB,#4F46E5)"
           />
         </Grid>
-        <Grid item xs={12} md={4}>
+        <Grid size={{ xs: 12, md: 4 }}>
           <MetricCard
             icon={ShowChartRoundedIcon}
             label="Average per Receipt"
@@ -161,13 +161,13 @@ const SpendingTrackerPage = () => {
 
       {/* Charts row */}
       <Grid container spacing={2.5} sx={{ mb: 3 }}>
-        <Grid item xs={12} md={8}>
+        <Grid size={{ xs: 12, md: 8 }}>
           <EmptyChartCard
             title="Monthly Spending Trends"
             note="Start scanning receipts to see your trends"
           />
         </Grid>
-        <Grid item xs={12} md={4}>
+        <Grid size={{ xs: 12, md: 4 }}>
           <EmptyChartCard
             title="Category Breakdown"
             note="No spending data for selected period"

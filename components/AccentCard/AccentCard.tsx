@@ -180,7 +180,7 @@ const FeaturesGrid = ({
 
         <Grid container spacing={{ xs: 2.5, md: 3 }}>
           {items.map((it, idx) => (
-            <Grid key={idx} item xs={12} sm={6} md={4}>
+            <Grid key={idx} size={{ xs: 12, md: 4, sm: 6 }}>
               <AccentCard item={it} />
             </Grid>
           ))}

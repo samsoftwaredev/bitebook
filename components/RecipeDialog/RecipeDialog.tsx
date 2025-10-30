@@ -243,28 +243,28 @@ export default function RecipeDialog({
 
         {/* Stats grid with enhanced background */}
         <Grid container spacing={2} sx={{ mt: 0 }}>
-          <Grid item xs={6} sm={3}>
+          <Grid size={{ xs: 6, sm: 3 }}>
             <Stat
               icon={<AccessTimeIcon fontSize="small" />}
               label="Duration"
               value={`${recipe.recipe.duration_min} min`}
             />
           </Grid>
-          <Grid item xs={6} sm={3}>
+          <Grid size={{ xs: 6, sm: 3 }}>
             <Stat
               icon={<AttachMoneyIcon fontSize="small" />}
               label="Cost"
               value={money(recipe.recipe.est_cost_cents)}
             />
           </Grid>
-          <Grid item xs={6} sm={3}>
+          <Grid size={{ xs: 6, sm: 3 }}>
             <Stat
               icon={<RestaurantIcon fontSize="small" />}
               label="Servings"
               value={recipe.recipe.servings}
             />
           </Grid>
-          <Grid item xs={6} sm={3}>
+          <Grid size={{ xs: 6, sm: 3 }}>
             <Stat
               icon={<EventAvailableIcon fontSize="small" />}
               label="Shelf Life"

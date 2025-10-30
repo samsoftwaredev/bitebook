@@ -502,7 +502,7 @@ function ManualEntryForm({ onBack }: { onBack: () => void }) {
       <Box sx={{ px: { xs: 2, sm: 3 }, mb: 10 }}>
         <Grid container spacing={{ xs: 3, md: 4 }}>
           {/* Left Column - Core Details */}
-          <Grid item xs={12} md={6}>
+          <Grid size={{ xs: 12, md: 6 }}>
             <Paper
               elevation={0}
               sx={{
@@ -559,7 +559,7 @@ function ManualEntryForm({ onBack }: { onBack: () => void }) {
                 />
 
                 <Grid container spacing={1}>
-                  <Grid item xs={6}>
+                  <Grid size={{ xs: 6 }}>
                     <TextField
                       fullWidth
                       label="Cook Time"
@@ -590,7 +590,7 @@ function ManualEntryForm({ onBack }: { onBack: () => void }) {
                     />
                   </Grid>
 
-                  <Grid item xs={6}>
+                  <Grid size={{ xs: 6 }}>
                     <TextField
                       fullWidth
                       label="Servings"
@@ -692,7 +692,7 @@ function ManualEntryForm({ onBack }: { onBack: () => void }) {
           </Grid>
 
           {/* Right Column - Ingredients and Instructions */}
-          <Grid item xs={12} md={6}>
+          <Grid size={{ xs: 12, md: 6 }}>
             <Stack spacing={3}>
               {/* Ingredients Section */}
               <Paper

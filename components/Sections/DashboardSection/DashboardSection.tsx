@@ -98,7 +98,7 @@ export default function DashboardSection({
       {/* Grid of cards */}
       <Grid container spacing={2.5}>
         {recipes.map((r) => (
-          <Grid key={r.id} item xs={12} sm={6} lg={4}>
+          <Grid key={r.id} size={{ xs: 12, sm: 6, lg: 4 }}>
             <RecipeCard r={r} handleCardClick={handleCardClick} />
           </Grid>
         ))}

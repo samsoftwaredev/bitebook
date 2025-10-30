@@ -78,7 +78,7 @@ function CategorySelection({
 
       <Grid container spacing={{ xs: 2, sm: 3 }}>
         {categories.map((category) => (
-          <Grid item xs={12} sm={4} key={category.id}>
+          <Grid size={{ xs: 12, sm: 4 }} key={category.id}>
             <Card
               elevation={0}
               sx={{

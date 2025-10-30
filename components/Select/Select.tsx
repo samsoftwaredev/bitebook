@@ -1,15 +1,11 @@
-import {
-  MenuItem as MenuItemMUI,
-  Select as SelectMUI,
-  SelectProps,
-} from '@mui/material';
+import { MenuItem as MenuItemMUI, Select as SelectMUI } from '@mui/material';
 
 type Props = {
   menuItems: {
     value: string;
     name: string;
   }[];
-} & Omit<SelectProps<any, any>, 'variant'>;
+};
 
 const Select = ({ menuItems, ...props }: Props) => {
   return (

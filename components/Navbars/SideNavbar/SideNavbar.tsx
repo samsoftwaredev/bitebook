@@ -6,7 +6,6 @@ import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import ShoppingCartRoundedIcon from '@mui/icons-material/ShoppingCartRounded';
 import WorkspacePremiumRoundedIcon from '@mui/icons-material/WorkspacePremiumRounded';
 import {
-  Avatar,
   Box,
   Button,
   Divider,

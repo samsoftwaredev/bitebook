@@ -84,7 +84,7 @@ const Community = ({
 
         <Grid container spacing={{ xs: 2.5, md: 3 }}>
           {items.map((t, i) => (
-            <Grid key={i} item xs={12} md={4}>
+            <Grid key={i} size={{ xs: 12, md: 4 }}>
               <Paper
                 elevation={0}
                 sx={{

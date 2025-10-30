@@ -147,7 +147,7 @@ export default function AboutSection() {
       >
         <Container maxWidth="lg">
           <Grid container spacing={4} alignItems="center">
-            <Grid item xs={12} md={6}>
+            <Grid size={{ xs: 12, md: 6 }}>
               <Typography
                 component="h2"
                 variant="h4"
@@ -184,7 +184,7 @@ export default function AboutSection() {
                 </MUILink>
               </Stack>
             </Grid>
-            <Grid item xs={12} md={6}>
+            <Grid size={{ xs: 12, md: 6 }}>
               {/* Placeholder media block; replace with screenshot */}
               <Box
                 sx={{
@@ -234,7 +234,7 @@ export default function AboutSection() {
 
           <Grid container spacing={2.5}>
             {features.map((f) => (
-              <Grid item key={f.title} xs={12} sm={6} md={4}>
+              <Grid size={{ xs: 12, sm: 6, md: 4 }} key={f.title}>
                 <Card
                   variant="outlined"
                   sx={{ height: '100%', borderRadius: 2 }}
@@ -315,7 +315,7 @@ export default function AboutSection() {
       >
         <Container maxWidth="lg">
           <Grid container spacing={2} alignItems="center">
-            <Grid item xs={12} md={8}>
+            <Grid size={{ xs: 12, md: 8 }}>
               <Typography
                 component="h2"
                 variant="h5"

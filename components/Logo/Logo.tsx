@@ -9,7 +9,7 @@ const WordLogoIcon = () => (
     role="img"
     aria-labelledby="title desc"
   >
-    <title id="title">{COMPANY.name} — logo</title>
+    <title id="title">{COMPANY.name}</title>
     <desc id="desc">
       {COMPANY.name} wordmark with a minimal open-book icon. The spine and a
       small page notch subtly form a cross, symbolizing thoughtful design and

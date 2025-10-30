@@ -14,7 +14,6 @@ export { default as PasswordValidator } from './PasswordValidator';
 export { default as HorizontalDivider } from './HorizontalDivider';
 export { default as Select } from './Select';
 export { default as ErrorPage } from './ErrorPage';
-export { default as CopyLinkButton } from './CopyLinkButton';
 export { default as SafeImage } from './SafeImage';
 export { default as HowItWorks } from './HowItWorks';
 export { default as AppIntroduction } from './AppIntroduction';

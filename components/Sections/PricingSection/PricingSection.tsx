@@ -245,10 +245,10 @@ export default function PricingPage() {
 
         {/* Plans */}
         <Grid container spacing={2.5} sx={{ mb: 4 }}>
-          <Grid item xs={12} md={6}>
+          <Grid size={{ xs: 12, md: 6 }}>
             <PlanCard plan={FREE_PLAN} onSelect={() => {}} />
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid size={{ xs: 12, md: 6 }}>
             <PlanCard
               plan={PREMIUM_PLAN}
               onSelect={() => console.log('upgrade')}
@@ -276,7 +276,7 @@ export default function PricingPage() {
           </Typography>
 
           <Grid container spacing={2}>
-            <Grid item xs={12} md={4}>
+            <Grid size={{ xs: 12, md: 4 }}>
               <Stack spacing={1} alignItems="center">
                 <WorkspacePremiumRoundedIcon />
                 <Typography fontWeight={800}>Smart Receipt Scanning</Typography>
@@ -289,7 +289,7 @@ export default function PricingPage() {
                 </Typography>
               </Stack>
             </Grid>
-            <Grid item xs={12} md={4}>
+            <Grid size={{ xs: 12, md: 4 }}>
               <Stack spacing={1} alignItems="center">
                 <AssessmentRoundedIcon />
                 <Typography fontWeight={800}>Spending Analytics</Typography>
@@ -302,7 +302,7 @@ export default function PricingPage() {
                 </Typography>
               </Stack>
             </Grid>
-            <Grid item xs={12} md={4}>
+            <Grid size={{ xs: 12, md: 4 }}>
               <Stack spacing={1} alignItems="center">
                 <CalendarMonthRoundedIcon />
                 <Typography fontWeight={800}>Annual Overview</Typography>
@@ -349,7 +349,7 @@ export default function PricingPage() {
                 'Yes, we take data security seriously. All your information is encrypted and stored securely in the cloud, and we never share your personal data with third parties.',
             },
           ].map((faq, index) => (
-            <Grid item xs={12} md={6} key={index}>
+            <Grid size={{ xs: 12, md: 6 }} key={index}>
               <Paper sx={{ p: 2, borderRadius: 1, height: '100%' }}>
                 <Typography fontWeight={700} gutterBottom>
                   {faq.question}

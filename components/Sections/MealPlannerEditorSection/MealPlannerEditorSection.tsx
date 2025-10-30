@@ -265,7 +265,7 @@ export default function WeeklyMealPlanner({
             }}
           >
             {days.map((day, dIdx) => (
-              <Grid key={day.key} item xs={12}>
+              <Grid key={day.key} size={{ xs: 12 }}>
                 <Paper
                   elevation={0}
                   sx={{
@@ -279,7 +279,7 @@ export default function WeeklyMealPlanner({
                 >
                   <Grid container spacing={1} alignItems="center">
                     {/* Day tag */}
-                    <Grid item xs={2} sm={1.2 as any} md={1}>
+                    <Grid size={{ xs: 2, sm: 1.2, md: 1 }}>
                       <Stack
                         alignItems="center"
                         spacing={0}
@@ -305,10 +305,11 @@ export default function WeeklyMealPlanner({
                       return (
                         <Grid
                           key={id}
-                          item
-                          xs={10 / 3}
-                          sm={(11 / 3) as any}
-                          md={(11 / 3) as any}
+                          size={{
+                            xs: 10 / 3,
+                            sm: 11 / 3,
+                            md: 11 / 3,
+                          }}
                         >
                           <div id={id} />
                           <Droppable id={id}>

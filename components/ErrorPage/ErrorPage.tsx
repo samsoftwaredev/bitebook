@@ -21,10 +21,8 @@ const ErrorPage = ({ text, isPage = false }: Props) => {
 
   return (
     <Box>
-      <Box>
-        <Logo type="logo" />
-        <Typography my={2}>{text}</Typography>
-      </Box>
+      <Logo type="logo" />
+      <Typography my={2}>{text}</Typography>
     </Box>
   );
 };
