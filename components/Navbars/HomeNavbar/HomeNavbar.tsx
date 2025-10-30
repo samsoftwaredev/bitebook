@@ -43,26 +43,23 @@ function HomeNavbar(props: Props) {
     {
       label: t.aboutPage,
       goTo: NAV_FOOTER_LINKS.about.link,
-      sx: { color: '#fff' },
     },
     {
       label: t.resourcesPage,
       goTo: NAV_MAIN_LINKS.resources.link,
-      sx: { color: '#fff' },
     },
     {
       label: t.logIn,
       goTo: NAV_MAIN_LINKS.login.link,
-      sx: { color: '#fff' },
     },
   ];
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-      <Button disableRipple href={NAV_MAIN_LINKS.home.link}>
+      <Link passHref href={NAV_MAIN_LINKS.home.link}>
         <Typography sx={{ display: 'none' }}>{COMPANY.name}</Typography>
         <Logo type="wordLogo" />
-      </Button>
+      </Link>
       <Divider />
       <List>
         {navItems.map(({ label, goTo }) => (
@@ -93,7 +90,11 @@ function HomeNavbar(props: Props) {
 
   return (
     <Box sx={{ display: 'flex' }}>
-      <AppBar component="nav" position="static">
+      <AppBar
+        sx={{ borderRadius: 0, bgcolor: 'primary.dark' }}
+        component="nav"
+        position="static"
+      >
         <Toolbar>
           <IconButton
             color="inherit"
@@ -118,7 +119,11 @@ function HomeNavbar(props: Props) {
           <Box sx={{ display: { xs: 'none', sm: 'none', md: 'block' } }}>
             {navItems.map(({ label, goTo, sx }) => (
               <Link key={label} passHref href={goTo}>
-                <Button key={label} sx={sx}>
+                <Button
+                  key={label}
+                  sx={{ color: '#fff', boxShadow: 'none' }}
+                  variant="text"
+                >
                   {label}
                 </Button>
               </Link>

@@ -34,6 +34,7 @@ export { default as RecipeDraggableCard } from './RecipeDraggableCard';
 export { default as ManualEntryForm } from './ManualEntryForm';
 export { default as PhotoImportForm } from './PhotoImportForm';
 export { default as URLImportForm } from './URLImportForm';
+export { default as ThemeRegistry } from './ThemeRegistry';
 
 export * from './Navbars';
 export * from './Fields';
