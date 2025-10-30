@@ -71,9 +71,7 @@ const HowItWorks = () => {
           {steps.map((step, i) => (
             <Grid
               component="li"
-              item
-              xs={12}
-              md={4}
+              size={{ xs: 12, md: 4 }}
               key={step.id}
               id={step.id}
               sx={{
