@@ -4,7 +4,7 @@ import { Box, Typography } from '@mui/material';
 
 import { minPasswordLength } from '@/constants/global';
 import { useLanguageContext } from '@/context/LanguageContext';
-import { digitRegEx, specialCharsRegEx } from '@/utils';
+import { digitRegEx, specialCharsRegEx } from '@/utils/regEx';
 
 interface Props {
   password: string;

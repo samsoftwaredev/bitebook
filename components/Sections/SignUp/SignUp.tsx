@@ -17,7 +17,7 @@ import { db } from '@/classes/SupabaseDB';
 import { FormErrorText } from '@/components';
 import { NAV_APP_LINKS, passwordValidationRules } from '@/constants';
 import { useLanguageContext } from '@/context/LanguageContext';
-import { emailRegEx, nameRegEx } from '@/utils';
+import { emailRegEx, nameRegEx } from '@/utils/regEx';
 
 import { HorizontalDivider, Loading, PasswordValidator } from '../..';
 

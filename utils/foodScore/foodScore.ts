@@ -1,4 +1,3 @@
-// foodScore.ts
 // Build-ready TypeScript implementation for Food scoring (0–100)
 
 export type Category = 'food' | 'beverage' | 'cheese' | 'fat_spread';

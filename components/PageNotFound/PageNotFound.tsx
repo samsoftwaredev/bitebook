@@ -5,15 +5,15 @@ import { MainLayout } from '@/components/Templates';
 interface Props {
   title?: string;
   description?: string;
-  imagePath?: string;
-  imageAlt?: string;
+  // imagePath?: string;
+  // imageAlt?: string;
 }
 
 const PageNotFound = ({
   title = '404',
   description = 'Page Not Found',
-  imagePath = '',
-  imageAlt = 'Not Found',
+  // imagePath = '',
+  // imageAlt = 'Not Found',
 }: Props) => {
   return (
     <MainLayout>
