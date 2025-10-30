@@ -1,6 +1,57 @@
 {
-  "extends": ["next"],
+  "extends": [
+    "next/core-web-vitals",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended"
+  ],
+  "plugins": ["react", "react-hooks", "import"],
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
   "rules": {
-    "react-hooks/exhaustive-deps": "off"
-  }
+    // Prevent React error #130 - undefined components
+    "react/jsx-uses-vars": "error",
+    "react/jsx-no-undef": "error",
+    "react/jsx-no-duplicate-props": "error",
+    "react/no-unescaped-entities": "error",
+    "react/no-unknown-property": "error",
+    "react/self-closing-comp": "error",
+    "react/jsx-key": "error",
+    "react/jsx-pascal-case": "error",
+
+    // Import/Export rules to catch undefined imports
+    "import/no-unresolved": "warn", // TypeScript handles this
+    "import/named": "error",
+    "import/default": "error",
+    "import/no-duplicates": "error",
+    "import/first": "error",
+    "import/newline-after-import": "error",
+
+    // General rules to prevent common issues
+    "no-unused-vars": "error",
+    "no-console": "warn",
+    "no-debugger": "error",
+    "no-duplicate-imports": "error",
+    "no-empty": "error",
+    "no-undef": "error",
+    "no-unreachable": "error",
+    "prefer-const": "error",
+
+    // React Hooks rules
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn"
+  },
+  "overrides": [
+    {
+      "files": ["*.tsx", "*.ts"],
+      "rules": {
+        "react/prop-types": "off",
+        "react/react-in-jsx-scope": "off",
+        "no-unused-vars": "off",
+        "@typescript-eslint/no-unused-vars": "error"
+      }
+    }
+  ]
 }
