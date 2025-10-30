@@ -45,11 +45,11 @@ const defaults: Testimonial[] = [
   },
 ];
 
-export default function Community({
+const Community = ({
   title = 'Loved by Home Cooks Everywhere',
   subtitle = 'Join thousands of people who have transformed their cooking experience',
   items = defaults,
-}: Props) {
+}: Props) => {
   const theme = useTheme();
 
   return (
@@ -121,4 +121,6 @@ export default function Community({
       </Container>
     </Box>
   );
-}
+};
+
+export default Community;

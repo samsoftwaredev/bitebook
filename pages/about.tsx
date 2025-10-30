@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 
 import { Meta } from '@/components';
-import AboutSection from '@/components/Sections/AboutSection';
+import { AboutSection } from '@/components/Sections';
 import { MainLayout } from '@/components/Templates';
 
 const About: NextPage = () => {

@@ -10,7 +10,6 @@ import {
   useTheme,
 } from '@mui/material';
 import Link from 'next/link';
-import React from 'react';
 
 import { NAV_MAIN_LINKS } from '@/constants/nav';
 
@@ -22,7 +21,7 @@ const defaultStats: Stat[] = [
   { value: '95+', label: 'Health Score Available' },
 ];
 
-export default function CallToAction() {
+const CallToAction = () => {
   const theme = useTheme();
 
   const page = {
@@ -131,4 +130,6 @@ export default function CallToAction() {
       </Container>
     </Box>
   );
-}
+};
+
+export default CallToAction;

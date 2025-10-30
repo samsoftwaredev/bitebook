@@ -18,8 +18,7 @@ import {
 import * as React from 'react';
 
 import { PageHeader } from '@/components';
-import { NutritionPer100 } from '@/utils/foodScore/foodScore';
-import { foodScore } from '@/utils/index';
+import { NutritionPer100, scoreFood } from '@/utils';
 
 const MetricCard = ({
   icon,
@@ -76,7 +75,6 @@ const EmptyChartCard = ({ title, note }: { title: string; note: string }) => (
 
 export default function SpendingTrackerPage() {
   const [range, setRange] = React.useState<'all' | '30' | '90' | 'ytd'>('all');
-  const { scoreFood } = foodScore;
 
   React.useEffect(() => {
     const nutrition: NutritionPer100 = {

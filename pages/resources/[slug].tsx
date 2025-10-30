@@ -12,9 +12,7 @@ import {
 } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
 
-import { db } from '@/classes';
 import { Loading, Meta, PageNotFound } from '@/components';
 import { MainLayout } from '@/components/Templates';
 import { NAV_MAIN_LINKS } from '@/constants/nav';

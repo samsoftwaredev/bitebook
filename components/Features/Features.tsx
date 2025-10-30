@@ -47,11 +47,11 @@ const defaultItems: Feature[] = [
   },
 ];
 
-export default function Features({
+const Features = ({
   title = 'Why Choose RecipeBox?',
   subtitle = 'Transform your cooking experience with powerful tools designed to save you time and money',
   items = defaultItems,
-}: Props) {
+}: Props) => {
   const theme = useTheme();
 
   return (
@@ -137,4 +137,6 @@ export default function Features({
       </Container>
     </Box>
   );
-}
+};
+
+export default Features;

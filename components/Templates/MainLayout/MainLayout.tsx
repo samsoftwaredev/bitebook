@@ -4,10 +4,9 @@ import { Footer, HomeNavbar } from '@/components';
 
 interface Props {
   children: React.ReactNode;
-  topNavbar?: React.ReactNode;
 }
 
-const MainLayout = ({ children, topNavbar = <HomeNavbar /> }: Props) => {
+const MainLayout = ({ children }: Props) => {
   return (
     <div
       style={{
@@ -17,7 +16,7 @@ const MainLayout = ({ children, topNavbar = <HomeNavbar /> }: Props) => {
       }}
     >
       <div style={{ flex: '1 0 auto' }}>
-        {topNavbar}
+        <HomeNavbar />
         {children}
       </div>
       <div style={{ flexShrink: 0 }}>

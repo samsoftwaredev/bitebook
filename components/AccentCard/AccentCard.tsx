@@ -1,5 +1,3 @@
-// FeaturesGrid.tsx
-// Icons
 import { Grass } from '@mui/icons-material';
 import AutoAwesomeRoundedIcon from '@mui/icons-material/AutoAwesomeRounded';
 import EventNoteRoundedIcon from '@mui/icons-material/EventNoteRounded';
@@ -76,7 +74,7 @@ const defaultItems: FeatureItem[] = [
   },
 ];
 
-function AccentCard({ item }: { item: FeatureItem }) {
+const AccentCard = ({ item }: { item: FeatureItem }) => {
   const theme = useTheme();
 
   return (
@@ -153,13 +151,13 @@ function AccentCard({ item }: { item: FeatureItem }) {
       </Stack>
     </Paper>
   );
-}
+};
 
-export default function FeaturesGrid({
+const FeaturesGrid = ({
   title = 'Everything You Need to Cook Smarter',
   subtitle = 'Powerful features that make meal planning, shopping, and cooking a breeze',
   items = defaultItems,
-}: FeaturesGridProps) {
+}: FeaturesGridProps) => {
   return (
     <Box component="section" sx={{ py: { xs: 8, md: 10 } }}>
       <Container maxWidth="lg">
@@ -190,4 +188,6 @@ export default function FeaturesGrid({
       </Container>
     </Box>
   );
-}
+};
+
+export default FeaturesGrid;

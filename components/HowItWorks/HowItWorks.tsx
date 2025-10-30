@@ -1,6 +1,5 @@
 import { Box, Card, CardContent, Grid, Typography } from '@mui/material';
 import Head from 'next/head';
-import * as React from 'react';
 
 const steps = [
   {

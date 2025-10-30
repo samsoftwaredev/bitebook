@@ -18,6 +18,46 @@ import NextLink from 'next/link';
 import { Logo } from '@/components';
 import { COMPANY, NAV_FOOTER_LINKS, NAV_MAIN_LINKS } from '@/constants';
 
+const iconButtonSx = (theme: any) => {
+  return {
+    color: theme.palette.success.main,
+    border: `1px solid ${alpha(theme.palette.success.main, 0.3)}`,
+    backgroundColor: alpha(theme.palette.success.main, 0.06),
+    borderRadius: 2,
+    width: { xs: 44, md: 40 },
+    height: { xs: 44, md: 40 },
+    transition: 'all 0.2s ease-in-out',
+    '&:hover': {
+      backgroundColor: alpha(theme.palette.success.main, 0.14),
+      transform: 'translateY(-1px)',
+      borderColor: alpha(theme.palette.success.main, 0.5),
+    },
+    '&:focus-visible': {
+      outline: `2px solid ${theme.palette.success.main}`,
+      outlineOffset: 2,
+    },
+    '&:active': {
+      transform: 'translateY(0)',
+      backgroundColor: alpha(theme.palette.success.main, 0.2),
+    },
+  };
+};
+
+const Separator = () => {
+  return (
+    <Box
+      component="span"
+      aria-hidden
+      sx={{
+        width: 1,
+        height: 16,
+        mx: 0.5,
+        display: { xs: 'none', sm: 'inline-block' },
+      }}
+    />
+  );
+};
+
 const Footer = () => {
   const theme = useTheme();
   const currentYear = new Date().getFullYear();
@@ -301,45 +341,5 @@ const Footer = () => {
     </Box>
   );
 };
-
-function iconButtonSx(theme: any) {
-  return {
-    color: theme.palette.success.main,
-    border: `1px solid ${alpha(theme.palette.success.main, 0.3)}`,
-    backgroundColor: alpha(theme.palette.success.main, 0.06),
-    borderRadius: 2,
-    width: { xs: 44, md: 40 },
-    height: { xs: 44, md: 40 },
-    transition: 'all 0.2s ease-in-out',
-    '&:hover': {
-      backgroundColor: alpha(theme.palette.success.main, 0.14),
-      transform: 'translateY(-1px)',
-      borderColor: alpha(theme.palette.success.main, 0.5),
-    },
-    '&:focus-visible': {
-      outline: `2px solid ${theme.palette.success.main}`,
-      outlineOffset: 2,
-    },
-    '&:active': {
-      transform: 'translateY(0)',
-      backgroundColor: alpha(theme.palette.success.main, 0.2),
-    },
-  };
-}
-
-function Separator() {
-  return (
-    <Box
-      component="span"
-      aria-hidden
-      sx={{
-        width: 1,
-        height: 16,
-        mx: 0.5,
-        display: { xs: 'none', sm: 'inline-block' },
-      }}
-    />
-  );
-}
 
 export default Footer;

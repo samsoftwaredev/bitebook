@@ -15,7 +15,6 @@ import {
 } from '@mui/material';
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
 
 import { NAV_MAIN_LINKS } from '@/constants/nav';
 import spaghetti from '@/public/assets/images/food/spaghetti.jpg';
@@ -30,14 +29,14 @@ type HeroProps = {
   onSecondaryClick?: () => void;
 };
 
-export default function Hero({
+const Hero = ({
   eyebrow = 'AI-Powered Recipe Management',
   titleLine1 = 'Your Complete',
   titleLine2 = 'Culinary Companion',
   subtitle = `Discover recipes, plan meals, track spending, and reduce food waste—all in one beautiful app. Cook smarter, save money, and eat healthier.`,
   onPrimaryClick,
   onSecondaryClick,
-}: HeroProps) {
+}: HeroProps) => {
   const theme = useTheme();
 
   return (
@@ -261,4 +260,6 @@ export default function Hero({
       </Container>
     </Box>
   );
-}
+};
+
+export default Hero;

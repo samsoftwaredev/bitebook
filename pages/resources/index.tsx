@@ -9,9 +9,7 @@ import {
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
 
-import { db } from '@/classes';
 import { Meta } from '@/components';
 import { MainLayout } from '@/components/Templates';
 import { NAV_MAIN_LINKS } from '@/constants/nav';

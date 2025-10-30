@@ -1,15 +1,23 @@
-import { Typography } from '@mui/material';
+import { Box, Container, Typography } from '@mui/material';
 import type { NextPage } from 'next';
 
 import { Meta } from '@/components';
-import { MainLayout } from '@/components/Templates';
 
 const Contact: NextPage = () => {
   return (
-    <MainLayout>
+    <>
       <Meta pageTitle="Contact Us" />
-      <Typography>Contact Page</Typography>
-    </MainLayout>
+      <Container maxWidth="lg" sx={{ py: 4 }}>
+        <Box sx={{ textAlign: 'center' }}>
+          <Typography variant="h3" component="h1" gutterBottom>
+            Contact Us
+          </Typography>
+          <Typography variant="body1" color="text.secondary">
+            Get in touch with our team
+          </Typography>
+        </Box>
+      </Container>
+    </>
   );
 };
 

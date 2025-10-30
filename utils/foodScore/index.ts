@@ -1,1 +1,1 @@
-export * as foodScore from './foodScore';
+export * from './foodScore';
