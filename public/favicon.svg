@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="64" height="64"><svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-label="BiteBook icon">
+  <style>
+    :root{ --accent:#0FB77A; --muted:#0A7F56; --ink:#0B1C17; }
+    @media (prefers-color-scheme: dark){
+      :root{ --accent:#6EE7C8; --muted:#A7F3D0; --ink:#F5FFFB; }
+    }
+  </style>
+  <rect x="1" y="1" width="62" height="62" rx="10" fill="none" stroke="var(--accent)" stroke-width="2"></rect>
+  <path d="M10 16c10-6 20-6 30 0v28c-10-6-20-6-30 0V16z" fill="var(--accent)"></path>
+  <path d="M52 16c-10-6-20-6-30 0v28c10-6 20-6 30 0V16z" fill="var(--muted)"></path>
+  <rect x="30.25" y="12" width="1.5" height="36" fill="var(--ink)" opacity=".9"></rect>
+  <rect x="26" y="22" width="10" height="2" rx="1" fill="var(--ink)" opacity=".9"></rect>
+</svg><style>@media (prefers-color-scheme: light) { :root { filter: none; } }
+@media (prefers-color-scheme: dark) { :root { filter: none; } }
+</style></svg>
