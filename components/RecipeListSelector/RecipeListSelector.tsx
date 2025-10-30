@@ -15,7 +15,7 @@ import {
 import React from 'react';
 
 import { Draggable, RecipeDraggableCard } from '@/components';
-import { drawerWidth } from '@/constants';
+import { drawerWidth } from '@/constants/global';
 import { RecipeType } from '@/interfaces';
 import { theme } from '@/styles/mui-overwrite';
 

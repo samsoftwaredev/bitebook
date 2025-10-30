@@ -16,7 +16,8 @@ import {
 import NextLink from 'next/link';
 
 import { Logo } from '@/components';
-import { COMPANY, NAV_FOOTER_LINKS, NAV_MAIN_LINKS } from '@/constants';
+import { COMPANY } from '@/constants/company';
+import { NAV_FOOTER_LINKS, NAV_MAIN_LINKS } from '@/constants/nav';
 
 const iconButtonSx = (theme: any) => {
   return {

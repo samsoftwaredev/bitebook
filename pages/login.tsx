@@ -4,7 +4,8 @@ import { useRouter } from 'next/router';
 import { useEffect, useMemo } from 'react';
 
 import { Loading, MainLayout, Meta } from '@/components';
-import { NAV_APP_LINKS, pageView } from '@/constants';
+import { NAV_APP_LINKS } from '@/constants/nav';
+import { pageView } from '@/constants/register';
 import { useLanguageContext } from '@/context/LanguageContext';
 import { useUserContext } from '@/context/UserContext';
 

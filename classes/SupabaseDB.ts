@@ -1,6 +1,6 @@
 import { AuthResponse, createClient } from '@supabase/supabase-js';
 
-import { NAV_APP_LINKS, NAV_MAIN_LINKS } from '@/constants';
+import { NAV_APP_LINKS, NAV_MAIN_LINKS } from '@/constants/nav';
 import type { Database } from '@/interfaces/database';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_PROJECT_URL!;

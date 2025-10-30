@@ -1,6 +1,6 @@
 import Head from 'next/head';
 
-import { COMPANY } from '@/constants';
+import { COMPANY } from '@/constants/company';
 
 interface Props {
   pageTitle?: string;

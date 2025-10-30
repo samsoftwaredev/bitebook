@@ -3,7 +3,8 @@ import type { NextPage } from 'next';
 
 import { Meta } from '@/components';
 import { MainLayout } from '@/components/Templates';
-import { COMPANY, minAge } from '@/constants';
+import { COMPANY } from '@/constants/company';
+import { minAge } from '@/constants/global';
 
 const PrivacyPolicy: NextPage = () => {
   const appName = COMPANY.nameAbbr;

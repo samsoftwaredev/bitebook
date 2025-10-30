@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { NAV_APP_LINKS, NAV_MAIN_LINKS } from '@/constants';
+import { NAV_APP_LINKS, NAV_MAIN_LINKS } from '@/constants/nav';
 import { LanguageContextProvider } from '@/context/LanguageContext';
 import { UserContextProvider } from '@/context/UserContext';
 import { theme } from '@/styles/mui-overwrite';

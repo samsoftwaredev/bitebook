@@ -6,7 +6,8 @@ import { toast } from 'react-toastify';
 
 import { db } from '@/classes';
 import { FormErrorText, PasswordValidator } from '@/components';
-import { NAV_MAIN_LINKS, passwordValidationRules } from '@/constants';
+import { passwordValidationRules } from '@/constants/global';
+import { NAV_MAIN_LINKS } from '@/constants/nav';
 import { useLanguageContext } from '@/context/LanguageContext';
 
 interface IFormInputs {
