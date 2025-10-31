@@ -144,3 +144,28 @@ export type ShoppingStats = {
   status: string;
   total: number;
 };
+
+export type AddRecipeService = {
+  title: string;
+  description?: string;
+  image_url?: string | null;
+  duration_min?: number; // 0..600
+  servings?: number; // 1..20
+  est_cost_cents?: number; // >= 0
+  shelf_life_days?: number | null; // >= 0
+  health_score?: number | null; // 0..100
+  is_public?: boolean; // default false
+  ingredients?: RecipeIngredientService[];
+  steps?: RecipeStepsService[];
+  tags?: string[]; // tag names; will be created if missing
+};
+
+export type RecipeStepsService = { step_no?: number; body: string };
+
+export type RecipeIngredientService = {
+  ingredient_id: string;
+  name: string;
+  qty_num: number;
+  qty_unit: string;
+  shelf_life_days: number | null;
+};

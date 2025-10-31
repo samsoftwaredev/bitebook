@@ -1,5 +1,6 @@
 import { supabase } from '@/classes';
 import {
+  AddRecipeService,
   RecipeDetail,
   RecipeResponse,
   ShoppingItem,
@@ -231,4 +232,19 @@ export const toggleShoppingListItemService = async ({
     },
   );
   return { data, error };
+};
+
+export const addRecipeService = async (
+  data: AddRecipeService,
+): Promise<{
+  data: any;
+  error: any;
+}> => {
+  const { data: responseData, error } = await supabase.functions.invoke(
+    'recipes-create',
+    {
+      body: data,
+    },
+  );
+  return { data: responseData, error };
 };

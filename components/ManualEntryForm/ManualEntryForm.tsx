@@ -45,7 +45,10 @@ import {
   useScrollTrigger,
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useId, useState } from 'react';
+import { toast } from 'react-toastify';
+
+import { addRecipeService } from '@/services/index';
 
 // Sortable Step Component
 function SortableStep({
@@ -313,19 +316,35 @@ function ManualEntryForm({ onBack }: { onBack: () => void }) {
     setIsLoading(true);
 
     try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-
-      console.log('Saving manual recipe:', {
-        ...formData,
-        steps: steps.filter((step) => step.trim()),
-        photo: selectedPhoto,
+      await addRecipeService({
+        title: formData.title,
+        description: formData.description,
+        image_url: photoPreview,
+        duration_min: Number(formData.cookTime),
+        servings: Number(formData.servings),
+        est_cost_cents: 0,
+        shelf_life_days: null,
+        health_score: null,
+        is_public: false,
+        ingredients: formData.ingredients.map((ing) => ({
+          ingredient_id: useId(),
+          name: ing,
+          qty_num: 0,
+          qty_unit: '',
+          shelf_life_days: null,
+        })),
+        steps: steps.map((step) => ({ body: step.trim() })),
+        tags: [],
       });
 
       setShowSuccess(true);
-      setTimeout(() => {
-        onBack();
-      }, 2000);
+
+      toast.success('Recipe saved successfully!', {
+        onClose: () => {
+          onBack();
+        },
+        autoClose: 1000,
+      });
     } catch (error) {
       console.error('Error saving recipe:', error);
     } finally {
