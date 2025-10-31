@@ -23,7 +23,24 @@ const ShoppingList: NextPage = () => {
     remaining: 0,
     status: 'active',
   });
-  const shoppingListId = searchParams.get('shoppingListId');
+
+  let shoppingListId = searchParams.get('shoppingListId');
+  const localStoredShoppingListId = localStorage.getItem('shoppingListId');
+
+  useEffect(() => {
+    if (localStoredShoppingListId === null && shoppingListId) {
+      localStorage.setItem('shoppingListId', shoppingListId);
+    }
+    if (!shoppingListId && localStoredShoppingListId) {
+      // Update the URL or state with the local stored shoppingListId
+      window.history.replaceState(
+        {},
+        '',
+        `${window.location.pathname}?shoppingListId=${localStoredShoppingListId}`,
+      );
+      shoppingListId = localStoredShoppingListId;
+    }
+  }, [shoppingListId, localStoredShoppingListId]);
 
   const getShoppingListData = async () => {
     if (!shoppingListId) return;

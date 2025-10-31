@@ -71,11 +71,23 @@ export default function ShoppingListPage({
         return prev;
       });
     }
+    setStats((prev) => ({
+      ...prev,
+      purchased: prev.purchased + (toBuy.find((it) => it.id === id) ? 1 : -1),
+      remaining: prev.remaining + (toBuy.find((it) => it.id === id) ? -1 : 1),
+    }));
   };
 
   const remove = (id: string) => {
     setPurchasedItems((prev) => prev.filter((it) => it.id !== id));
     setToBuyItems((prev) => prev.filter((it) => it.id !== id));
+    setStats((prev) => ({
+      ...prev,
+      total: prev.total - 1,
+      purchased:
+        prev.purchased - (purchased.find((it) => it.id === id) ? 1 : 0),
+      remaining: prev.remaining - (toBuy.find((it) => it.id === id) ? 1 : 0),
+    }));
   };
 
   const clearCompleted = () => {
