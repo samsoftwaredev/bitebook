@@ -179,12 +179,6 @@ export default function AddNewRecipeDialog({ open, onClose }: Props) {
       fullScreen={isMobile}
       maxWidth="md"
       fullWidth
-      PaperProps={{
-        sx: {
-          borderRadius: { xs: 0, sm: 2 },
-          minHeight: { xs: '100vh', sm: 'auto' },
-        },
-      }}
     >
       <DialogTitle
         sx={{
