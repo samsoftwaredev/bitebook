@@ -7,11 +7,13 @@ import {
   Toolbar,
   alpha,
 } from '@mui/material';
+import Link from 'next/link';
 import React from 'react';
 
 import { Logo } from '@/components';
 import { SideNavbar } from '@/components/Navbars';
 import { drawerWidth } from '@/constants/global';
+import { NAV_APP_LINKS } from '@/constants/nav';
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -23,6 +25,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         position="fixed"
         elevation={0}
         sx={{
+          borderRadius: 0,
           display: { xs: 'block', md: 'none' },
           backgroundColor: '#fff',
           color: 'text.primary',
@@ -37,7 +40,9 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             <MenuRoundedIcon />
           </IconButton>
           <Box textAlign="center" mt={1}>
-            <Logo type="logo" size={42} />
+            <Link passHref href={NAV_APP_LINKS.app.link}>
+              <Logo type="logo" size={42} />
+            </Link>
           </Box>
         </Toolbar>
       </AppBar>
