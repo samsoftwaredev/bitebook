@@ -49,6 +49,7 @@ import React, { useEffect, useId, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { addRecipeService } from '@/services/index';
+import { generateRandomStringId } from '@/utils/helpers';
 
 // Sortable Step Component
 function SortableStep({
@@ -327,7 +328,7 @@ function ManualEntryForm({ onBack }: { onBack: () => void }) {
         health_score: null,
         is_public: false,
         ingredients: formData.ingredients.map((ing) => ({
-          ingredient_id: useId(),
+          ingredient_id: generateRandomStringId(1200),
           name: ing,
           qty_num: 0,
           qty_unit: '',

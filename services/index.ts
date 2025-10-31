@@ -248,3 +248,18 @@ export const addRecipeService = async (
   );
   return { data: responseData, error };
 };
+
+export const updateRecipeService = async (
+  data: AddRecipeService,
+): Promise<{
+  data: any;
+  error: any;
+}> => {
+  const { data: responseData, error } = await supabase.functions.invoke(
+    'recipes-update',
+    {
+      body: data,
+    },
+  );
+  return { data: responseData, error };
+};

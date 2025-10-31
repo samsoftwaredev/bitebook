@@ -1,3 +1,4 @@
+import { uniqueId } from 'lodash';
 import moment from 'moment';
 
 export const isClientSideRender = () => typeof window !== 'undefined';
@@ -34,16 +35,7 @@ export const formatDateSlash = (dateString: string | Date): string => {
 };
 
 export const generateRandomStringId = (length: number) => {
-  let result = '';
-  const characters =
-    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  const charactersLength = characters.length;
-  let counter = 0;
-  while (counter < length) {
-    result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    counter += 1;
-  }
-  return result;
+  return uniqueId();
 };
 
 export const dollarFormatter = (amount: number) => {
