@@ -270,7 +270,7 @@ export default function MealPlannerSection() {
 
       <Grid size={{ xs: 12, md: 4, lg: 3 }} sx={{ mb: 2 }}>
         <Stack
-          direction="row"
+          direction={{ md: 'row', sm: 'column', xs: 'column' }}
           spacing={1}
           justifyContent={{ xs: 'flex-start', md: 'flex-end' }}
         >

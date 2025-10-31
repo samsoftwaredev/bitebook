@@ -211,40 +211,44 @@ export default function WeeklyMealPlanner({
           sx={{ fontWeight: 900, ml: 1 }}
         />
       </Stack>
+
       <Stack
-        direction="row"
-        alignItems="center"
-        justifyContent="space-between"
-        sx={{ px: 2, py: 1 }}
+        my={2}
         spacing={1}
+        display="flex"
+        alignContent={{
+          sm: 'center',
+          md: 'flex-end',
+        }}
+        direction={{ md: 'row', sm: 'column', xs: 'column' }}
       >
-        <Stack direction="row" spacing={1}>
-          <Button
-            variant="contained"
-            color="warning"
-            onClick={handleAIGeneratePlanner}
-            startIcon={<BoltRoundedIcon />}
-            sx={{ textTransform: 'none', fontWeight: 800 }}
-          >
-            AI Generate Meal Plan
-          </Button>
-          <Button
-            variant="contained"
-            color="success"
-            disabled={isLoadingShoppingList}
-            onClick={onSendShoppingList}
-            startIcon={
-              isLoadingShoppingList ? (
-                <CircularProgress size={24} />
-              ) : (
-                <ShoppingCartRoundedIcon />
-              )
-            }
-            sx={{ textTransform: 'none', fontWeight: 800 }}
-          >
-            Send to Shopping List
-          </Button>
-        </Stack>
+        <Button
+          variant="contained"
+          color="warning"
+          onClick={handleAIGeneratePlanner}
+          startIcon={<BoltRoundedIcon />}
+          sx={{ textTransform: 'none', fontWeight: 800 }}
+          fullWidth={isMobile}
+        >
+          AI Generate Meal Plan
+        </Button>
+        <Button
+          variant="contained"
+          color="success"
+          disabled={isLoadingShoppingList}
+          onClick={onSendShoppingList}
+          startIcon={
+            isLoadingShoppingList ? (
+              <CircularProgress size={24} />
+            ) : (
+              <ShoppingCartRoundedIcon />
+            )
+          }
+          sx={{ textTransform: 'none', fontWeight: 800 }}
+          fullWidth={isMobile}
+        >
+          Send to Shopping List
+        </Button>
       </Stack>
       <DndContext
         sensors={sensors}
