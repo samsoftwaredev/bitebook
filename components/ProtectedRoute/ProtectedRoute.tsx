@@ -1,22 +1,20 @@
-import { useRouter } from 'next/router';
 import { JSX, ReactElement, useEffect } from 'react';
 
+import Loading from '@/components/Loading';
 import { NAV_MAIN_LINKS } from '@/constants/nav';
-import { useUserContext } from '@/context/UserContext';
+import { useAuthRedirect } from '@/hooks/useAuthRedirect';
 
 interface Props {
   children: JSX.Element | ReactElement<any, any>;
 }
 
 const ProtectedRoute = ({ children }: Props) => {
-  const router = useRouter();
-  const { isAuth } = useUserContext();
-  useEffect(() => {
-    // if user is not auth, redirect user to login screen
-    if (!isAuth) router.push(NAV_MAIN_LINKS.login.link);
-  }, []);
+  const { isLoading } = useAuthRedirect({
+    redirectTo: NAV_MAIN_LINKS.login.link,
+    redirectWhen: 'unauthenticated', // Redirect unauthenticated users to login
+  });
 
-  if (!isAuth) return null;
+  if (isLoading) return <Loading />;
 
   return children;
 };

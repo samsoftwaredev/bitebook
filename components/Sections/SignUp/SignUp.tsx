@@ -8,7 +8,6 @@ import {
   RadioGroup,
   TextField,
 } from '@mui/material';
-import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { Controller, SubmitHandler, useForm, useWatch } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -17,8 +16,8 @@ import { db } from '@/classes';
 import { FormErrorText } from '@/components';
 import { HorizontalDivider, Loading, PasswordValidator } from '@/components';
 import { passwordValidationRules } from '@/constants/global';
-import { NAV_APP_LINKS } from '@/constants/nav';
 import { useLanguageContext } from '@/context/LanguageContext';
+import { useUserContext } from '@/context/UserContext';
 import { emailRegEx, nameRegEx } from '@/utils/regEx';
 
 interface IFormInputs {
@@ -31,7 +30,7 @@ interface IFormInputs {
 
 const SignUp = () => {
   const { t } = useLanguageContext();
-  const router = useRouter();
+  const { checkAuth } = useUserContext();
   const [isLoading, setIsLoading] = useState(false);
   const { handleSubmit, control } = useForm<IFormInputs>({
     mode: 'onChange',
@@ -59,7 +58,7 @@ const SignUp = () => {
       toast.error(error.message);
       console.error(error);
     } else {
-      router.push(NAV_APP_LINKS.app.link);
+      checkAuth();
     }
   };
 

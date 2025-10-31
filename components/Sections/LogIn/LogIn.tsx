@@ -1,6 +1,5 @@
 import { Button, FormControl, TextField } from '@mui/material';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -8,8 +7,9 @@ import { toast } from 'react-toastify';
 import { db } from '@/classes';
 import { HorizontalDivider } from '@/components';
 import FormErrorText from '@/components/FormErrorText';
-import { NAV_APP_LINKS, NAV_MAIN_LINKS } from '@/constants/nav';
+import { NAV_MAIN_LINKS } from '@/constants/nav';
 import { useLanguageContext } from '@/context/LanguageContext';
+import { useUserContext } from '@/context/UserContext';
 
 interface IFormInputs {
   password: string;
@@ -17,8 +17,8 @@ interface IFormInputs {
 }
 
 const LogIn = () => {
-  const router = useRouter();
   const { t } = useLanguageContext();
+  const { checkAuth } = useUserContext();
   const [isLoading, setIsLoading] = useState(false);
   const { handleSubmit, control } = useForm<IFormInputs>({
     mode: 'onChange',
@@ -35,7 +35,7 @@ const LogIn = () => {
       console.error(error);
       toast.error(error.message);
     } else {
-      router.push(NAV_APP_LINKS.app.link);
+      checkAuth();
     }
     setIsLoading(false);
   };
