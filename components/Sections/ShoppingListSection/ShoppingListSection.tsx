@@ -114,7 +114,7 @@ export default function ShoppingListPage({
 
       <Grid container spacing={2.5}>
         {/* Left – checklist */}
-        <Grid size={{ xs: 12, md: 8 }}>
+        <Grid order={{ xs: 1, md: 0 }} size={{ xs: 12, md: 8 }}>
           <Paper sx={{ borderRadius: 1, overflow: 'hidden' }}>
             {/* Gradient header */}
             <Stack
@@ -181,7 +181,7 @@ export default function ShoppingListPage({
         </Grid>
 
         {/* Right – tips & stats */}
-        <Grid size={{ xs: 12, md: 4 }}>
+        <Grid order={{ xs: 0, md: 1 }} size={{ xs: 12, md: 4 }}>
           <Stack spacing={2}>
             <Paper
               sx={{
