@@ -45,11 +45,11 @@ import {
   useScrollTrigger,
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import React, { useEffect, useId, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { genericFoodImage } from '@/constants/global';
-import { addRecipeService } from '@/services/index';
+import { addRecipeService, getUnitsService } from '@/services/index';
 import { uuidv4 } from '@/utils/helpers';
 
 // Sortable Step Component
@@ -180,6 +180,7 @@ function ManualEntryForm({ onBack }: { onBack: () => void }) {
   const [ingredientInput, setIngredientInput] = useState('');
   const [validationErrors, setValidationErrors] = useState<string[]>([]);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [units, setUnits] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   // DnD Sensors
@@ -279,6 +280,20 @@ function ManualEntryForm({ onBack }: { onBack: () => void }) {
     setSteps(newSteps);
   };
 
+  const getUnits = async () => {
+    try {
+      const { data, error } = await getUnitsService();
+      if (error) {
+        console.error('Error fetching units:', error);
+        return [];
+      }
+      setUnits(data?.unit || []);
+    } catch (error) {
+      console.error('Error fetching units:', error);
+      return [];
+    }
+  };
+
   const handleStepDelete = (index: number) => {
     if (steps.length > 1) {
       setSteps(steps.filter((_, i) => i !== index));
@@ -358,6 +373,10 @@ function ManualEntryForm({ onBack }: { onBack: () => void }) {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    getUnits();
+  }, []);
 
   const isFormValid = validationErrors.length === 0 && formData.title.trim();
 

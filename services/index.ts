@@ -263,3 +263,13 @@ export const updateRecipeService = async (
   );
   return { data: responseData, error };
 };
+
+export const getUnitsService = async (): Promise<{
+  data: { unit: string[] } | null;
+  error: any;
+}> => {
+  const { data, error } = await supabase.functions.invoke('get-units', {
+    method: 'GET',
+  });
+  return { data, error };
+};
