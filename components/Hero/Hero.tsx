@@ -160,6 +160,7 @@ const Hero = ({
               }}
             >
               <Image
+                priority
                 style={{
                   gridArea: 'image',
                   width: '100%',

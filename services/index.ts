@@ -238,7 +238,7 @@ export const addRecipeService = async (
   data: AddRecipeService,
 ): Promise<{
   data: any;
-  error: any;
+  error: string;
 }> => {
   const { data: responseData, error } = await supabase.functions.invoke(
     'recipes-create',

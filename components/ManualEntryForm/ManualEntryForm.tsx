@@ -48,8 +48,9 @@ import { useTheme } from '@mui/material/styles';
 import React, { useEffect, useId, useState } from 'react';
 import { toast } from 'react-toastify';
 
+import { genericFoodImage } from '@/constants/global';
 import { addRecipeService } from '@/services/index';
-import { generateRandomStringId } from '@/utils/helpers';
+import { uuidv4 } from '@/utils/helpers';
 
 // Sortable Step Component
 function SortableStep({
@@ -317,10 +318,10 @@ function ManualEntryForm({ onBack }: { onBack: () => void }) {
     setIsLoading(true);
 
     try {
-      await addRecipeService({
+      const { error } = await addRecipeService({
         title: formData.title,
         description: formData.description,
-        image_url: photoPreview,
+        image_url: photoPreview ?? genericFoodImage,
         duration_min: Number(formData.cookTime),
         servings: Number(formData.servings),
         est_cost_cents: 0,
@@ -328,15 +329,19 @@ function ManualEntryForm({ onBack }: { onBack: () => void }) {
         health_score: null,
         is_public: false,
         ingredients: formData.ingredients.map((ing) => ({
-          ingredient_id: generateRandomStringId(1200),
+          ingredient_id: uuidv4(),
           name: ing,
-          qty_num: 0,
-          qty_unit: '',
+          qty_num: 1,
+          qty_unit: 'cup',
           shelf_life_days: null,
         })),
         steps: steps.map((step) => ({ body: step.trim() })),
         tags: [],
       });
+
+      if (error) {
+        throw new Error(error);
+      }
 
       setShowSuccess(true);
 
@@ -344,10 +349,11 @@ function ManualEntryForm({ onBack }: { onBack: () => void }) {
         onClose: () => {
           onBack();
         },
-        autoClose: 1000,
+        autoClose: 2000,
       });
     } catch (error) {
       console.error('Error saving recipe:', error);
+      toast.error('Failed to save recipe. Please try again.');
     } finally {
       setIsLoading(false);
     }

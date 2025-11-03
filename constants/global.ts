@@ -6,6 +6,9 @@ export const maxAge = 120;
 export const minAge = 13;
 export const drawerWidth = 260;
 
+export const genericFoodImage =
+  'https://lhivthorxlkyfyeubrwm.supabase.co/storage/v1/object/sign/recipes/images/genericFoodImg.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wMGQwNDIwOC1iOWNjLTQxMDEtOGZmNi1mYjVlOThiNGQxMzciLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJyZWNpcGVzL2ltYWdlcy9nZW5lcmljRm9vZEltZy5qcGciLCJpYXQiOjE3NjIxMDU4MzgsImV4cCI6MjM5MjgyNTgzOH0.6oKKAT-XPUKNn87-SfOnsqLxRdbs409taiB8jNBm6tA';
+
 export const foodTypeFilters: FoodTypeFilter[] = [
   { value: 'all', label: 'All Recipes', filled: true, icon: '🍽️' },
   { value: 'vegan', label: 'Vegan', icon: '🌱' },
