@@ -35,6 +35,7 @@ export { default as ManualEntryForm } from './ManualEntryForm';
 export { default as PhotoImportForm } from './PhotoImportForm';
 export { default as URLImportForm } from './URLImportForm';
 export { default as ThemeRegistry } from './ThemeRegistry';
+export { default as SortableStep } from './SortableStep';
 
 export * from './Navbars';
 export * from './Fields';

@@ -9,7 +9,7 @@ import {
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 
-import { AddRecipeService, RecipeFormData } from '@/interfaces/index';
+import { RecipeFormData } from '@/interfaces/index';
 import { analyzeRecipeImageService } from '@/services/index';
 
 import ManualEntryForm from '../ManualEntryForm';
