@@ -20,9 +20,7 @@ import {
 import { useTheme } from '@mui/material/styles';
 import { useState } from 'react';
 
-import { ManualEntryForm } from '@/components';
-import { PhotoImportForm } from '@/components';
-import { URLImportForm } from '@/components';
+import { ManualEntryForm, PhotoImportForm, URLImportForm } from '@/components';
 
 type Props = {
   open: boolean;
