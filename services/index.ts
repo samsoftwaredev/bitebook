@@ -273,3 +273,21 @@ export const getUnitsService = async (): Promise<{
   });
   return { data, error };
 };
+
+export const analyzeRecipeImageService = async (
+  file: File,
+): Promise<{
+  data: AddRecipeService;
+  ok: boolean;
+  error: any;
+}> => {
+  const formData = new FormData();
+  formData.append('image', file);
+
+  const response = await fetch('http://localhost:8000/analyze-image', {
+    method: 'POST',
+    body: formData,
+  });
+  const data = await response.json();
+  return { data: data, ok: response.ok, error: null };
+};

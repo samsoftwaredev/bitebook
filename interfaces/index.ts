@@ -35,14 +35,8 @@ export type RecipeDetail = {
     is_public: boolean;
     owner_id: string;
   };
-  ingredients: {
-    ingredient_id: string;
-    name: string;
-    qty_num: number;
-    qty_unit: string;
-    shelf_life_days: number | null;
-  }[];
-  steps: { step_no: number; body: string }[];
+  ingredients?: RecipeIngredientService[];
+  steps?: RecipeStepsService[];
   tags: string[];
 };
 
@@ -169,3 +163,26 @@ export type RecipeIngredientService = {
   qty_unit: string;
   shelf_life_days: number | null;
 };
+
+// Interface for ingredient with detailed fields
+export interface IngredientFormData {
+  ingredient_id?: string;
+  name: string;
+  qty_num?: number;
+  qty_unit?: string;
+  shelf_life_days?: number;
+}
+
+// Interface for pre-filling form data
+export interface RecipeFormData {
+  title?: string;
+  description?: string;
+  ingredients?: IngredientFormData[];
+  steps?: string[];
+  cookTime?: string;
+  servings?: string;
+  difficulty?: string;
+  cuisine?: string;
+  dietaryRestrictions?: string[];
+  imageUrl?: string;
+}

@@ -49,9 +49,14 @@ import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { genericFoodImage } from '@/constants/global';
+import { IngredientFormData, RecipeFormData } from '@/interfaces/index';
 import { addRecipeService, getUnitsService } from '@/services/index';
 import { uuidv4 } from '@/utils/helpers';
 
+export interface ManualEntryFormProps {
+  onBack: () => void;
+  initialData?: RecipeFormData;
+}
 // Sortable Step Component
 function SortableStep({
   step,
@@ -153,7 +158,7 @@ function SortableStep({
   );
 }
 
-function ManualEntryForm({ onBack }: { onBack: () => void }) {
+function ManualEntryForm({ onBack, initialData }: ManualEntryFormProps) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const trigger = useScrollTrigger({
@@ -162,22 +167,33 @@ function ManualEntryForm({ onBack }: { onBack: () => void }) {
   });
 
   const [formData, setFormData] = useState({
-    title: '',
-    description: '',
-    ingredients: [] as string[],
-    cookTime: '',
-    servings: '',
-    difficulty: '',
-    cuisine: '',
-    dietaryRestrictions: [] as string[],
+    title: initialData?.title || '',
+    description: initialData?.description || '',
+    ingredients: initialData?.ingredients || ([] as IngredientFormData[]),
+    cookTime: initialData?.cookTime || '',
+    servings: initialData?.servings || '',
+    difficulty: initialData?.difficulty || '',
+    cuisine: initialData?.cuisine || '',
+    dietaryRestrictions: initialData?.dietaryRestrictions || ([] as string[]),
   });
 
-  const [steps, setSteps] = useState<string[]>(['']);
+  const [steps, setSteps] = useState<string[]>(
+    initialData?.steps && initialData.steps.length > 0
+      ? initialData.steps
+      : [''],
+  );
   const [selectedPhoto, setSelectedPhoto] = useState<File | null>(null);
-  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
+  const [photoPreview, setPhotoPreview] = useState<string | null>(
+    initialData?.imageUrl || null,
+  );
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
   const [ingredientInput, setIngredientInput] = useState('');
+  const [ingredientQty, setIngredientQty] = useState('');
+  const [ingredientUnit, setIngredientUnit] = useState('cup');
+  const [editingIngredient, setEditingIngredient] = useState<number | null>(
+    null,
+  );
   const [validationErrors, setValidationErrors] = useState<string[]>([]);
   const [showSuccess, setShowSuccess] = useState(false);
   const [units, setUnits] = useState<string[]>([]);
@@ -259,11 +275,23 @@ function ManualEntryForm({ onBack }: { onBack: () => void }) {
 
   const handleAddIngredient = () => {
     if (ingredientInput.trim()) {
+      const newIngredient: IngredientFormData = {
+        ingredient_id: uuidv4(),
+        name: ingredientInput.trim(),
+        qty_num: ingredientQty ? Number(ingredientQty) : 1,
+        qty_unit: ingredientUnit,
+        shelf_life_days: undefined,
+      };
+
       setFormData((prev) => ({
         ...prev,
-        ingredients: [...prev.ingredients, ingredientInput.trim()],
+        ingredients: [...prev.ingredients, newIngredient],
       }));
+
+      // Reset input fields
       setIngredientInput('');
+      setIngredientQty('');
+      setIngredientUnit('cup');
     }
   };
 
@@ -272,6 +300,37 @@ function ManualEntryForm({ onBack }: { onBack: () => void }) {
       ...prev,
       ingredients: prev.ingredients.filter((_, i) => i !== index),
     }));
+  };
+
+  const handleEditIngredient = (index: number) => {
+    const ingredient = formData.ingredients[index];
+    setIngredientInput(ingredient.name);
+    setIngredientQty(String(ingredient.qty_num || ''));
+    setIngredientUnit(ingredient.qty_unit || 'cup');
+    setEditingIngredient(index);
+  };
+
+  const handleUpdateIngredient = () => {
+    if (editingIngredient !== null && ingredientInput.trim()) {
+      const updatedIngredients = [...formData.ingredients];
+      updatedIngredients[editingIngredient] = {
+        ...updatedIngredients[editingIngredient],
+        name: ingredientInput.trim(),
+        qty_num: ingredientQty ? Number(ingredientQty) : 1,
+        qty_unit: ingredientUnit,
+      };
+
+      setFormData((prev) => ({
+        ...prev,
+        ingredients: updatedIngredients,
+      }));
+
+      // Reset form
+      setIngredientInput('');
+      setIngredientQty('');
+      setIngredientUnit('cup');
+      setEditingIngredient(null);
+    }
   };
 
   const handleStepUpdate = (index: number, value: string) => {
@@ -344,11 +403,11 @@ function ManualEntryForm({ onBack }: { onBack: () => void }) {
         health_score: null,
         is_public: false,
         ingredients: formData.ingredients.map((ing) => ({
-          ingredient_id: uuidv4(),
-          name: ing,
-          qty_num: 1,
-          qty_unit: 'cup',
-          shelf_life_days: null,
+          ingredient_id: ing.ingredient_id || uuidv4(),
+          name: ing.name,
+          qty_num: ing.qty_num || 1,
+          qty_unit: ing.qty_unit || 'cup',
+          shelf_life_days: ing.shelf_life_days || null,
         })),
         steps: steps.map((step) => ({ body: step.trim() })),
         tags: [],
@@ -377,6 +436,30 @@ function ManualEntryForm({ onBack }: { onBack: () => void }) {
   useEffect(() => {
     getUnits();
   }, []);
+
+  // Update form data when initialData changes
+  useEffect(() => {
+    if (initialData) {
+      setFormData({
+        title: initialData.title || '',
+        description: initialData.description || '',
+        ingredients: initialData.ingredients || [],
+        cookTime: initialData.cookTime || '',
+        servings: initialData.servings || '',
+        difficulty: initialData.difficulty || '',
+        cuisine: initialData.cuisine || '',
+        dietaryRestrictions: initialData.dietaryRestrictions || [],
+      });
+
+      if (initialData.steps && initialData.steps.length > 0) {
+        setSteps(initialData.steps);
+      }
+
+      if (initialData.imageUrl) {
+        setPhotoPreview(initialData.imageUrl);
+      }
+    }
+  }, [initialData]);
 
   const isFormValid = validationErrors.length === 0 && formData.title.trim();
 
@@ -754,42 +837,101 @@ function ManualEntryForm({ onBack }: { onBack: () => void }) {
                 </Typography>
 
                 <Stack spacing={2}>
-                  <TextField
-                    fullWidth
-                    label="Add Ingredient"
-                    value={ingredientInput}
-                    onChange={(e) => setIngredientInput(e.target.value)}
-                    onKeyPress={(e) => {
-                      if (e.key === 'Enter') {
-                        e.preventDefault();
-                        handleAddIngredient();
-                      }
-                    }}
-                    variant="outlined"
-                    placeholder="e.g., 2 cups flour"
-                    InputProps={{
-                      endAdornment: (
-                        <Button
-                          onClick={handleAddIngredient}
-                          size="small"
-                          disabled={!ingredientInput.trim()}
-                        >
-                          Add
-                        </Button>
-                      ),
-                    }}
-                    sx={{
-                      '& .MuiOutlinedInput-root': {
-                        borderRadius: 2,
-                      },
-                    }}
-                  />
+                  <Grid container spacing={1}>
+                    <Grid size={{ xs: 3 }}>
+                      <TextField
+                        fullWidth
+                        label="Qty"
+                        value={ingredientQty}
+                        onChange={(e) => setIngredientQty(e.target.value)}
+                        variant="outlined"
+                        type="number"
+                        placeholder="2"
+                        sx={{
+                          '& .MuiOutlinedInput-root': {
+                            borderRadius: 2,
+                          },
+                        }}
+                      />
+                    </Grid>
+                    <Grid size={{ xs: 3 }}>
+                      <TextField
+                        fullWidth
+                        select
+                        label="Unit"
+                        value={ingredientUnit}
+                        onChange={(e) => setIngredientUnit(e.target.value)}
+                        variant="outlined"
+                        SelectProps={{
+                          native: true,
+                        }}
+                        sx={{
+                          '& .MuiOutlinedInput-root': {
+                            borderRadius: 2,
+                          },
+                        }}
+                      >
+                        {units.length === 0 ? (
+                          <>
+                            <option value="cup">cup</option>
+                            <option value="tbsp">tbsp</option>
+                            <option value="tsp">tsp</option>
+                            <option value="lbs">lbs</option>
+                            <option value="oz">oz</option>
+                            <option value="g">g</option>
+                            <option value="kg">kg</option>
+                            <option value="ml">ml</option>
+                            <option value="l">l</option>
+                            <option value="piece">piece</option>
+                          </>
+                        ) : (
+                          units.map((unit) => (
+                            <option key={unit} value={unit}>
+                              {unit}
+                            </option>
+                          ))
+                        )}
+                      </TextField>
+                    </Grid>
+                    <Grid size={{ xs: 6 }}>
+                      <TextField
+                        fullWidth
+                        label="Ingredient Name"
+                        value={ingredientInput}
+                        onChange={(e) => setIngredientInput(e.target.value)}
+                        onKeyPress={(e) => {
+                          if (e.key === 'Enter') {
+                            e.preventDefault();
+                            handleAddIngredient();
+                          }
+                        }}
+                        variant="outlined"
+                        placeholder="e.g., flour, eggs, salt"
+                        InputProps={{
+                          endAdornment: (
+                            <Button
+                              onClick={handleAddIngredient}
+                              size="small"
+                              disabled={!ingredientInput.trim()}
+                            >
+                              Add
+                            </Button>
+                          ),
+                        }}
+                        sx={{
+                          '& .MuiOutlinedInput-root': {
+                            borderRadius: 2,
+                          },
+                        }}
+                      />
+                    </Grid>
+                  </Grid>
 
                   <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
                     {formData.ingredients.map((ingredient, index) => (
                       <Chip
                         key={index}
-                        label={ingredient}
+                        label={`${ingredient.qty_num || ''} ${ingredient.qty_unit || ''} ${ingredient.name}`.trim()}
                         onDelete={() => handleRemoveIngredient(index)}
                         sx={{
                           borderRadius: 2,
@@ -807,7 +949,8 @@ function ManualEntryForm({ onBack }: { onBack: () => void }) {
                       color="text.secondary"
                       sx={{ fontStyle: 'italic' }}
                     >
-                      Add ingredients separated by commas or one by one
+                      Add ingredients with quantities and units for better
+                      recipes
                     </Typography>
                   )}
                 </Stack>
@@ -875,90 +1018,77 @@ function ManualEntryForm({ onBack }: { onBack: () => void }) {
         </Grid>
       </Box>
 
-      <Paper
-        elevation={trigger ? 8 : 2}
-        sx={{
-          p: { xs: 2, sm: 3 },
-          borderTop: 1,
-          borderColor: 'divider',
-          bgcolor: 'background.paper',
-          backdropFilter: 'blur(10px)',
-          zIndex: 1000,
-          transition: 'all 0.3s ease',
-        }}
+      <Stack
+        direction="row"
+        justifyContent="space-between"
+        alignItems="center"
+        sx={{ maxWidth: 1200, mx: 'auto' }}
       >
-        <Stack
-          direction="row"
-          justifyContent="space-between"
-          alignItems="center"
-          sx={{ maxWidth: 1200, mx: 'auto' }}
+        <Button
+          variant="outlined"
+          startIcon={<ArrowBackIcon />}
+          onClick={onBack}
+          sx={{
+            borderRadius: 2,
+            px: { xs: 2, sm: 3 },
+            py: 1.5,
+            borderColor: 'grey.300',
+            color: 'text.primary',
+            '&:hover': {
+              borderColor: 'grey.400',
+              bgcolor: 'grey.50',
+            },
+          }}
         >
-          <Button
-            variant="outlined"
-            startIcon={<ArrowBackIcon />}
-            onClick={onBack}
+          Back
+        </Button>
+
+        <Stack direction="row" alignItems="center" spacing={2}>
+          {isFormValid && (
+            <Typography
+              variant="body2"
+              color="success.main"
+              sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}
+            >
+              <CheckCircleIcon fontSize="small" />
+              Ready to save!
+            </Typography>
+          )}
+
+          <Fab
+            variant="extended"
+            color="primary"
+            onClick={handleSave}
+            disabled={!isFormValid || isLoading}
             sx={{
               borderRadius: 2,
-              px: { xs: 2, sm: 3 },
-              py: 1.5,
-              borderColor: 'grey.300',
-              color: 'text.primary',
+              px: 4,
+              py: 1,
+              boxShadow: trigger
+                ? '0 8px 32px rgba(25, 118, 210, 0.3)'
+                : '0 4px 16px rgba(25, 118, 210, 0.2)',
+              transition: 'all 0.3s ease',
               '&:hover': {
-                borderColor: 'grey.400',
-                bgcolor: 'grey.50',
+                transform: 'translateY(-2px)',
+                boxShadow: '0 12px 40px rgba(25, 118, 210, 0.4)',
+              },
+              '&:disabled': {
+                bgcolor: 'grey.300',
+                color: 'grey.500',
               },
             }}
           >
-            Back
-          </Button>
-
-          <Stack direction="row" alignItems="center" spacing={2}>
-            {isFormValid && (
-              <Typography
-                variant="body2"
-                color="success.main"
-                sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}
-              >
-                <CheckCircleIcon fontSize="small" />
-                Ready to save!
-              </Typography>
+            {isLoading ? (
+              <>Loading...</>
+            ) : (
+              <>
+                <SaveIcon sx={{ mr: 1 }} />
+                Save Recipe
+              </>
             )}
-
-            <Fab
-              variant="extended"
-              color="primary"
-              onClick={handleSave}
-              disabled={!isFormValid || isLoading}
-              sx={{
-                borderRadius: 2,
-                px: 4,
-                py: 1,
-                boxShadow: trigger
-                  ? '0 8px 32px rgba(25, 118, 210, 0.3)'
-                  : '0 4px 16px rgba(25, 118, 210, 0.2)',
-                transition: 'all 0.3s ease',
-                '&:hover': {
-                  transform: 'translateY(-2px)',
-                  boxShadow: '0 12px 40px rgba(25, 118, 210, 0.4)',
-                },
-                '&:disabled': {
-                  bgcolor: 'grey.300',
-                  color: 'grey.500',
-                },
-              }}
-            >
-              {isLoading ? (
-                <>Loading...</>
-              ) : (
-                <>
-                  <SaveIcon sx={{ mr: 1 }} />
-                  Save Recipe
-                </>
-              )}
-            </Fab>
-          </Stack>
+          </Fab>
         </Stack>
-      </Paper>
+      </Stack>
 
       {/* Success Snackbar */}
       <Snackbar

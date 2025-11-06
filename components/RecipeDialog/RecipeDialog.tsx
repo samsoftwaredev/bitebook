@@ -329,7 +329,7 @@ export default function RecipeDialog({
           </Typography>
 
           <Stack spacing={1.2}>
-            {recipe.ingredients.map((ing) => (
+            {recipe.ingredients?.map((ing) => (
               <Paper
                 key={ing.ingredient_id}
                 variant="outlined"
@@ -366,7 +366,7 @@ export default function RecipeDialog({
         </Box>
 
         {/* Steps */}
-        {recipe.steps?.length > 0 && (
+        {recipe.steps && recipe.steps.length > 0 && (
           <Box sx={{ mt: 3 }}>
             <Typography
               sx={{
@@ -383,7 +383,7 @@ export default function RecipeDialog({
               <Stack spacing={1.25} sx={{ mb: 1, p: 2 }}>
                 {recipe.steps
                   .slice()
-                  .sort((a, b) => a.step_no - b.step_no)
+                  .sort((a, b) => (a.step_no ?? 0) - (b.step_no ?? 0))
                   .map((s) => (
                     <Box key={s.step_no} sx={{ display: 'flex', gap: 1 }}>
                       <Box
