@@ -1,5 +1,4 @@
 import { Box, Grid } from '@mui/material';
-import React from 'react';
 
 // Interfaces
 import { RecipeFormData } from '@/interfaces';
@@ -25,11 +24,11 @@ interface ManualEntryFormProps {
   trigger?: boolean;
 }
 
-const ManualEntryForm: React.FC<ManualEntryFormProps> = ({
+const ManualEntryForm = ({
   initialData,
   onBack = () => {},
   trigger = false,
-}) => {
+}: ManualEntryFormProps) => {
   // Custom hooks
   const {
     formData,

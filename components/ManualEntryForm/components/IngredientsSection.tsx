@@ -27,7 +27,7 @@ interface IngredientsSectionProps {
   onEditIngredient: (index: number) => void;
 }
 
-const IngredientsSection: React.FC<IngredientsSectionProps> = ({
+const IngredientsSection = ({
   ingredients,
   ingredientInput,
   ingredientQty,
@@ -40,7 +40,7 @@ const IngredientsSection: React.FC<IngredientsSectionProps> = ({
   onAddIngredient,
   onRemoveIngredient,
   onEditIngredient,
-}) => {
+}: IngredientsSectionProps) => {
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
       e.preventDefault();

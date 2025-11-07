@@ -8,11 +8,11 @@ interface PhotoUploadSectionProps {
   selectedPhoto: File | null;
 }
 
-const PhotoUploadSection: React.FC<PhotoUploadSectionProps> = ({
+const PhotoUploadSection = ({
   photoPreview,
   onPhotoSelect,
   selectedPhoto,
-}) => {
+}: PhotoUploadSectionProps) => {
   return (
     <Card
       elevation={0}

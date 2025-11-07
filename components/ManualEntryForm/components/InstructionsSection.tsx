@@ -25,13 +25,13 @@ interface InstructionsSectionProps {
   onDragEnd: (event: DragEndEvent) => void;
 }
 
-const InstructionsSection: React.FC<InstructionsSectionProps> = ({
+const InstructionsSection = ({
   steps,
   onStepUpdate,
   onStepDelete,
   onAddStep,
   onDragEnd,
-}) => {
+}: InstructionsSectionProps) => {
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {

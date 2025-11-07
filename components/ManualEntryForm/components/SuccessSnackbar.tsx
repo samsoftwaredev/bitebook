@@ -1,12 +1,11 @@
 import { Alert, Snackbar } from '@mui/material';
-import React from 'react';
 
 interface SuccessSnackbarProps {
   open: boolean;
   onClose: () => void;
 }
 
-const SuccessSnackbar: React.FC<SuccessSnackbarProps> = ({ open, onClose }) => {
+const SuccessSnackbar = ({ open, onClose }: SuccessSnackbarProps) => {
   return (
     <Snackbar
       open={open}

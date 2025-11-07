@@ -21,12 +21,12 @@ interface CoreDetailsSectionProps {
   onInputChange: (field: keyof RecipeFormData, value: string) => void;
 }
 
-const CoreDetailsSection: React.FC<CoreDetailsSectionProps> = ({
+const CoreDetailsSection = ({
   formData,
   showAdvanced,
   onToggleAdvanced,
   onInputChange,
-}) => {
+}: CoreDetailsSectionProps) => {
   return (
     <Paper
       elevation={0}

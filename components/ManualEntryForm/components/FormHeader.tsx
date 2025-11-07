@@ -22,7 +22,7 @@ interface FormHeaderProps {
   onSave: () => void;
 }
 
-const FormHeader: React.FC<FormHeaderProps> = ({
+const FormHeader = ({
   currentStep,
   validationErrors,
   calculateProgress,
@@ -30,7 +30,7 @@ const FormHeader: React.FC<FormHeaderProps> = ({
   isLoading,
   formTitle,
   onSave,
-}) => {
+}: FormHeaderProps) => {
   return (
     <Box sx={{ p: { xs: 2, sm: 3 }, pb: 2 }}>
       <Stack
