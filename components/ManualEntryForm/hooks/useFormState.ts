@@ -1,8 +1,14 @@
 import { DragEndEvent } from '@dnd-kit/core';
 import { useCallback, useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
-import { RecipeFormData } from '@/interfaces';
-import { addRecipeService } from '@/services';
+import { IngredientFormData, RecipeFormData } from '@/interfaces';
+import {
+  addRecipeService,
+  getIngredientsService,
+  upsertIngredientService,
+} from '@/services';
+import { uuidv4 } from '@/utils/helpers';
 
 export const useFormState = (initialData?: Partial<RecipeFormData>) => {
   const [formData, setFormData] = useState<RecipeFormData>({
@@ -104,7 +110,7 @@ export const useFormState = (initialData?: Partial<RecipeFormData>) => {
             body,
           })),
         ingredients:
-          formData.ingredients?.map((ing) => ({
+          formData.ingredients.map((ing) => ({
             ingredient_id: ing.ingredient_id || crypto.randomUUID(),
             name: ing.name,
             qty_num: ing.qty_num || 1,
@@ -115,7 +121,49 @@ export const useFormState = (initialData?: Partial<RecipeFormData>) => {
         servings: parseInt(formData.servings || '0') || undefined,
       };
 
-      await addRecipeService(recipeData);
+      const { data: ingredientsData, error: ingredientsError } =
+        await upsertIngredientService(
+          recipeData.ingredients.map((ing) => ({
+            id: ing.ingredient_id || uuidv4(),
+            name: ing.name,
+            default_unit: ing.qty_unit,
+            default_shelf_life_days: ing.shelf_life_days,
+            notes: null,
+          })),
+        );
+
+      if (ingredientsError) throw new Error('Failed to get ingredients');
+      console.log('Upserted ingredients:', ingredientsData);
+      // Map ingredient names to their IDs from the service response
+      const ingredientIdMap: IngredientFormData[] =
+        ingredientsData.data
+          .map((ing) => {
+            const found = formData.ingredients.find((i) => i.name === ing.name);
+            if (ing.default_unit !== null) {
+              return {
+                ingredient_id: ing.id || crypto.randomUUID(),
+                name: ing.name,
+                qty_num: found?.qty_num || 1,
+                qty_unit: found?.qty_unit || 'piece',
+                shelf_life_days: found?.shelf_life_days || 0,
+              } as IngredientFormData;
+            }
+            return {
+              ingredient_id: ing.id || crypto.randomUUID(),
+              name: ing.name,
+              qty_num: found?.qty_num || 1,
+              qty_unit: found?.qty_unit || 'piece',
+              shelf_life_days: found?.shelf_life_days || 0,
+            } as IngredientFormData;
+          })
+          .filter((item): item is IngredientFormData => item !== undefined) ||
+        [];
+
+      recipeData.ingredients = ingredientIdMap;
+
+      console.log('Final recipe data to save:', recipeData);
+      const { error: addRecipeError } = await addRecipeService(recipeData);
+      if (addRecipeError) throw new Error('Failed to add recipe');
       setShowSuccess(true);
 
       // Reset form after successful save
@@ -137,6 +185,7 @@ export const useFormState = (initialData?: Partial<RecipeFormData>) => {
       }, 2000);
     } catch (error) {
       console.error('Error saving recipe:', error);
+      toast.error('Failed to save recipe. Please try again.');
       // Handle error (show toast, etc.)
     } finally {
       setIsLoading(false);

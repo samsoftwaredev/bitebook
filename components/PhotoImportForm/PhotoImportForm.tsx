@@ -60,6 +60,7 @@ function PhotoImportForm({ onBack }: { onBack: () => void }) {
         toast.error('Failed to analyze the recipe image. Please try again.');
         setAnalysisResult(null);
         setSelectedFile(null);
+        setRecipeData(null);
       } finally {
         setIsLoading(false);
       }
@@ -128,7 +129,7 @@ function PhotoImportForm({ onBack }: { onBack: () => void }) {
                 />
                 <Typography variant="body1" color="text.secondary">
                   {isLoading
-                    ? 'Analyzing recipe image...'
+                    ? 'This can take a couple of minutes. Analyzing recipe image...'
                     : selectedFile
                       ? `${selectedFile.name} ${analysisResult ? '✓ Analyzed' : ''}`
                       : 'Click to upload a recipe photo'}

@@ -1,7 +1,9 @@
 import { supabase } from '@/classes';
 import {
   AddRecipeService,
+  IngredientService,
   RecipeDetail,
+  RecipeIngredientService,
   RecipeResponse,
   ShoppingItem,
   ShoppingStats,
@@ -234,6 +236,30 @@ export const toggleShoppingListItemService = async ({
   return { data, error };
 };
 
+export const upsertIngredientService = async (
+  ingredients: IngredientService[],
+): Promise<{
+  data: { data: (IngredientService & { created: boolean })[]; ok: boolean };
+  error: any;
+}> => {
+  const { data, error } = await supabase.functions.invoke('add-ingredients', {
+    body: { ingredients },
+  });
+  return { data, error };
+};
+
+export const getIngredientsService = async (
+  ingredients: string[],
+): Promise<{
+  data: { ingredients: IngredientService[] } | null;
+  error: any;
+}> => {
+  const { data, error } = await supabase.functions.invoke('ingredients-get', {
+    body: { names: ingredients },
+  });
+  return { data, error };
+};
+
 export const addRecipeService = async (
   data: AddRecipeService,
 ): Promise<{
@@ -288,6 +314,6 @@ export const analyzeRecipeImageService = async (
     method: 'POST',
     body: formData,
   });
-  const data = await response.json();
-  return { data: data, ok: response.ok, error: null };
+  const res = await response.json();
+  return { data: res.data, ok: response.ok, error: null };
 };

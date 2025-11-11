@@ -3,16 +3,24 @@ import { useEffect, useState } from 'react';
 import { getUnitsService } from '@/services';
 
 const DEFAULT_UNITS = [
+  'each',
+  'can',
   'cup',
-  'tbsp',
-  'tsp',
-  'lbs',
-  'oz',
-  'g',
-  'kg',
-  'ml',
-  'l',
+  'tablespoon',
+  'teaspoon',
+  'ounce',
+  'pound',
+  'gram',
+  'kilogram',
+  'milliliter',
+  'liter',
   'piece',
+  'bunch',
+  'clove',
+  'pint',
+  'quart',
+  'stick',
+  'slice',
 ];
 
 export const useUnits = () => {

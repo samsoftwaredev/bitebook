@@ -156,6 +156,14 @@ export type AddRecipeService = {
 
 export type RecipeStepsService = { step_no?: number; body: string };
 
+export type IngredientService = {
+  id: string | null;
+  name: string;
+  default_unit: string | null;
+  default_shelf_life_days: number | null;
+  notes: string | null;
+};
+
 export type RecipeIngredientService = {
   ingredient_id: string;
   name: string;
@@ -166,18 +174,18 @@ export type RecipeIngredientService = {
 
 // Interface for ingredient with detailed fields
 export interface IngredientFormData {
-  ingredient_id?: string;
+  ingredient_id: string;
   name: string;
-  qty_num?: number;
-  qty_unit?: string;
-  shelf_life_days?: number;
+  qty_num: number;
+  qty_unit: string;
+  shelf_life_days: number;
 }
 
 // Interface for pre-filling form data
 export interface RecipeFormData {
   title?: string;
   description?: string;
-  ingredients?: IngredientFormData[];
+  ingredients: IngredientFormData[];
   steps?: string[];
   cookTime?: string;
   servings?: string;

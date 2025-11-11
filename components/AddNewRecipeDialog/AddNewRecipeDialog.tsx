@@ -171,13 +171,7 @@ export default function AddNewRecipeDialog({ open, onClose }: Props) {
   };
 
   return (
-    <Dialog
-      open={open}
-      onClose={handleClose}
-      fullScreen={isMobile}
-      maxWidth="md"
-      fullWidth
-    >
+    <Dialog open={open} fullScreen={isMobile} maxWidth="md" fullWidth>
       <DialogTitle
         sx={{
           display: 'flex',

@@ -19,9 +19,9 @@ export const useIngredientForm = (
     const newIngredient: IngredientFormData = {
       ingredient_id: crypto.randomUUID(),
       name: ingredientInput.trim(),
-      qty_num: parseFloat(ingredientQty) || undefined,
-      qty_unit: ingredientUnit || undefined,
-      shelf_life_days: undefined,
+      qty_num: parseFloat(ingredientQty),
+      qty_unit: ingredientUnit,
+      shelf_life_days: 0,
     };
 
     if (editingIngredient !== null) {
