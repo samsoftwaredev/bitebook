@@ -300,6 +300,24 @@ export const getUnitsService = async (): Promise<{
   return { data, error };
 };
 
+export const analyzeWebURLService = async (
+  url: string,
+): Promise<{
+  data: AddRecipeService;
+  ok: boolean;
+  error: any;
+}> => {
+  const response = await fetch('http://localhost:8000/web-scraper', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ webData: { url } }),
+  });
+  const res = await response.json();
+  return { data: res.data, ok: response.ok, error: null };
+};
+
 export const analyzeRecipeImageService = async (
   file: File,
 ): Promise<{
